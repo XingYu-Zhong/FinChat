@@ -1,67 +1,56 @@
-# FinChat 智能股票分析助手 🚀
+# 智能股票分析助手 (FinChat)
 
-## 项目简介
+一个基于中国大语言模型的智能股票分析工具，能够生成股票研报并提供智能问答服务。
+<div align="center">
+    <img src="img/cat-log.png" width="500">
+</div>
 
-FinChat 是一个基于人工智能的股票分析助手，集成了多个大语言模型（如智谱 GLM-4、Deepseek），能够为用户提供专业的股票分析服务。系统通过结合实时市场数据和 AI 分析能力，为投资者提供深入的市场洞察和投资建议。
+## 🌟 功能特点
 
-### 主要特性
+- 🤖 支持多种大语言模型（GLM-4-plus、Deepseek-chat），无需科学上网，都是国内大模型
+- 📊 自动生成股票分析研报
+- 💬 智能问答功能，可针对研报内容进行深入讨论
+- 🔄 实时流式响应
+- 📈 可自定义分析时间范围
+- 🎯 直观的Web界面
 
-- 🤖 支持多个大语言模型（GLM-4、Deepseek等）
-- 📈 实时股票数据分析
-- 🔍 智能市场洞察
-- 💡 专业投资建议
-- 🌐 友好的 Web 界面
+## 🏗️ 技术架构
 
-## 项目结构
+- 🔄 基于ReAct架构的智能Agent系统
+- 📚 RAG (Retrieval-Augmented Generation) 增强的工具调用机制
+- 🛠️ 自适应代码生成与执行框架
+- 📊 实时数据获取与分析引擎
+- 🌐 Streamlit构建的交互式Web界面
 
-```
-FinChat/
-├── agent/                 # 智能代理模块
-├── llm/                   # LLM 模型接口
-├── promptstore/           # Prompt 模板存储
-├── llamaindex/           # 向量检索相关
-├── predata/              # 数据预处理
-├── data/                 # 数据存储
-├── .streamlit/           # Streamlit 配置
-├── app.py                # Web 应用主程序
-├── requirements.txt      # 项目依赖
-└── .env                  # 环境变量配置
-```
+## 💡 创新特点
 
-## 安装说明
+1. **突破性的Agent交互模式**
+   - 创新采用Agent自主编写代码获取数据
+   - 基于ReAct架构实现Agent自反思与代码优化
+   - 支持运行结果反馈，实现闭环迭代改进
 
-### 环境要求
+2. **革新性的工具调用机制**
+   - 突破传统Function Call的限制
+   - 创新采用RAG模式管理工具库
+   - 支持千级别工具的灵活调用
+   - 有效解决海量工具超出上下文限制的问题
 
-- Python 3.11+
-- Conda 或 pip 包管理器
+3. **智能化的代码执行系统**
+   - 支持代码自动生成与优化
+   - 实时执行结果分析
+   - 错误自动诊断与修正
 
-### 依赖版本
-
-主要依赖包版本要求：
-- llama_index==0.12.8
-- streamlit==1.41.1
-- akshare (最新版本)
-- python-dotenv
-- json-repair
-
-注意：由于 akshare 的数据可能会更新，建议定期更新到最新版本：
-```bash
-pip install --upgrade akshare
-```
-
-### 安装步骤
+## 🛠️ 安装说明
 
 1. 克隆项目
 ```bash
-git clone [项目地址]
+git clone https://github.com/yourusername/FinChat.git
 cd FinChat
 ```
 
-2. 使用 Conda 创建虚拟环境（推荐）
+2. 创建并激活虚拟环境（推荐）
 ```bash
-# 创建名为 finchat 的 Python 3.11 环境
 conda create -n finchat python=3.11
-# 激活环境
 conda activate finchat
 ```
 
@@ -71,68 +60,70 @@ pip install -r requirements.txt
 ```
 
 4. 配置环境变量
-复制 `.env_tmp` 为 `.env` 并填写必要的配置信息：
-```bash
-cp .env_tmp .env
+创建 `.env` 文件并添加以下配置：
+```env
+# 智谱AI配置
+zhipu_api_key=your_zhipu_api_key
+zhipu_base_url=your_zhipu_base_url
+
+# Deepseek配置
+deepseek_api_key=your_deepseek_api_key
+deepseek_base_url=your_deepseek_base_url
 ```
+需要自行去官网获取api，目前使用了zhipu的embedding模型，可以自行替换。
+## 🚀 使用方法
 
-需要配置的环境变量：
-- `zhipu_api_key`: 智谱 AI API 密钥
-- `zhipu_base_url`: 智谱 AI 接口地址
-- `deepseek_api_key`: Deepseek API 密钥
-- `deepseek_base_url`: Deepseek 接口地址
-
-zhipu：https://open.bigmodel.cn/
-deepseek：https://platform.deepseek.com/
-## 使用说明
-
-### 启动服务
-
+1. 启动应用
 ```bash
-# 使用默认端口（8501）启动
 streamlit run app.py
-
-# 或使用 80 端口启动（需要 root 权限）
-sudo streamlit run app.py
 ```
 
-### 访问应用
+2. 在浏览器中访问 `http://localhost:8501`
 
-- 本地访问：http://localhost 或 http://localhost:8501
-- 远程访问：http://[服务器IP]
+<div align="center">
+    <img src="img/init.png" width="500">
+</div>
 
-### 使用流程
+3. 使用步骤：
+   - 在左侧边栏选择要使用的LLM模型
+   - 输入股票名称（如：贵州茅台）
+   - 选择分析的时间范围
+   - 点击"开始分析"按钮
 
-1. 在左侧边栏选择要使用的 LLM 模型
-2. 在主界面输入股票名称
-3. 选择分析的时间范围
-4. 点击"开始分析"按钮
-5. 等待分析结果生成
+   <div align="center">
+    <img src="img/yanbao.png" width="500">
+    </div>
 
-## 注意事项
+   - 等待分析完成后，可以查看研报并进行智能问答
+<div align="center">
+    <img src="img/liaotian.png" width="500">
+</div>
+<div align="center">
+    <img src="img/wenda.png" width="500">
+</div>
 
-- 首次运行时会下载必要的模型文件，可能需要一些时间
-- 分析过程可能需要几分钟，请耐心等待
-- 分析结果仅供参考，不构成投资建议
-- 建议使用较短的时间范围以获得更精确的分析结果
 
-## 许可证
 
-本项目采用 [LICENSE](LICENSE) 许可证
+## 📝 注意事项
 
-## 贡献指南
+- 股票名称需要输入完整的名称
+- 分析时间范围不宜过长，以免影响分析速度
+- 本系统生成的分析结果仅供参考，不构成投资建议
+- 请确保您的API密钥配置正确且有足够的额度
+
+## 🔒 隐私说明
+
+- 本项目不会存储任何用户的个人信息
+- API密钥仅用于与AI服务商通信，请妥善保管
+
+## 📄 许可证
+
+MIT License
+
+## 🤝 贡献指南
 
 欢迎提交 Issue 和 Pull Request 来帮助改进项目。
 
-## 联系方式
+## 📞 联系方式
 
-如有问题或建议，请通过以下方式联系：
-- 提交 Issue
-- 发送邮件至 zhongxingyuemail@gmail.com
-
-## 致谢
-
-感谢以下开源项目的支持：
-- Streamlit
-- LlamaIndex
-- AKShare
+如有问题或建议，请通过 Issue 与我们联系。

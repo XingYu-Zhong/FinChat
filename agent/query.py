@@ -42,6 +42,22 @@ class QueryProcessor:
     def chat_llm(self,messages):
         return self.model.chat_model(messages)
     
+    def stream_chat_llm(self, messages):
+        """流式输出聊天响应"""
+        return self.model.stream_chat_model(messages)
+    
+    def check_need_query(self, user_query):
+        """检查是否需要使用query获取数据"""
+        messages = [{
+            "role": "system",
+            "content": "你是一个判断用户问题是否需要查询数据的助手。如果用户问题涉及到需要实时数据、历史数据、或者具体的数据分析，就需要使用query。"
+        }, {
+            "role": "user",
+            "content": f"请判断这个问题是否需要使用query获取数据来回答：{user_query}\n只需要回答'是'或'否'。"
+        }]
+        result = self.chat_llm(messages)
+        return "是" in result
+    
     def _get_current_time(self):
         """获取当前时间和星期"""
         now = datetime.now()
