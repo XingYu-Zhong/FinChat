@@ -33,7 +33,7 @@ FinChat/
 ### 环境要求
 
 - Python 3.11+
-- pip 包管理器
+- Conda 或 pip 包管理器
 
 ### 依赖版本
 
@@ -57,12 +57,20 @@ git clone [项目地址]
 cd FinChat
 ```
 
-2. 安装依赖
+2. 使用 Conda 创建虚拟环境（推荐）
+```bash
+# 创建名为 finchat 的 Python 3.11 环境
+conda create -n finchat python=3.11
+# 激活环境
+conda activate finchat
+```
+
+3. 安装依赖
 ```bash
 pip install -r requirements.txt
 ```
 
-3. 配置环境变量
+4. 配置环境变量
 复制 `.env_tmp` 为 `.env` 并填写必要的配置信息：
 ```bash
 cp .env_tmp .env
