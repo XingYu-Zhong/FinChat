@@ -1,0 +1,103 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# 环境文件
+.env
+.env.*
+.venv
+venv/
+ENV/
+
+# 索引和嵌入文件
+.index_*/
+.vector_store/
+.embedding*/
+*_embedding*/
+*_index*/
+data/
+
+# 压缩包
+*.zip
+*.rar
+*.7z
+*.tar
+*.gz
+*.tgz
+
+# 日志文件
+*.log
+logs/
+log/
+*.log.*
+
+# IDE相关
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+.vs/
+
+# 测试文件和目录
+test*/
+tests/
+*_test.*
+test_*.py
+testing/
+test.py
+ttt.py
+
+# 临时文件
+tmp/
+temp/
+.tmp/
+.temp/
+*.tmp
+*.temp
+chat_logs.txt
+
+# 数据文件
+*.csv
+*.xlsx
+*.xls
+*.db
+*.sqlite
+*.sqlite3
+
+# 缓存
+.cache/
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# 其他
+*.bak
+*.backup
+*~
+.history/ 
