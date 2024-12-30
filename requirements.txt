@@ -1,5 +1,5 @@
 akshare
-llama_index=0.12.8
+llama_index==0.12.8
 python-dotenv
 json-repair
-streamlit=1.41.1
+streamlit==1.41.1
