@@ -1,0 +1,4217 @@
+[2025-01-01 00:16:53] 日志系统初始化
+[2025-01-01 00:16:53] agent 查找相关数据文档:
+ #### 个股信息查询
+
+接口: stock_individual_info_em
+
+目标地址: http://quote.eastmoney.com/concept/sh603777.html?from=classic
+
+描述: 东方财富-个股-股票信息
+
+限量: 单次返回指定 symbol 的个股信息
+
+输入参数
+
+| 名称      | 类型    | 描述                      |
+|---------|-------|-------------------------|
+| symbol  | str   | symbol="603777"; 股票代码   |
+| timeout | float | timeout=None; 默认不设置超时参数 |
+
+输出参数
+
+| 名称    | 类型     | 描述  |
+|-------|--------|-----|
+| item  | object | -   |
+| value | object | -   |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_individual_info_em_df = ak.stock_individual_info_em(symbol="000001")
+print(stock_individual_info_em_df)
+```
+
+数据示例
+
+```
+   item                value
+0   总市值  337468917463.220032
+1  流通市值      337466070320.25
+2    行业                   银行
+3  上市时间             19910403
+4  股票代码               000001
+5  股票简称                 平安银行
+6   总股本        19405918198.0
+7   流通股        19405754475.0
+```
+#### 分红情况-同花顺
+
+接口: stock_fhps_detail_ths
+
+目标地址: https://basic.10jqka.com.cn/new/603444/bonus.html
+
+描述: 同花顺-分红情况
+
+限量: 单次获取指定 symbol 的分红情况数据
+
+输入参数
+
+| 名称     | 类型  | 描述              |
+|--------|-----|-----------------|
+| symbol | str | symbol="603444" |
+
+输出参数
+
+| 名称         | 类型     | 描述 |
+|------------|--------|----|
+| 报告期        | object | -  |
+| 董事会日期      | object | -  |
+| 股东大会预案公告日期 | object | -  |
+| 实施公告日      | object | -  |
+| 分红方案说明     | object | -  |
+| A股股权登记日    | object | -  |
+| A股除权除息日    | object | -  |
+| 分红总额       | object | -  |
+| 方案进度       | object | -  |
+| 股利支付率      | object | -  |
+| 税前分红率      | object | -  |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_fhps_detail_ths_df = ak.stock_fhps_detail_ths(symbol="603444")
+print(stock_fhps_detail_ths_df)
+```
+
+数据示例
+
+```
+        报告期   董事会日期  股东大会预案公告日期  实施公告日  ... 分红总额 方案进度 股利支付率 税前分红率
+0    2016年报  2017-03-28  2017-04-18  2017-04-28  ...   2.94亿    实施方案  37.37%  1.52%
+1    2017中报  2017-08-15         NaT         NaT  ...      --   董事会预案      --     --
+2    2017年报  2018-04-03  2018-04-25  2018-05-07  ...   1.87亿    实施方案  30.48%  1.66%
+3    2018中报  2018-08-14         NaT         NaT  ...      --   董事会预案      --     --
+4    2018年报  2019-04-10  2019-05-01  2019-05-16  ...   7.19亿    实施方案  98.81%  4.47%
+5    2019中报  2019-08-13         NaT         NaT  ...      --   董事会预案      --     --
+6    2019年报  2020-04-09  2020-04-30  2020-05-14  ...   3.59亿    实施方案  44.33%  1.17%
+7    2020中报  2020-08-18         NaT         NaT  ...      --   董事会预案      --     --
+8    2020年报  2021-03-31  2021-05-13  2021-05-31  ...   8.62亿    实施方案   82.3%  2.08%
+9    2021中报  2021-08-13         NaT         NaT  ...      --   董事会预案      --     --
+10   2021年报  2022-04-08  2022-04-30  2022-05-13  ...  11.50亿    实施方案  78.32%  4.78%
+11   2022中报  2022-08-16         NaT         NaT  ...      --   董事会预案      --     --
+12  2022三季报  2022-10-27  2022-11-16  2022-12-22  ...  10.06亿    实施方案  99.43%  4.41%
+13   2022年报  2023-03-31  2023-04-22  2023-05-05  ...   2.16亿    实施方案  14.76%  0.61%
+14   2023中报  2023-08-16  2023-09-09  2023-09-21  ...   5.04亿    实施方案  74.47%  1.88%
+15   2023年报  2024-03-29  2024-04-19         NaT  ...      --  股东大会预案      --     --
+[16 rows x 11 columns]
+```
+#### 公司概况-巨潮资讯
+
+接口: stock_profile_cninfo
+
+目标地址: http://webapi.cninfo.com.cn/#/company
+
+描述: 巨潮资讯-个股-公司概况
+
+限量: 单次获取指定 symbol 的公司概况
+
+输入参数
+
+| 名称         | 类型  | 描述                    |
+|------------|-----|-----------------------|
+| symbol     | str | symbol="600030"       |
+
+输出参数
+
+| 名称   | 类型     | 描述  |
+|------|--------|-----|
+| 公司名称 | object | -   |
+| 英文名称 | object | -   |
+| 曾用简称 | object | -   |
+| A股代码 | object | -   |
+| A股简称 | object | -   |
+| B股代码 | object | -   |
+| B股简称 | object | -   |
+| H股代码 | object | -   |
+| H股简称 | object | -   |
+| 入选指数 | object | -   |
+| 所属市场 | object | -   |
+| 所属行业 | object | -   |
+| 法人代表 | object | -   |
+| 注册资金 | object | -   |
+| 成立日期 | object | -   |
+| 上市日期 | object | -   |
+| 官方网站 | object | -   |
+| 电子邮箱 | object | -   |
+| 联系电话 | object | -   |
+| 传真   | object | -   |
+| 注册地址 | object | -   |
+| 办公地址 | object | -   |
+| 邮政编码 | object | -   |
+| 主营业务 | object | -   |
+| 经营范围 | object | -   |
+| 机构简介 | object | -   |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_profile_cninfo_df = ak.stock_profile_cninfo(symbol="600030")
+print(stock_profile_cninfo_df)
+```
+
+数据示例
+
+```
+         公司名称  ...                                               机构简介
+0  中信证券股份有限公司  ...  公司的前身中信证券有限责任公司是经中国人民银行银复[1995]313号文批准，由中信公司，中...
+```
+#### 信息披露公告-巨潮资讯
+
+接口: stock_zh_a_disclosure_report_cninfo
+
+目标地址: http://www.cninfo.com.cn/new/commonUrl/pageOfSearch?url=disclosure/list/search
+
+描述: 巨潮资讯-首页-公告查询-信息披露公告-沪深京
+
+限量: 单次获取指定 symbol 的信息披露公告数据
+
+输入参数
+
+| 名称         | 类型  | 描述                                                                                                                                                                                                                         |
+|------------|-----|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| symbol     | str | symbol="000001"; 股票代码                                                                                                                                                                                                      |
+| market     | str | market="沪深京"; choice of {"沪深京", "港股", "三板", "基金", "债券", "监管", "预披露"}                                                                                                                                                       |
+| keyword    | str | keyword=""; 关键词                                                                                                                                                                                                            |
+| category   | str | category=""; choice of {'年报', '半年报', '一季报', '三季报', '业绩预告', '权益分派', '董事会', '监事会', '股东大会', '日常经营', '公司治理', '中介报告', '首发', '增发', '股权激励', '配股', '解禁', '公司债', '可转债', '其他融资', '股权变动', '补充更正', '澄清致歉', '风险提示', '特别处理和退市', '退市整理期'} |
+| start_date | str | start_date="20230618"                                                                                                                                                                                                      |
+| end_date   | str | end_date="20231219"                                                                                                                                                                                                        |
+
+输出参数
+
+| 名称   | 类型     | 描述 |
+|------|--------|----|
+| 代码   | object | -  |
+| 简称   | object | -  |
+| 公告标题 | object | -  |
+| 公告时间 | object | -  |
+| 公告链接 | object | -  |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_zh_a_disclosure_report_cninfo_df = ak.stock_zh_a_disclosure_report_cninfo(symbol="000001", market="沪深京", category="公司治理", start_date="20230619", end_date="20231220")
+print(stock_zh_a_disclosure_report_cninfo_df)
+```
+
+数据示例
+
+```
+   代码    简称  ...        公告时间                               公告链接
+0  000001  平安银行  ...  2023-12-09  http://www.cninfo.com.cn/new/disclosure/detail...
+1  000001  平安银行  ...  2023-11-21  http://www.cninfo.com.cn/new/disclosure/detail...
+2  000001  平安银行  ...  2023-10-25  http://www.cninfo.com.cn/new/disclosure/detail...
+3  000001  平安银行  ...  2023-08-24  http://www.cninfo.com.cn/new/disclosure/detail...
+4  000001  平安银行  ...  2023-07-29  http://www.cninfo.com.cn/new/disclosure/detail...
+5  000001  平安银行  ...  2023-07-25  http://www.cninfo.com.cn/new/disclosure/detail...
+[6 rows x 5 columns]
+```
+#### 信息披露调研-巨潮资讯
+
+接口: stock_zh_a_disclosure_relation_cninfo
+
+目标地址: http://www.cninfo.com.cn/new/commonUrl/pageOfSearch?url=disclosure/list/search
+
+描述: 巨潮资讯-首页-公告查询-信息披露调研-沪深京
+
+限量: 单次获取指定 symbol 的信息披露调研数据
+
+输入参数
+
+| 名称         | 类型  | 描述                                                                   |
+|------------|-----|----------------------------------------------------------------------|
+| symbol     | str | symbol="000001"; 股票代码                                                |
+| market     | str | market="沪深京"; choice of {"沪深京", "港股", "三板", "基金", "债券", "监管", "预披露"} |
+| start_date | str | start_date="20230618"                                                |
+| end_date   | str | end_date="20231219"                                                  |
+
+输出参数
+
+| 名称   | 类型     | 描述 |
+|------|--------|----|
+| 代码   | object | -  |
+| 简称   | object | -  |
+| 公告标题 | object | -  |
+| 公告时间 | object | -  |
+| 公告链接 | object | -  |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_zh_a_disclosure_relation_cninfo_df = ak.stock_zh_a_disclosure_relation_cninfo(symbol="000001", market="沪深京", start_date="20230619", end_date="20231220")
+print(stock_zh_a_disclosure_relation_cninfo_df)
+```
+
+数据示例
+
+```
+   代码    简称  ...        公告时间                               公告链接
+0  000001  平安银行  ...  2023-11-08  http://www.cninfo.com.cn/new/disclosure/detail...
+1  000001  平安银行  ...  2023-11-01  http://www.cninfo.com.cn/new/disclosure/detail...
+2  000001  平安银行  ...  2023-10-24  http://www.cninfo.com.cn/new/disclosure/detail...
+3  000001  平安银行  ...  2023-10-24  http://www.cninfo.com.cn/new/disclosure/detail...
+4  000001  平安银行  ...  2023-10-24  http://www.cninfo.com.cn/new/disclosure/detail...
+5  000001  平安银行  ...  2023-10-24  http://www.cninfo.com.cn/new/disclosure/detail...
+6  000001  平安银行  ...  2023-08-23  http://www.cninfo.com.cn/new/disclosure/detail...
+7  000001  平安银行  ...  2023-08-23  http://www.cninfo.com.cn/new/disclosure/detail...
+8  000001  平安银行  ...  2023-08-23  http://www.cninfo.com.cn/new/disclosure/detail...
+9  000001  平安银行  ...  2023-08-23  http://www.cninfo.com.cn/new/disclosure/detail...
+[10 rows x 5 columns]
+``` 
+--------------------------------
+[2025-01-01 00:16:58] agent 生成新的查询语句:
+ 需要用到的数据是：个股信息查询，需要查询的主体是：贵州茅台（600519），查询的时间范围是：2025-01-01。 
+--------------------------------
+[2025-01-01 00:17:05] agent 第0次生成执行代码:
+ import akshare as ak
+
+# 获取贵州茅台的个股信息
+stock_individual_info_em_df = ak.stock_individual_info_em(symbol="600519")
+
+# 将获取到的数据处理为 dict 类型
+result = {
+    "股票代码": stock_individual_info_em_df.loc[stock_individual_info_em_df['item'] == '股票代码', 'value'].values[0],
+    "股票简称": stock_individual_info_em_df.loc[stock_individual_info_em_df['item'] == '股票简称', 'value'].values[0],
+    "总市值": stock_individual_info_em_df.loc[stock_individual_info_em_df['item'] == '总市值', 'value'].values[0],
+    "流通市值": stock_individual_info_em_df.loc[stock_individual_info_em_df['item'] == '流通市值', 'value'].values[0],
+    "行业": stock_individual_info_em_df.loc[stock_individual_info_em_df['item'] == '行业', 'value'].values[0],
+    "上市时间": stock_individual_info_em_df.loc[stock_individual_info_em_df['item'] == '上市时间', 'value'].values[0],
+    "总股本": stock_individual_info_em_df.loc[stock_individual_info_em_df['item'] == '总股本', 'value'].values[0],
+    "流通股": stock_individual_info_em_df.loc[stock_individual_info_em_df['item'] == '流通股', 'value'].values[0]
+} 
+--------------------------------
+[2025-01-01 00:18:59] agent 查找相关数据文档:
+ #### 个股信息查询
+
+接口: stock_individual_info_em
+
+目标地址: http://quote.eastmoney.com/concept/sh603777.html?from=classic
+
+描述: 东方财富-个股-股票信息
+
+限量: 单次返回指定 symbol 的个股信息
+
+输入参数
+
+| 名称      | 类型    | 描述                      |
+|---------|-------|-------------------------|
+| symbol  | str   | symbol="603777"; 股票代码   |
+| timeout | float | timeout=None; 默认不设置超时参数 |
+
+输出参数
+
+| 名称    | 类型     | 描述  |
+|-------|--------|-----|
+| item  | object | -   |
+| value | object | -   |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_individual_info_em_df = ak.stock_individual_info_em(symbol="000001")
+print(stock_individual_info_em_df)
+```
+
+数据示例
+
+```
+   item                value
+0   总市值  337468917463.220032
+1  流通市值      337466070320.25
+2    行业                   银行
+3  上市时间             19910403
+4  股票代码               000001
+5  股票简称                 平安银行
+6   总股本        19405918198.0
+7   流通股        19405754475.0
+```
+#### 分红情况-同花顺
+
+接口: stock_fhps_detail_ths
+
+目标地址: https://basic.10jqka.com.cn/new/603444/bonus.html
+
+描述: 同花顺-分红情况
+
+限量: 单次获取指定 symbol 的分红情况数据
+
+输入参数
+
+| 名称     | 类型  | 描述              |
+|--------|-----|-----------------|
+| symbol | str | symbol="603444" |
+
+输出参数
+
+| 名称         | 类型     | 描述 |
+|------------|--------|----|
+| 报告期        | object | -  |
+| 董事会日期      | object | -  |
+| 股东大会预案公告日期 | object | -  |
+| 实施公告日      | object | -  |
+| 分红方案说明     | object | -  |
+| A股股权登记日    | object | -  |
+| A股除权除息日    | object | -  |
+| 分红总额       | object | -  |
+| 方案进度       | object | -  |
+| 股利支付率      | object | -  |
+| 税前分红率      | object | -  |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_fhps_detail_ths_df = ak.stock_fhps_detail_ths(symbol="603444")
+print(stock_fhps_detail_ths_df)
+```
+
+数据示例
+
+```
+        报告期   董事会日期  股东大会预案公告日期  实施公告日  ... 分红总额 方案进度 股利支付率 税前分红率
+0    2016年报  2017-03-28  2017-04-18  2017-04-28  ...   2.94亿    实施方案  37.37%  1.52%
+1    2017中报  2017-08-15         NaT         NaT  ...      --   董事会预案      --     --
+2    2017年报  2018-04-03  2018-04-25  2018-05-07  ...   1.87亿    实施方案  30.48%  1.66%
+3    2018中报  2018-08-14         NaT         NaT  ...      --   董事会预案      --     --
+4    2018年报  2019-04-10  2019-05-01  2019-05-16  ...   7.19亿    实施方案  98.81%  4.47%
+5    2019中报  2019-08-13         NaT         NaT  ...      --   董事会预案      --     --
+6    2019年报  2020-04-09  2020-04-30  2020-05-14  ...   3.59亿    实施方案  44.33%  1.17%
+7    2020中报  2020-08-18         NaT         NaT  ...      --   董事会预案      --     --
+8    2020年报  2021-03-31  2021-05-13  2021-05-31  ...   8.62亿    实施方案   82.3%  2.08%
+9    2021中报  2021-08-13         NaT         NaT  ...      --   董事会预案      --     --
+10   2021年报  2022-04-08  2022-04-30  2022-05-13  ...  11.50亿    实施方案  78.32%  4.78%
+11   2022中报  2022-08-16         NaT         NaT  ...      --   董事会预案      --     --
+12  2022三季报  2022-10-27  2022-11-16  2022-12-22  ...  10.06亿    实施方案  99.43%  4.41%
+13   2022年报  2023-03-31  2023-04-22  2023-05-05  ...   2.16亿    实施方案  14.76%  0.61%
+14   2023中报  2023-08-16  2023-09-09  2023-09-21  ...   5.04亿    实施方案  74.47%  1.88%
+15   2023年报  2024-03-29  2024-04-19         NaT  ...      --  股东大会预案      --     --
+[16 rows x 11 columns]
+```
+#### 公司概况-巨潮资讯
+
+接口: stock_profile_cninfo
+
+目标地址: http://webapi.cninfo.com.cn/#/company
+
+描述: 巨潮资讯-个股-公司概况
+
+限量: 单次获取指定 symbol 的公司概况
+
+输入参数
+
+| 名称         | 类型  | 描述                    |
+|------------|-----|-----------------------|
+| symbol     | str | symbol="600030"       |
+
+输出参数
+
+| 名称   | 类型     | 描述  |
+|------|--------|-----|
+| 公司名称 | object | -   |
+| 英文名称 | object | -   |
+| 曾用简称 | object | -   |
+| A股代码 | object | -   |
+| A股简称 | object | -   |
+| B股代码 | object | -   |
+| B股简称 | object | -   |
+| H股代码 | object | -   |
+| H股简称 | object | -   |
+| 入选指数 | object | -   |
+| 所属市场 | object | -   |
+| 所属行业 | object | -   |
+| 法人代表 | object | -   |
+| 注册资金 | object | -   |
+| 成立日期 | object | -   |
+| 上市日期 | object | -   |
+| 官方网站 | object | -   |
+| 电子邮箱 | object | -   |
+| 联系电话 | object | -   |
+| 传真   | object | -   |
+| 注册地址 | object | -   |
+| 办公地址 | object | -   |
+| 邮政编码 | object | -   |
+| 主营业务 | object | -   |
+| 经营范围 | object | -   |
+| 机构简介 | object | -   |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_profile_cninfo_df = ak.stock_profile_cninfo(symbol="600030")
+print(stock_profile_cninfo_df)
+```
+
+数据示例
+
+```
+         公司名称  ...                                               机构简介
+0  中信证券股份有限公司  ...  公司的前身中信证券有限责任公司是经中国人民银行银复[1995]313号文批准，由中信公司，中...
+```
+#### 信息披露公告-巨潮资讯
+
+接口: stock_zh_a_disclosure_report_cninfo
+
+目标地址: http://www.cninfo.com.cn/new/commonUrl/pageOfSearch?url=disclosure/list/search
+
+描述: 巨潮资讯-首页-公告查询-信息披露公告-沪深京
+
+限量: 单次获取指定 symbol 的信息披露公告数据
+
+输入参数
+
+| 名称         | 类型  | 描述                                                                                                                                                                                                                         |
+|------------|-----|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| symbol     | str | symbol="000001"; 股票代码                                                                                                                                                                                                      |
+| market     | str | market="沪深京"; choice of {"沪深京", "港股", "三板", "基金", "债券", "监管", "预披露"}                                                                                                                                                       |
+| keyword    | str | keyword=""; 关键词                                                                                                                                                                                                            |
+| category   | str | category=""; choice of {'年报', '半年报', '一季报', '三季报', '业绩预告', '权益分派', '董事会', '监事会', '股东大会', '日常经营', '公司治理', '中介报告', '首发', '增发', '股权激励', '配股', '解禁', '公司债', '可转债', '其他融资', '股权变动', '补充更正', '澄清致歉', '风险提示', '特别处理和退市', '退市整理期'} |
+| start_date | str | start_date="20230618"                                                                                                                                                                                                      |
+| end_date   | str | end_date="20231219"                                                                                                                                                                                                        |
+
+输出参数
+
+| 名称   | 类型     | 描述 |
+|------|--------|----|
+| 代码   | object | -  |
+| 简称   | object | -  |
+| 公告标题 | object | -  |
+| 公告时间 | object | -  |
+| 公告链接 | object | -  |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_zh_a_disclosure_report_cninfo_df = ak.stock_zh_a_disclosure_report_cninfo(symbol="000001", market="沪深京", category="公司治理", start_date="20230619", end_date="20231220")
+print(stock_zh_a_disclosure_report_cninfo_df)
+```
+
+数据示例
+
+```
+   代码    简称  ...        公告时间                               公告链接
+0  000001  平安银行  ...  2023-12-09  http://www.cninfo.com.cn/new/disclosure/detail...
+1  000001  平安银行  ...  2023-11-21  http://www.cninfo.com.cn/new/disclosure/detail...
+2  000001  平安银行  ...  2023-10-25  http://www.cninfo.com.cn/new/disclosure/detail...
+3  000001  平安银行  ...  2023-08-24  http://www.cninfo.com.cn/new/disclosure/detail...
+4  000001  平安银行  ...  2023-07-29  http://www.cninfo.com.cn/new/disclosure/detail...
+5  000001  平安银行  ...  2023-07-25  http://www.cninfo.com.cn/new/disclosure/detail...
+[6 rows x 5 columns]
+```
+#### 信息披露调研-巨潮资讯
+
+接口: stock_zh_a_disclosure_relation_cninfo
+
+目标地址: http://www.cninfo.com.cn/new/commonUrl/pageOfSearch?url=disclosure/list/search
+
+描述: 巨潮资讯-首页-公告查询-信息披露调研-沪深京
+
+限量: 单次获取指定 symbol 的信息披露调研数据
+
+输入参数
+
+| 名称         | 类型  | 描述                                                                   |
+|------------|-----|----------------------------------------------------------------------|
+| symbol     | str | symbol="000001"; 股票代码                                                |
+| market     | str | market="沪深京"; choice of {"沪深京", "港股", "三板", "基金", "债券", "监管", "预披露"} |
+| start_date | str | start_date="20230618"                                                |
+| end_date   | str | end_date="20231219"                                                  |
+
+输出参数
+
+| 名称   | 类型     | 描述 |
+|------|--------|----|
+| 代码   | object | -  |
+| 简称   | object | -  |
+| 公告标题 | object | -  |
+| 公告时间 | object | -  |
+| 公告链接 | object | -  |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_zh_a_disclosure_relation_cninfo_df = ak.stock_zh_a_disclosure_relation_cninfo(symbol="000001", market="沪深京", start_date="20230619", end_date="20231220")
+print(stock_zh_a_disclosure_relation_cninfo_df)
+```
+
+数据示例
+
+```
+   代码    简称  ...        公告时间                               公告链接
+0  000001  平安银行  ...  2023-11-08  http://www.cninfo.com.cn/new/disclosure/detail...
+1  000001  平安银行  ...  2023-11-01  http://www.cninfo.com.cn/new/disclosure/detail...
+2  000001  平安银行  ...  2023-10-24  http://www.cninfo.com.cn/new/disclosure/detail...
+3  000001  平安银行  ...  2023-10-24  http://www.cninfo.com.cn/new/disclosure/detail...
+4  000001  平安银行  ...  2023-10-24  http://www.cninfo.com.cn/new/disclosure/detail...
+5  000001  平安银行  ...  2023-10-24  http://www.cninfo.com.cn/new/disclosure/detail...
+6  000001  平安银行  ...  2023-08-23  http://www.cninfo.com.cn/new/disclosure/detail...
+7  000001  平安银行  ...  2023-08-23  http://www.cninfo.com.cn/new/disclosure/detail...
+8  000001  平安银行  ...  2023-08-23  http://www.cninfo.com.cn/new/disclosure/detail...
+9  000001  平安银行  ...  2023-08-23  http://www.cninfo.com.cn/new/disclosure/detail...
+[10 rows x 5 columns]
+``` 
+--------------------------------
+[2025-01-01 00:19:03] agent 生成新的查询语句:
+ 需要用到的数据是：个股信息查询，需要查询的主体是：贵州茅台（600519），查询的时间范围是：2025-01-01。 
+--------------------------------
+[2025-01-01 00:19:10] agent 第0次生成执行代码:
+ import akshare as ak
+
+# 获取贵州茅台的个股信息
+stock_individual_info_em_df = ak.stock_individual_info_em(symbol="600519")
+
+# 将获取到的数据处理为 dict 类型
+result = {
+    "股票代码": stock_individual_info_em_df.loc[stock_individual_info_em_df['item'] == '股票代码', 'value'].values[0],
+    "股票简称": stock_individual_info_em_df.loc[stock_individual_info_em_df['item'] == '股票简称', 'value'].values[0],
+    "总市值": stock_individual_info_em_df.loc[stock_individual_info_em_df['item'] == '总市值', 'value'].values[0],
+    "流通市值": stock_individual_info_em_df.loc[stock_individual_info_em_df['item'] == '流通市值', 'value'].values[0],
+    "行业": stock_individual_info_em_df.loc[stock_individual_info_em_df['item'] == '行业', 'value'].values[0],
+    "上市时间": stock_individual_info_em_df.loc[stock_individual_info_em_df['item'] == '上市时间', 'value'].values[0],
+    "总股本": stock_individual_info_em_df.loc[stock_individual_info_em_df['item'] == '总股本', 'value'].values[0],
+    "流通股": stock_individual_info_em_df.loc[stock_individual_info_em_df['item'] == '流通股', 'value'].values[0]
+} 
+--------------------------------
+[2025-01-01 00:22:44] agent 查找相关数据文档:
+ #### 个股信息查询
+
+接口: stock_individual_info_em
+
+目标地址: http://quote.eastmoney.com/concept/sh603777.html?from=classic
+
+描述: 东方财富-个股-股票信息
+
+限量: 单次返回指定 symbol 的个股信息
+
+输入参数
+
+| 名称      | 类型    | 描述                      |
+|---------|-------|-------------------------|
+| symbol  | str   | symbol="603777"; 股票代码   |
+| timeout | float | timeout=None; 默认不设置超时参数 |
+
+输出参数
+
+| 名称    | 类型     | 描述  |
+|-------|--------|-----|
+| item  | object | -   |
+| value | object | -   |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_individual_info_em_df = ak.stock_individual_info_em(symbol="000001")
+print(stock_individual_info_em_df)
+```
+
+数据示例
+
+```
+   item                value
+0   总市值  337468917463.220032
+1  流通市值      337466070320.25
+2    行业                   银行
+3  上市时间             19910403
+4  股票代码               000001
+5  股票简称                 平安银行
+6   总股本        19405918198.0
+7   流通股        19405754475.0
+```
+#### 分红情况-同花顺
+
+接口: stock_fhps_detail_ths
+
+目标地址: https://basic.10jqka.com.cn/new/603444/bonus.html
+
+描述: 同花顺-分红情况
+
+限量: 单次获取指定 symbol 的分红情况数据
+
+输入参数
+
+| 名称     | 类型  | 描述              |
+|--------|-----|-----------------|
+| symbol | str | symbol="603444" |
+
+输出参数
+
+| 名称         | 类型     | 描述 |
+|------------|--------|----|
+| 报告期        | object | -  |
+| 董事会日期      | object | -  |
+| 股东大会预案公告日期 | object | -  |
+| 实施公告日      | object | -  |
+| 分红方案说明     | object | -  |
+| A股股权登记日    | object | -  |
+| A股除权除息日    | object | -  |
+| 分红总额       | object | -  |
+| 方案进度       | object | -  |
+| 股利支付率      | object | -  |
+| 税前分红率      | object | -  |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_fhps_detail_ths_df = ak.stock_fhps_detail_ths(symbol="603444")
+print(stock_fhps_detail_ths_df)
+```
+
+数据示例
+
+```
+        报告期   董事会日期  股东大会预案公告日期  实施公告日  ... 分红总额 方案进度 股利支付率 税前分红率
+0    2016年报  2017-03-28  2017-04-18  2017-04-28  ...   2.94亿    实施方案  37.37%  1.52%
+1    2017中报  2017-08-15         NaT         NaT  ...      --   董事会预案      --     --
+2    2017年报  2018-04-03  2018-04-25  2018-05-07  ...   1.87亿    实施方案  30.48%  1.66%
+3    2018中报  2018-08-14         NaT         NaT  ...      --   董事会预案      --     --
+4    2018年报  2019-04-10  2019-05-01  2019-05-16  ...   7.19亿    实施方案  98.81%  4.47%
+5    2019中报  2019-08-13         NaT         NaT  ...      --   董事会预案      --     --
+6    2019年报  2020-04-09  2020-04-30  2020-05-14  ...   3.59亿    实施方案  44.33%  1.17%
+7    2020中报  2020-08-18         NaT         NaT  ...      --   董事会预案      --     --
+8    2020年报  2021-03-31  2021-05-13  2021-05-31  ...   8.62亿    实施方案   82.3%  2.08%
+9    2021中报  2021-08-13         NaT         NaT  ...      --   董事会预案      --     --
+10   2021年报  2022-04-08  2022-04-30  2022-05-13  ...  11.50亿    实施方案  78.32%  4.78%
+11   2022中报  2022-08-16         NaT         NaT  ...      --   董事会预案      --     --
+12  2022三季报  2022-10-27  2022-11-16  2022-12-22  ...  10.06亿    实施方案  99.43%  4.41%
+13   2022年报  2023-03-31  2023-04-22  2023-05-05  ...   2.16亿    实施方案  14.76%  0.61%
+14   2023中报  2023-08-16  2023-09-09  2023-09-21  ...   5.04亿    实施方案  74.47%  1.88%
+15   2023年报  2024-03-29  2024-04-19         NaT  ...      --  股东大会预案      --     --
+[16 rows x 11 columns]
+```
+#### 公司概况-巨潮资讯
+
+接口: stock_profile_cninfo
+
+目标地址: http://webapi.cninfo.com.cn/#/company
+
+描述: 巨潮资讯-个股-公司概况
+
+限量: 单次获取指定 symbol 的公司概况
+
+输入参数
+
+| 名称         | 类型  | 描述                    |
+|------------|-----|-----------------------|
+| symbol     | str | symbol="600030"       |
+
+输出参数
+
+| 名称   | 类型     | 描述  |
+|------|--------|-----|
+| 公司名称 | object | -   |
+| 英文名称 | object | -   |
+| 曾用简称 | object | -   |
+| A股代码 | object | -   |
+| A股简称 | object | -   |
+| B股代码 | object | -   |
+| B股简称 | object | -   |
+| H股代码 | object | -   |
+| H股简称 | object | -   |
+| 入选指数 | object | -   |
+| 所属市场 | object | -   |
+| 所属行业 | object | -   |
+| 法人代表 | object | -   |
+| 注册资金 | object | -   |
+| 成立日期 | object | -   |
+| 上市日期 | object | -   |
+| 官方网站 | object | -   |
+| 电子邮箱 | object | -   |
+| 联系电话 | object | -   |
+| 传真   | object | -   |
+| 注册地址 | object | -   |
+| 办公地址 | object | -   |
+| 邮政编码 | object | -   |
+| 主营业务 | object | -   |
+| 经营范围 | object | -   |
+| 机构简介 | object | -   |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_profile_cninfo_df = ak.stock_profile_cninfo(symbol="600030")
+print(stock_profile_cninfo_df)
+```
+
+数据示例
+
+```
+         公司名称  ...                                               机构简介
+0  中信证券股份有限公司  ...  公司的前身中信证券有限责任公司是经中国人民银行银复[1995]313号文批准，由中信公司，中...
+```
+#### 信息披露公告-巨潮资讯
+
+接口: stock_zh_a_disclosure_report_cninfo
+
+目标地址: http://www.cninfo.com.cn/new/commonUrl/pageOfSearch?url=disclosure/list/search
+
+描述: 巨潮资讯-首页-公告查询-信息披露公告-沪深京
+
+限量: 单次获取指定 symbol 的信息披露公告数据
+
+输入参数
+
+| 名称         | 类型  | 描述                                                                                                                                                                                                                         |
+|------------|-----|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| symbol     | str | symbol="000001"; 股票代码                                                                                                                                                                                                      |
+| market     | str | market="沪深京"; choice of {"沪深京", "港股", "三板", "基金", "债券", "监管", "预披露"}                                                                                                                                                       |
+| keyword    | str | keyword=""; 关键词                                                                                                                                                                                                            |
+| category   | str | category=""; choice of {'年报', '半年报', '一季报', '三季报', '业绩预告', '权益分派', '董事会', '监事会', '股东大会', '日常经营', '公司治理', '中介报告', '首发', '增发', '股权激励', '配股', '解禁', '公司债', '可转债', '其他融资', '股权变动', '补充更正', '澄清致歉', '风险提示', '特别处理和退市', '退市整理期'} |
+| start_date | str | start_date="20230618"                                                                                                                                                                                                      |
+| end_date   | str | end_date="20231219"                                                                                                                                                                                                        |
+
+输出参数
+
+| 名称   | 类型     | 描述 |
+|------|--------|----|
+| 代码   | object | -  |
+| 简称   | object | -  |
+| 公告标题 | object | -  |
+| 公告时间 | object | -  |
+| 公告链接 | object | -  |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_zh_a_disclosure_report_cninfo_df = ak.stock_zh_a_disclosure_report_cninfo(symbol="000001", market="沪深京", category="公司治理", start_date="20230619", end_date="20231220")
+print(stock_zh_a_disclosure_report_cninfo_df)
+```
+
+数据示例
+
+```
+   代码    简称  ...        公告时间                               公告链接
+0  000001  平安银行  ...  2023-12-09  http://www.cninfo.com.cn/new/disclosure/detail...
+1  000001  平安银行  ...  2023-11-21  http://www.cninfo.com.cn/new/disclosure/detail...
+2  000001  平安银行  ...  2023-10-25  http://www.cninfo.com.cn/new/disclosure/detail...
+3  000001  平安银行  ...  2023-08-24  http://www.cninfo.com.cn/new/disclosure/detail...
+4  000001  平安银行  ...  2023-07-29  http://www.cninfo.com.cn/new/disclosure/detail...
+5  000001  平安银行  ...  2023-07-25  http://www.cninfo.com.cn/new/disclosure/detail...
+[6 rows x 5 columns]
+```
+#### 信息披露调研-巨潮资讯
+
+接口: stock_zh_a_disclosure_relation_cninfo
+
+目标地址: http://www.cninfo.com.cn/new/commonUrl/pageOfSearch?url=disclosure/list/search
+
+描述: 巨潮资讯-首页-公告查询-信息披露调研-沪深京
+
+限量: 单次获取指定 symbol 的信息披露调研数据
+
+输入参数
+
+| 名称         | 类型  | 描述                                                                   |
+|------------|-----|----------------------------------------------------------------------|
+| symbol     | str | symbol="000001"; 股票代码                                                |
+| market     | str | market="沪深京"; choice of {"沪深京", "港股", "三板", "基金", "债券", "监管", "预披露"} |
+| start_date | str | start_date="20230618"                                                |
+| end_date   | str | end_date="20231219"                                                  |
+
+输出参数
+
+| 名称   | 类型     | 描述 |
+|------|--------|----|
+| 代码   | object | -  |
+| 简称   | object | -  |
+| 公告标题 | object | -  |
+| 公告时间 | object | -  |
+| 公告链接 | object | -  |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_zh_a_disclosure_relation_cninfo_df = ak.stock_zh_a_disclosure_relation_cninfo(symbol="000001", market="沪深京", start_date="20230619", end_date="20231220")
+print(stock_zh_a_disclosure_relation_cninfo_df)
+```
+
+数据示例
+
+```
+   代码    简称  ...        公告时间                               公告链接
+0  000001  平安银行  ...  2023-11-08  http://www.cninfo.com.cn/new/disclosure/detail...
+1  000001  平安银行  ...  2023-11-01  http://www.cninfo.com.cn/new/disclosure/detail...
+2  000001  平安银行  ...  2023-10-24  http://www.cninfo.com.cn/new/disclosure/detail...
+3  000001  平安银行  ...  2023-10-24  http://www.cninfo.com.cn/new/disclosure/detail...
+4  000001  平安银行  ...  2023-10-24  http://www.cninfo.com.cn/new/disclosure/detail...
+5  000001  平安银行  ...  2023-10-24  http://www.cninfo.com.cn/new/disclosure/detail...
+6  000001  平安银行  ...  2023-08-23  http://www.cninfo.com.cn/new/disclosure/detail...
+7  000001  平安银行  ...  2023-08-23  http://www.cninfo.com.cn/new/disclosure/detail...
+8  000001  平安银行  ...  2023-08-23  http://www.cninfo.com.cn/new/disclosure/detail...
+9  000001  平安银行  ...  2023-08-23  http://www.cninfo.com.cn/new/disclosure/detail...
+[10 rows x 5 columns]
+``` 
+--------------------------------
+[2025-01-01 00:22:47] agent 生成新的查询语句:
+ 需要用到的数据是：个股信息查询，需要查询的主体是：贵州茅台（600519），查询的时间范围是：2025-01-01。 
+--------------------------------
+[2025-01-01 00:22:54] agent 第0次生成执行代码:
+ import akshare as ak
+
+# 获取贵州茅台的个股信息
+stock_individual_info_em_df = ak.stock_individual_info_em(symbol="600519")
+
+# 将获取到的数据处理为 dict 类型
+result = {
+    "股票代码": stock_individual_info_em_df.loc[stock_individual_info_em_df['item'] == '股票代码', 'value'].values[0],
+    "股票简称": stock_individual_info_em_df.loc[stock_individual_info_em_df['item'] == '股票简称', 'value'].values[0],
+    "总市值": stock_individual_info_em_df.loc[stock_individual_info_em_df['item'] == '总市值', 'value'].values[0],
+    "流通市值": stock_individual_info_em_df.loc[stock_individual_info_em_df['item'] == '流通市值', 'value'].values[0],
+    "行业": stock_individual_info_em_df.loc[stock_individual_info_em_df['item'] == '行业', 'value'].values[0],
+    "上市时间": stock_individual_info_em_df.loc[stock_individual_info_em_df['item'] == '上市时间', 'value'].values[0],
+    "总股本": stock_individual_info_em_df.loc[stock_individual_info_em_df['item'] == '总股本', 'value'].values[0],
+    "流通股": stock_individual_info_em_df.loc[stock_individual_info_em_df['item'] == '流通股', 'value'].values[0]
+} 
+--------------------------------
+[2025-01-01 00:22:59] agent 判断数据满足需求，返回结果
+[2025-01-01 00:22:59] agent 查找相关数据文档:
+ #### 港股估值指标
+
+接口: stock_hk_valuation_baidu
+
+目标地址: https://gushitong.baidu.com/stock/hk-06969
+
+描述: 百度股市通-港股-财务报表-估值数据
+
+限量: 单次获取指定 symbol 的指定 indicator 的特定 period 的历史数据
+
+输入参数
+
+| 名称        | 类型  | 描述                                                                     |
+|-----------|-----|------------------------------------------------------------------------|
+| symbol    | str | symbol="02358"; 港股代码                                                   |
+| indicator | str | indicator="总市值"; choice of {"总市值", "市盈率(TTM)", "市盈率(静)", "市净率", "市现率"} |
+| period    | str | period="近一年"; choice of {"近一年", "近三年", "全部"}                           |
+
+输出参数
+
+| 名称    | 类型      | 描述  |
+|-------|---------|-----|
+| date  | object  | -   |
+| value | float64 | -   |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_hk_valuation_baidu_df = ak.stock_hk_valuation_baidu(symbol="06969", indicator="总市值", period="近一年")
+print(stock_hk_valuation_baidu_df)
+```
+
+数据示例
+
+```
+           date   value
+0    2023-11-21  427.15
+1    2023-11-22  428.99
+2    2023-11-23  441.88
+3    2023-11-24  430.83
+4    2023-11-25  430.83
+..          ...     ...
+362  2024-11-17  602.46
+363  2024-11-18  632.73
+364  2024-11-19  679.69
+365  2024-11-20  713.06
+366  2024-11-21  688.35
+[367 rows x 2 columns]
+```
+#### 指数估值-中证
+
+接口: stock_zh_index_value_csindex
+
+目标地址: https://www.csindex.com.cn/zh-CN/indices/index-detail/H30374#/indices/family/detail?indexCode=H30374
+
+描述: 中证指数-指数估值数据
+
+限量: 该接口返回指定的指数的估值数据, 该接口只能返回近期的数据
+
+输入参数
+
+| 名称     | 类型  | 描述                    |
+|--------|-----|-----------------------|
+| symbol | str | symbol="H30374"; 指数代码 |
+
+输出参数
+
+| 名称     | 类型      | 描述              |
+|--------|---------|-----------------|
+| 日期     | object  | -               |
+| 指数代码   | object  | -               |
+| 指数中文全称 | object  | -               |
+| 指数中文简称 | object  | -               |
+| 指数英文全称 | object  | -               |
+| 指数英文简称 | object  | -               |
+| 市盈率1   | float64 | 注意: （总股本）P/E1   |
+| 市盈率2   | float64 | 注意: （计算用股本）P/E2 |
+| 股息率1   | float64 | 注意: （总股本）D/P1   |
+| 股息率2   | float64 | 注意: （计算用股本）D/P2 |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_zh_index_value_csindex_df = ak.stock_zh_index_value_csindex(symbol="H30374")
+print(stock_zh_index_value_csindex_df)
+```
+
+数据示例
+
+```
+    日期    指数代码        指数中文全称  指数中文简称  ...       市盈率1   市盈率2  股息率1  股息率2
+0   2021-10-19  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  18.22  19.66  1.79  1.56
+1   2021-10-18  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  18.05  19.45  1.80  1.58
+2   2021-10-15  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  18.05  19.45  1.80  1.58
+3   2021-10-14  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  17.96  19.33  1.81  1.59
+4   2021-10-13  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  17.96  19.32  1.82  1.59
+5   2021-10-12  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  17.84  19.17  1.83  1.60
+6   2021-10-11  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  18.09  19.46  1.80  1.58
+7   2021-10-08  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  18.06  19.38  1.81  1.59
+8   2021-10-07  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  17.94  19.23  1.82  1.60
+9   2021-10-05  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  17.82  19.05  1.83  1.61
+10  2021-10-04  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  17.81  19.03  1.83  1.61
+11  2021-10-01  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  17.90  19.16  1.82  1.60
+12  2021-09-30  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  17.91  19.18  1.82  1.60
+13  2021-09-29  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  17.75  19.01  1.83  1.63
+14  2021-09-28  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  18.04  19.31  1.80  1.61
+15  2021-09-27  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  17.95  19.21  1.80  1.60
+16  2021-09-24  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  18.07  19.33  1.79  1.59
+17  2021-09-23  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  18.23  19.51  1.77  1.58
+18  2021-09-22  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  18.12  19.37  1.78  1.59
+19  2021-09-21  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  18.09  19.36  1.79  1.59
+```
+#### A 股估值指标
+
+接口: stock_zh_valuation_baidu
+
+目标地址: https://gushitong.baidu.com/stock/ab-002044
+
+描述: 百度股市通-A 股-财务报表-估值数据
+
+限量: 单次获取指定 symbol 和 indicator 的所有历史数据
+
+输入参数
+
+| 名称        | 类型  | 描述                                                                     |
+|-----------|-----|------------------------------------------------------------------------|
+| symbol    | str | symbol="002044"; A 股代码                                                 |
+| indicator | str | indicator="总市值"; choice of {"总市值", "市盈率(TTM)", "市盈率(静)", "市净率", "市现率"} |
+| period    | str | period="近一年"; choice of {"近一年", "近三年", "近五年", "近十年", "全部"}             |
+
+输出参数
+
+| 名称    | 类型      | 描述  |
+|-------|---------|-----|
+| date  | object  | -   |
+| value | float64 | -   |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_zh_valuation_baidu_df = ak.stock_zh_valuation_baidu(symbol="002044", indicator="总市值", period="近一年")
+print(stock_zh_valuation_baidu_df)
+```
+
+数据示例
+
+```
+           date   value
+0    2023-05-29  245.42
+1    2023-05-30  246.60
+2    2023-05-31  249.73
+3    2023-06-01  253.64
+4    2023-06-02  259.52
+..          ...     ...
+362  2024-05-25  167.92
+363  2024-05-26  167.92
+364  2024-05-27  165.96
+365  2024-05-28  164.40
+366  2024-05-29  167.14
+[367 rows x 2 columns]
+```
+### 盈利预测-同花顺
+
+接口: stock_profit_forecast_ths
+
+目标地址: http://basic.10jqka.com.cn/new/600519/worth.html
+
+描述: 同花顺-盈利预测
+
+限量: 单次返回指定 symbol 和 indicator 的数据
+
+输入参数
+
+| 名称        | 类型  | 描述                                                                                    |
+|-----------|-----|---------------------------------------------------------------------------------------|
+| symbol    | str | symbol="600519"; 股票代码                                                                 |
+| indicator | str | indicator="预测年报每股收益"; choice of {"预测年报每股收益", "预测年报净利润", "业绩预测详表-机构", "业绩预测详表-详细指标预测"} |
+
+输出参数-预测年报每股收益
+
+| 名称    | 类型      | 描述  |
+|-------|---------|-----|
+| 年度    | object  | -   |
+| 预测机构数 | int64   | -   |
+| 最小值   | float64 | -   |
+| 均值    | float64 | -   |
+| 最大值   | float64 | -   |
+| 行业平均数 | float64 | -   |
+
+接口示例-预测年报每股收益
+
+```python
+import akshare as ak
+
+stock_profit_forecast_ths_df = ak.stock_profit_forecast_ths(symbol="600519", indicator="预测年报每股收益")
+print(stock_profit_forecast_ths_df)
+```
+
+数据示例-预测年报每股收益
+
+```
+     年度  预测机构数    最小值     均值    最大值  行业平均数
+0  2022     48  48.46  49.73  50.58   7.00
+1  2023     48  56.01  58.31  61.53   8.45
+2  2024     48  63.79  67.59  73.67  10.12
+```
+
+输出参数-预测年报净利润
+
+| 名称    | 类型      | 描述  |
+|-------|---------|-----|
+| 年度    | object  | -   |
+| 预测机构数 | int64   | -   |
+| 最小值   | float64 | -   |
+| 均值    | float64 | -   |
+| 最大值   | float64 | -   |
+| 行业平均数 | float64 | -   |
+
+接口示例-预测年报净利润
+
+```python
+import akshare as ak
+
+stock_profit_forecast_ths_df = ak.stock_profit_forecast_ths(symbol="600519", indicator="预测年报净利润")
+print(stock_profit_forecast_ths_df)
+```
+
+数据示例-预测年报净利润
+
+```
+     年度  预测机构数     最小值      均值     最大值   行业平均数
+0  2022     48  608.70  624.70  635.37   92.07
+1  2023     48  703.55  732.50  772.89  109.92
+2  2024     48  801.30  849.09  925.44  130.04
+```
+
+输出参数-业绩预测详表-机构
+
+| 名称             | 类型      | 描述  |
+|----------------|---------|-----|
+| 机构名称           | object  | -   |
+| 研究员            | object  | -   |
+| 预测年报每股收益2022预测 | float64 | -   |
+| 预测年报每股收益2023预测 | float64 | -   |
+| 预测年报每股收益2024预测 | float64 | -   |
+| 预测年报净利润2022预测  | object  | -   |
+| 预测年报净利润2023预测  | object  | -   |
+| 预测年报净利润2024预测  | object  | -   |
+| 报告日期           | object  | -   |
+
+接口示例-业绩预测详表-机构
+
+```python
+import akshare as ak
+
+stock_profit_forecast_ths_df = ak.stock_profit_forecast_ths(symbol="600519", indicator="业绩预测详表-机构")
+print(stock_profit_forecast_ths_df)
+```
+
+数据示例-业绩预测详表-机构
+
+```
+       机构名称          研究员  ...  预测年报净利润2024预测        报告日期
+0      东方证券          叶书怀  ...        829.14亿  2023-03-07
+1      中泰证券          范劲松  ...        848.80亿  2023-02-13
+2      中信证券           李鑫  ...        832.79亿  2023-02-13
+3      招银证券  Joseph Wong  ...        866.26亿  2023-02-06
+4      华鑫证券          孙山山  ...        860.24亿  2023-01-03
+5      开源证券          张宇光  ...        860.49亿  2023-01-03
+6  群益证券(香港)          顾向君  ...        845.28亿  2023-01-03
+7      财通证券           苏铖  ...        850.53亿  2023-01-02
+8      东吴证券           汤军  ...        845.27亿  2022-12-30
+9      东莞证券          魏红梅  ...        846.24亿  2022-12-30
+```
+
+输出参数-业绩预测详表-详细指标预测
+
+| 名称        | 类型     | 描述  |
+|-----------|--------|-----|
+| 预测指标      | object | -   |
+| 2019-实际值  | object | -   |
+| 2020-实际值  | object | -   |
+| 2021-实际值  | object | -   |
+| 预测2022-平均 | object | -   |
+| 预测2023-平均 | object | -   |
+| 预测2024-平均 | object | -   |
+
+接口示例-业绩预测详表-详细指标预测
+
+```python
+import akshare as ak
+
+stock_profit_forecast_ths_df = ak.stock_profit_forecast_ths(symbol="600519", indicator="业绩预测详表-详细指标预测")
+print(stock_profit_forecast_ths_df)
+```
+
+数据示例-业绩预测详表-详细指标预测
+
+```
+       预测指标 2019-实际值 2020-实际值  2021-实际值 预测2022-平均 预测2023-平均 预测2024-平均
+0   营业收入(元)  854.30亿  949.15亿  1061.90亿  1268.88亿  1471.77亿  1691.60亿
+1   营业收入增长率   15.10%   10.29%    11.71%    19.49%    15.99%    14.93%
+2   利润总额(元)  587.83亿  661.97亿   745.28亿   883.27亿  1034.55亿  1198.90亿
+3    净利润(元)  412.06亿  466.97亿   524.60亿   624.70亿   732.50亿   849.09亿
+4    净利润增长率   17.05%   13.33%    12.34%    18.92%    17.23%    15.96%
+5  每股现金流(元)    35.99    41.13     50.97     55.46     59.37     72.57
+6  每股净资产(元)   108.27   128.42    150.88    177.18    210.97    251.11
+7    净资产收益率   33.09%   31.41%    29.90%    28.62%    28.26%    27.64%
+8   市盈率(动态)    53.98    47.63     42.40     35.65     30.41     26.24
+```
+##### 行业市盈率
+
+接口: stock_industry_pe_ratio_cninfo
+
+目标地址: http://webapi.cninfo.com.cn/#/thematicStatistics
+
+描述: 巨潮资讯-数据中心-行业分析-行业市盈率
+
+限量: 单次获取指定 symbol 在指定交易日的所有数据; 只能获取近期的数据
+
+输入参数
+
+| 名称     | 类型  | 描述                                                |
+|--------|-----|---------------------------------------------------|
+| symbol | str | symbol="证监会行业分类"; choice of {"证监会行业分类", "国证行业分类"} |
+| date   | str | date="20210910"; 交易日                              |
+
+输出参数
+
+| 名称         | 类型      | 描述       |
+|------------|---------|----------|
+| 变动日期       | object  | -        |
+| 行业分类       | object  | -        |
+| 行业层级       | int64   | -        |
+| 行业编码       | object  | -        |
+| 行业名称       | object  | -        |
+| 公司数量       | float64 | -        |
+| 纳入计算公司数量   | float64 | -        |
+| 总市值-静态     | float64 | 注意单位: 亿元 |
+| 净利润-静态     | float64 | 注意单位: 亿元 |
+| 静态市盈率-加权平均 | float64 | -        |
+| 静态市盈率-中位数  | float64 | -        |
+| 静态市盈率-算术平均 | float64 | -        |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_industry_pe_ratio_cninfo_df = ak.stock_industry_pe_ratio_cninfo(symbol="国证行业分类", date="20240617")
+print(stock_industry_pe_ratio_cninfo_df)
+```
+
+数据示例
+
+```
+        变动日期          行业分类  行业层级  ... 静态市盈率-加权平均 静态市盈率-中位数  静态市盈率-算术平均
+0    2024-06-17  国证行业分类标准2019     1  ...      11.54     15.75       49.19
+1    2024-06-17  国证行业分类标准2019     2  ...      11.54     15.75       49.19
+2    2024-06-17  国证行业分类标准2019     3  ...      18.44     22.05       28.24
+3    2024-06-17  国证行业分类标准2019     4  ...      19.23     21.45       30.02
+4    2024-06-17  国证行业分类标准2019     4  ...      18.10     24.86       25.35
+..          ...           ...   ...  ...        ...       ...         ...
+288  2024-06-17  国证行业分类标准2019     4  ...        NaN       NaN         NaN
+289  2024-06-17  国证行业分类标准2019     3  ...      19.59     22.28       43.17
+290  2024-06-17  国证行业分类标准2019     4  ...      19.59     22.28       43.17
+291  2024-06-17  国证行业分类标准2019     3  ...      14.12     14.12       14.12
+292  2024-06-17  国证行业分类标准2019     4  ...      14.12     14.12       14.12
+[293 rows x 12 columns]
+``` 
+--------------------------------
+[2025-01-01 00:23:02] agent 生成新的查询语句:
+ 需要用到的数据是：股票估值, 个股估值, 历史行情数据, 需要查询的主体是：贵州茅台（600519），查询的时间范围是：2024-11-13到2024-12-30。 
+--------------------------------
+[2025-01-01 00:23:09] agent 第0次生成执行代码:
+ import akshare as ak
+import pandas as pd
+
+# 获取贵州茅台在指定时间范围内的估值数据
+stock_zh_valuation_baidu_df = ak.stock_zh_valuation_baidu(symbol="600519", indicator="市盈率(TTM)", period="全部")
+
+# 过滤出2024-11-13到2024-12-30期间的数据
+start_date = pd.to_datetime("2024-11-13")
+end_date = pd.to_datetime("2024-12-30")
+filtered_data = stock_zh_valuation_baidu_df[(pd.to_datetime(stock_zh_valuation_baidu_df['date']) >= start_date) & (pd.to_datetime(stock_zh_valuation_baidu_df['date']) <= end_date)]
+
+# 将结果转换为dict类型
+result = filtered_data.to_dict(orient='records') 
+--------------------------------
+[2025-01-01 00:23:13] agent 判断数据满足需求，返回结果
+[2025-01-01 00:23:14] agent 查找相关数据文档:
+ ### 盈利预测-同花顺
+
+接口: stock_profit_forecast_ths
+
+目标地址: http://basic.10jqka.com.cn/new/600519/worth.html
+
+描述: 同花顺-盈利预测
+
+限量: 单次返回指定 symbol 和 indicator 的数据
+
+输入参数
+
+| 名称        | 类型  | 描述                                                                                    |
+|-----------|-----|---------------------------------------------------------------------------------------|
+| symbol    | str | symbol="600519"; 股票代码                                                                 |
+| indicator | str | indicator="预测年报每股收益"; choice of {"预测年报每股收益", "预测年报净利润", "业绩预测详表-机构", "业绩预测详表-详细指标预测"} |
+
+输出参数-预测年报每股收益
+
+| 名称    | 类型      | 描述  |
+|-------|---------|-----|
+| 年度    | object  | -   |
+| 预测机构数 | int64   | -   |
+| 最小值   | float64 | -   |
+| 均值    | float64 | -   |
+| 最大值   | float64 | -   |
+| 行业平均数 | float64 | -   |
+
+接口示例-预测年报每股收益
+
+```python
+import akshare as ak
+
+stock_profit_forecast_ths_df = ak.stock_profit_forecast_ths(symbol="600519", indicator="预测年报每股收益")
+print(stock_profit_forecast_ths_df)
+```
+
+数据示例-预测年报每股收益
+
+```
+     年度  预测机构数    最小值     均值    最大值  行业平均数
+0  2022     48  48.46  49.73  50.58   7.00
+1  2023     48  56.01  58.31  61.53   8.45
+2  2024     48  63.79  67.59  73.67  10.12
+```
+
+输出参数-预测年报净利润
+
+| 名称    | 类型      | 描述  |
+|-------|---------|-----|
+| 年度    | object  | -   |
+| 预测机构数 | int64   | -   |
+| 最小值   | float64 | -   |
+| 均值    | float64 | -   |
+| 最大值   | float64 | -   |
+| 行业平均数 | float64 | -   |
+
+接口示例-预测年报净利润
+
+```python
+import akshare as ak
+
+stock_profit_forecast_ths_df = ak.stock_profit_forecast_ths(symbol="600519", indicator="预测年报净利润")
+print(stock_profit_forecast_ths_df)
+```
+
+数据示例-预测年报净利润
+
+```
+     年度  预测机构数     最小值      均值     最大值   行业平均数
+0  2022     48  608.70  624.70  635.37   92.07
+1  2023     48  703.55  732.50  772.89  109.92
+2  2024     48  801.30  849.09  925.44  130.04
+```
+
+输出参数-业绩预测详表-机构
+
+| 名称             | 类型      | 描述  |
+|----------------|---------|-----|
+| 机构名称           | object  | -   |
+| 研究员            | object  | -   |
+| 预测年报每股收益2022预测 | float64 | -   |
+| 预测年报每股收益2023预测 | float64 | -   |
+| 预测年报每股收益2024预测 | float64 | -   |
+| 预测年报净利润2022预测  | object  | -   |
+| 预测年报净利润2023预测  | object  | -   |
+| 预测年报净利润2024预测  | object  | -   |
+| 报告日期           | object  | -   |
+
+接口示例-业绩预测详表-机构
+
+```python
+import akshare as ak
+
+stock_profit_forecast_ths_df = ak.stock_profit_forecast_ths(symbol="600519", indicator="业绩预测详表-机构")
+print(stock_profit_forecast_ths_df)
+```
+
+数据示例-业绩预测详表-机构
+
+```
+       机构名称          研究员  ...  预测年报净利润2024预测        报告日期
+0      东方证券          叶书怀  ...        829.14亿  2023-03-07
+1      中泰证券          范劲松  ...        848.80亿  2023-02-13
+2      中信证券           李鑫  ...        832.79亿  2023-02-13
+3      招银证券  Joseph Wong  ...        866.26亿  2023-02-06
+4      华鑫证券          孙山山  ...        860.24亿  2023-01-03
+5      开源证券          张宇光  ...        860.49亿  2023-01-03
+6  群益证券(香港)          顾向君  ...        845.28亿  2023-01-03
+7      财通证券           苏铖  ...        850.53亿  2023-01-02
+8      东吴证券           汤军  ...        845.27亿  2022-12-30
+9      东莞证券          魏红梅  ...        846.24亿  2022-12-30
+```
+
+输出参数-业绩预测详表-详细指标预测
+
+| 名称        | 类型     | 描述  |
+|-----------|--------|-----|
+| 预测指标      | object | -   |
+| 2019-实际值  | object | -   |
+| 2020-实际值  | object | -   |
+| 2021-实际值  | object | -   |
+| 预测2022-平均 | object | -   |
+| 预测2023-平均 | object | -   |
+| 预测2024-平均 | object | -   |
+
+接口示例-业绩预测详表-详细指标预测
+
+```python
+import akshare as ak
+
+stock_profit_forecast_ths_df = ak.stock_profit_forecast_ths(symbol="600519", indicator="业绩预测详表-详细指标预测")
+print(stock_profit_forecast_ths_df)
+```
+
+数据示例-业绩预测详表-详细指标预测
+
+```
+       预测指标 2019-实际值 2020-实际值  2021-实际值 预测2022-平均 预测2023-平均 预测2024-平均
+0   营业收入(元)  854.30亿  949.15亿  1061.90亿  1268.88亿  1471.77亿  1691.60亿
+1   营业收入增长率   15.10%   10.29%    11.71%    19.49%    15.99%    14.93%
+2   利润总额(元)  587.83亿  661.97亿   745.28亿   883.27亿  1034.55亿  1198.90亿
+3    净利润(元)  412.06亿  466.97亿   524.60亿   624.70亿   732.50亿   849.09亿
+4    净利润增长率   17.05%   13.33%    12.34%    18.92%    17.23%    15.96%
+5  每股现金流(元)    35.99    41.13     50.97     55.46     59.37     72.57
+6  每股净资产(元)   108.27   128.42    150.88    177.18    210.97    251.11
+7    净资产收益率   33.09%   31.41%    29.90%    28.62%    28.26%    27.64%
+8   市盈率(动态)    53.98    47.63     42.40     35.65     30.41     26.24
+```
+##### 历史行情数据-腾讯
+
+接口: stock_zh_index_daily_tx
+
+目标地址: https://gu.qq.com/sh000919/zs
+
+描述: 股票指数(或者股票)历史行情数据
+
+限量: 单次返回具体某个股票指数(或者股票)的所有历史行情数据
+
+输入参数-历史行情数据
+
+| 名称     | 类型  | 描述                |
+|--------|-----|-------------------|
+| symbol | str | symbol="sh000919" |
+
+输出参数-历史行情数据
+
+| 名称     | 类型      | 描述                  |
+|--------|---------|---------------------|
+| date   | object  | 腾讯的数据开始时间, 不是证券上市时间 |
+| open   | float64 | -                   |
+| close  | float64 | -                   |
+| high   | float64 | -                   |
+| low    | float64 | -                   |
+| amount | float64 | 注意单位: 手             |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_zh_index_daily_tx_df = ak.stock_zh_index_daily_tx(symbol="sh000919")
+print(stock_zh_index_daily_tx_df)
+```
+
+数据示例
+
+```
+            date     open    close     high      low       amount
+0     2005-01-04   993.11   978.14   993.11   976.82   4235501.99
+1     2005-01-05   976.94   981.50   985.52   972.80   3366738.80
+2     2005-01-06   982.37   968.90   982.37   966.52   3137876.84
+3     2005-01-07   968.77   967.72   978.27   963.10   3340483.54
+4     2005-01-10   967.81   977.77   978.15   963.31   2680018.64
+          ...      ...      ...      ...      ...          ...
+4566  2023-10-23  4169.32  4140.72  4177.63  4115.03  51476987.00
+4567  2023-10-24  4146.42  4148.72  4157.80  4119.85  63088387.00
+4568  2023-10-25  4185.97  4158.66  4190.35  4149.74  70715384.00
+4569  2023-10-26  4139.06  4174.96  4177.47  4134.28  54267034.00
+4570  2023-10-27  4159.83  4179.02  4194.93  4146.62  60862014.00
+[4571 rows x 6 columns]
+```
+#### 向上突破
+
+接口: stock_rank_xstp_ths
+
+目标地址: https://data.10jqka.com.cn/rank/xstp/
+
+描述: 同花顺-数据中心-技术选股-向上突破
+
+限量: 单次返回所有数据
+
+输入参数
+
+| 名称     | 类型  | 描述                                                                                                   |
+|--------|-----|------------------------------------------------------------------------------------------------------|
+| symbol | str | symbol="500日均线"; choice of {"5日均线", "10日均线", "20日均线", "30日均线", "60日均线", "90日均线", "250日均线", "500日均线"} |
+
+输出参数
+
+| 名称   | 类型      | 描述      |
+|------|---------|---------|
+| 序号   | int64   | -       |
+| 股票代码 | object  | -       |
+| 股票简称 | object  | -       |
+| 最新价  | float64 | 注意单位: 元 |
+| 成交额  | object  | 注意单位: 元 |
+| 成交量  | object  | 注意单位: 股 |
+| 涨跌幅  | float64 | 注意单位: % |
+| 换手率  | float64 | 注意单位: % |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_rank_xstp_ths_df = ak.stock_rank_xstp_ths(symbol="500日均线")
+print(stock_rank_xstp_ths_df)
+```
+
+数据示例
+
+```
+   序号    股票代码  股票简称  最新价  成交额  成交量    涨跌幅    换手率
+0      1  300466  赛摩智能   6.13  6.42亿  9499.20万 -11.03  22.62
+1      2  300374  中铁装配  14.28  6.98亿  4488.57万 -10.69  23.72
+2      3  000972  中基健康   4.58  4.62亿  8499.21万 -10.02  11.02
+3      4  600630  龙头股份   9.70  8.09亿  7629.75万 -10.02  17.96
+4      5  603721  中广天择  17.24  3.40亿  1934.10万 -10.02  14.88
+..   ...     ...   ...    ...    ...       ...    ...    ...
+385  386  603178  圣龙股份  27.89  2.87亿  1066.88万  10.02   4.51
+386  387  603225   新凤鸣  13.37  2.67亿  2070.78万  10.04   1.35
+387  388  688728   格科微  19.96  3.61亿  1882.35万  11.63   1.69
+388  389  688127  蓝特光学  19.74  1.54亿   818.44万  12.74   3.40
+389  390  300128  锦富技术   4.20  3.43亿  8830.80万  16.02   8.07
+[390 rows x 8 columns]
+```
+### 交易日历
+
+接口: tool_trade_date_hist_sina
+
+目标地址: https://finance.sina.com.cn
+
+描述: 新浪财经-股票交易日历数据
+
+限量: 单次返回从 1990-12-19 到 2024-12-31 之间的股票交易日历数据, 这里补充 1992-05-04 进入交易日
+
+输入参数
+
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
+
+输出参数
+
+| 名称         | 类型     | 描述                                                        |
+|------------|--------|-----------------------------------------------------------|
+| trade_date | object | 从 1990-12-19 至 2024-12-31 的股票交易日数据; 这里补充 1992-05-04 进入交易日 |
+
+接口示例
+
+```python
+import akshare as ak
+
+tool_trade_date_hist_sina_df = ak.tool_trade_date_hist_sina()
+print(tool_trade_date_hist_sina_df)
+```
+
+数据示例
+
+```
+      trade_date
+0     1990-12-19
+1     1990-12-20
+2     1990-12-21
+3     1990-12-24
+4     1990-12-25
+...          ...
+8550  2025-12-25
+8551  2025-12-26
+8552  2025-12-29
+8553  2025-12-30
+8554  2025-12-31
+[8555 rows x 1 columns]
+```
+##### 期权行情日数据
+
+接口: option_sse_daily_sina
+
+目标地址: https://stock.finance.sina.com.cn/futures/view/optionsCffexDP.php
+
+描述: 期权行情日数据
+
+限量: 单次返回期权行情日数据
+
+输入参数
+
+| 名称     | 类型  | 描述                |
+|--------|-----|-------------------|
+| symbol | str | symbol="10002273" |
+
+输出参数
+
+| 名称  | 类型      | 描述  |
+|-----|---------|-----|
+| 时间  | object  | -   |
+| 开盘  | float64 | -   |
+| 最高  | float64 | -   |
+| 最低  | float64 | -   |
+| 收盘  | float64 | -   |
+| 成交  | int64   | -   |
+
+接口示例
+
+```python
+import akshare as ak
+
+option_sse_daily_sina_df = ak.option_sse_daily_sina(symbol="10002273")
+print(option_sse_daily_sina_df)
+```
+
+数据示例
+
+```
+     日期      开盘      最高      最低      收盘        成交
+0   2020-02-04  0.2200  0.2870  0.2151  0.2850  13729899
+1   2020-02-05  0.2868  0.3159  0.2711  0.3010  10716172
+2   2020-02-06  0.3050  0.3581  0.2939  0.3420   8849637
+3   2020-02-07  0.3265  0.3416  0.3110  0.3410   3538617
+4   2020-02-10  0.3251  0.3389  0.3117  0.3390   3569910
+5   2020-02-11  0.3402  0.3737  0.3391  0.3621   4518172
+6   2020-02-12  0.3600  0.3776  0.3550  0.3721   1020605
+7   2020-02-13  0.3756  0.3898  0.3556  0.3610   1956981
+8   2020-02-14  0.3662  0.3848  0.3626  0.3833   1130476
+9   2020-02-17  0.3800  0.4415  0.3800  0.4359   2606707
+10  2020-02-18  0.4250  0.4334  0.4042  0.4121    827370
+11  2020-02-19  0.4066  0.4300  0.4051  0.4122    720243
+12  2020-02-20  0.4200  0.4666  0.4050  0.4585   2621812
+13  2020-02-21  0.4550  0.4799  0.4477  0.4550   1892291
+``` 
+--------------------------------
+[2025-01-01 00:23:18] agent 生成新的查询语句:
+ 需要用到的数据是：股票历史行情数据，需要查询的主体是：贵州茅台（600519），查询的时间范围是：2024-11-13到2024-12-30。 
+--------------------------------
+[2025-01-01 00:23:23] agent 第0次生成执行代码:
+ import akshare as ak
+import pandas as pd
+
+# 获取贵州茅台的历史行情数据
+stock_code = "600519"
+start_date = "2024-11-13"
+end_date = "2024-12-30"
+
+# 获取交易日历数据
+trade_dates_df = ak.tool_trade_date_hist_sina()
+trade_dates = trade_dates_df['trade_date'].tolist()
+
+# 过滤出指定日期范围内的交易日
+filtered_dates = [date for date in trade_dates if start_date <= date <= end_date]
+
+# 获取贵州茅台的历史行情数据
+stock_data = ak.stock_zh_index_daily_tx(symbol=stock_code)
+
+# 过滤出指定日期范围内的数据
+filtered_data = stock_data[stock_data['date'].isin(filtered_dates)]
+
+# 将数据转换为字典格式
+result = filtered_data.to_dict(orient='records') 
+--------------------------------
+[2025-01-01 00:23:23] agent 代码执行错误:
+ '<=' not supported between instances of 'str' and 'datetime.date' 
+--------------------------------
+[2025-01-01 00:23:30] agent 分析结果并提出修改建议:
+ 当前代码在处理日期过滤时出现了类型不匹配的错误，原因是trade_dates中的日期是字符串类型，而比较操作符<=不支持字符串与datetime.date类型的比较。因此，代码无法正确过滤出指定日期范围内的交易日，导致最终结果无法满足用户需求。建议将trade_dates中的日期字符串转换为datetime.date类型，然后再进行日期范围的过滤。具体修改如下：
+
+1. 导入datetime模块：
+import datetime
+
+2. 将trade_dates中的日期字符串转换为datetime.date类型：
+trade_dates = [datetime.datetime.strptime(date, '%Y-%m-%d').date() for date in trade_dates_df['trade_date'].tolist()]
+
+3. 将start_date和end_date也转换为datetime.date类型：
+start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d').date()
+end_date = datetime.datetime.strptime(end_date, '%Y-%m-%d').date()
+
+4. 过滤出指定日期范围内的交易日：
+filtered_dates = [date for date in trade_dates if start_date <= date <= end_date]
+
+5. 将filtered_dates中的日期转换回字符串格式，以便与stock_data中的日期匹配：
+filtered_dates = [date.strftime('%Y-%m-%d') for date in filtered_dates]
+
+6. 过滤出指定日期范围内的数据：
+filtered_data = stock_data[stock_data['date'].isin(filtered_dates)] 
+--------------------------------
+[2025-01-01 00:23:36] agent 第1次生成执行代码:
+ import akshare as ak
+import pandas as pd
+import datetime
+
+# 获取贵州茅台的历史行情数据
+stock_code = "600519"
+start_date = "2024-11-13"
+end_date = "2024-12-30"
+
+# 获取交易日历数据
+trade_dates_df = ak.tool_trade_date_hist_sina()
+trade_dates = [datetime.datetime.strptime(date, '%Y-%m-%d').date() for date in trade_dates_df['trade_date'].tolist()]
+
+# 将start_date和end_date转换为datetime.date类型
+start_date = datetime.datetime.strptime(start_date, '%Y-%m-%d').date()
+end_date = datetime.datetime.strptime(end_date, '%Y-%m-%d').date()
+
+# 过滤出指定日期范围内的交易日
+filtered_dates = [date for date in trade_dates if start_date <= date <= end_date]
+
+# 将filtered_dates中的日期转换回字符串格式
+filtered_dates = [date.strftime('%Y-%m-%d') for date in filtered_dates]
+
+# 获取贵州茅台的历史行情数据
+stock_data = ak.stock_zh_index_daily_tx(symbol=stock_code)
+
+# 过滤出指定日期范围内的数据
+filtered_data = stock_data[stock_data['date'].isin(filtered_dates)]
+
+# 将数据转换为字典格式
+result = filtered_data.to_dict(orient='records') 
+--------------------------------
+[2025-01-01 00:23:36] agent 代码执行错误:
+ strptime() argument 1 must be str, not datetime.date 
+--------------------------------
+[2025-01-01 00:23:42] agent 分析结果并提出修改建议:
+ 当前代码尝试获取贵州茅台在2024-11-13到2024-12-30期间的股价走势，但由于代码中存在错误，导致无法正确获取数据。错误信息表明在strptime()函数中传递了datetime.date类型的参数，而该函数需要字符串类型的参数。此外，代码中使用了stock_zh_index_daily_tx接口，该接口适用于股票指数，而不是个股的历史行情数据。1. 使用正确的接口获取个股历史行情数据，例如使用ak.stock_zh_a_hist接口。2. 修复strptime()函数的参数类型错误，确保传递的是字符串类型的日期。3. 确保日期过滤逻辑正确。修改建议如下：
+
+# 获取贵州茅台的历史行情数据
+stock_code = 600519
+start_date = 2024-11-13
+end_date = 2024-12-30
+
+# 获取个股历史行情数据
+stock_data = ak.stock_zh_a_hist(symbol=stock_code, period=daily, start_date=start_date, end_date=end_date)
+
+# 将数据转换为字典格式
+result = stock_data.to_dict(orient=records) 
+--------------------------------
+[2025-01-01 00:23:46] agent 第2次生成执行代码:
+ import akshare as ak
+import pandas as pd
+import datetime
+
+# 获取贵州茅台的历史行情数据
+stock_code = "600519"
+start_date = "2024-11-13"
+end_date = "2024-12-30"
+
+# 获取个股历史行情数据
+stock_data = ak.stock_zh_a_hist(symbol=stock_code, period="daily", start_date=start_date, end_date=end_date)
+
+# 将数据转换为字典格式
+result = stock_data.to_dict(orient='records') 
+--------------------------------
+[2025-01-01 00:23:50] agent 分析结果并提出修改建议:
+ 当前代码使用了ak.stock_zh_a_hist接口来获取贵州茅台的历史行情数据，但根据接口文档，该接口并不存在。正确的接口应该是ak.stock_zh_index_daily_tx，但该接口主要用于获取指数数据，而不是个股数据。因此，当前代码无法获取到贵州茅台的股价走势数据。建议使用ak.stock_zh_index_daily_tx接口来获取贵州茅台的股价走势数据。由于该接口主要用于指数数据，可能需要寻找其他接口来获取个股数据。如果无法找到合适的接口，可以考虑使用其他数据源或API来获取贵州茅台的股价走势数据。 
+--------------------------------
+[2025-01-01 00:23:54] agent 第3次生成执行代码:
+ import akshare as ak
+import pandas as pd
+import datetime
+
+# 获取贵州茅台的历史行情数据
+stock_code = "600519"
+start_date = "2024-11-13"
+end_date = "2024-12-30"
+
+# 获取个股历史行情数据
+stock_data = ak.stock_zh_index_daily_tx(symbol=stock_code)
+
+# 过滤日期范围
+stock_data['date'] = pd.to_datetime(stock_data['date'])
+filtered_data = stock_data[(stock_data['date'] >= pd.to_datetime(start_date)) & (stock_data['date'] <= pd.to_datetime(end_date))]
+
+# 将数据转换为字典格式
+result = filtered_data.to_dict(orient='records') 
+--------------------------------
+[2025-01-01 00:23:54] agent 代码执行错误:
+ invalid literal for int() with base 10: 'i' 
+--------------------------------
+[2025-01-01 00:24:00] agent 分析结果并提出修改建议:
+ 当前代码尝试获取贵州茅台的历史行情数据，但由于使用了错误的接口 `stock_zh_index_daily_tx`，该接口用于获取股票指数的历史数据，而不是个股的历史数据。因此，代码无法正确获取贵州茅台的股价走势数据，导致错误。建议使用正确的接口来获取个股的历史行情数据。可以使用 `stock_zh_a_hist` 接口来获取贵州茅台的股价走势数据。修改代码如下：
+
+import akshare as ak
+import pandas as pd
+
+# 获取贵州茅台的历史行情数据
+stock_code = 600519
+start_date = 2024-11-13
+end_date = 2024-12-30
+
+# 获取个股历史行情数据
+stock_data = ak.stock_zh_a_hist(symbol=stock_code, period=daily, start_date=start_date, end_date=end_date, adjust=)
+
+# 过滤日期范围
+stock_data[date] = pd.to_datetime(stock_data[date])
+filtered_data = stock_data[(stock_data[date] >= pd.to_datetime(start_date)) & (stock_data[date] <= pd.to_datetime(end_date))]
+
+# 将数据转换为字典格式
+result = filtered_data.to_dict(orient=records) 
+--------------------------------
+[2025-01-01 00:24:06] agent 第4次生成执行代码:
+ import akshare as ak
+import pandas as pd
+
+# 获取贵州茅台的历史行情数据
+stock_code = "600519"
+start_date = "2024-11-13"
+end_date = "2024-12-30"
+
+# 获取个股历史行情数据
+stock_data = ak.stock_zh_a_hist(symbol=stock_code, period="daily", start_date=start_date, end_date=end_date, adjust="")
+
+# 过滤日期范围
+stock_data['date'] = pd.to_datetime(stock_data['date'])
+filtered_data = stock_data[(stock_data['date'] >= pd.to_datetime(start_date)) & (stock_data['date'] <= pd.to_datetime(end_date))]
+
+# 将数据转换为字典格式
+result = filtered_data.to_dict(orient='records') 
+--------------------------------
+[2025-01-01 00:24:06] agent 代码执行错误:
+ 'date' 
+--------------------------------
+[2025-01-01 00:24:12] agent 分析结果并提出修改建议:
+ 当前代码尝试获取贵州茅台在2024-11-13到2024-12-30期间的股价走势，但使用了错误的接口 `stock_zh_a_hist`，该接口可能不存在或参数不正确，导致返回错误信息。根据接口文档，应使用 `stock_zh_index_daily_tx` 接口来获取历史行情数据。建议修改代码，使用 `stock_zh_index_daily_tx` 接口来获取贵州茅台的历史行情数据。具体修改如下：
+
+1. 将 `stock_zh_a_hist` 替换为 `stock_zh_index_daily_tx`。
+2. 确保 `symbol` 参数正确，贵州茅台的代码为 `sh600519`。
+3. 过滤日期范围的逻辑保持不变。
+
+修改后的代码片段如下：
+
+stock_data = ak.stock_zh_index_daily_tx(symbol=sh600519)
+stock_data[date] = pd.to_datetime(stock_data[date])
+filtered_data = stock_data[(stock_data[date] >= pd.to_datetime(start_date)) & (stock_data[date] <= pd.to_datetime(end_date))] 
+--------------------------------
+[2025-01-01 00:24:16] agent 第5次生成执行代码:
+ import akshare as ak
+import pandas as pd
+
+# 获取贵州茅台的历史行情数据
+stock_code = "sh600519"
+start_date = "2024-11-13"
+end_date = "2024-12-30"
+
+# 获取个股历史行情数据
+stock_data = ak.stock_zh_index_daily_tx(symbol=stock_code)
+
+# 过滤日期范围
+stock_data['date'] = pd.to_datetime(stock_data['date'])
+filtered_data = stock_data[(stock_data['date'] >= pd.to_datetime(start_date)) & (stock_data['date'] <= pd.to_datetime(end_date))]
+
+# 将数据转换为字典格式
+result = filtered_data.to_dict(orient='records') 
+--------------------------------
+[2025-01-01 00:24:33] agent 判断数据满足需求，返回结果
+[2025-01-01 00:24:33] agent 查找相关数据文档:
+ ### 个股新闻
+
+接口: stock_news_em
+
+目标地址: https://so.eastmoney.com/news/s
+
+描述: 东方财富指定个股的新闻资讯数据
+
+限量: 指定 symbol 当日最近 100 条新闻资讯数据
+
+输入参数
+
+| 名称     | 类型  | 描述                          |
+|--------|-----|-----------------------------|
+| symbol | str | symbol="300059"; 股票代码或其他关键词 |
+
+输出参数
+
+| 名称   | 类型     | 描述  |
+|------|--------|-----|
+| 关键词  | object | -   |
+| 新闻标题 | object | -   |
+| 新闻内容 | object | -   |
+| 发布时间 | object | -   |
+| 文章来源 | object | -   |
+| 新闻链接 | object | -   |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_news_em_df = ak.stock_news_em(symbol="300059")
+print(stock_news_em_df)
+```
+
+数据示例
+
+```
+       关键词  ...                                               新闻链接
+0   300059  ...  http://finance.eastmoney.com/a/202405103073124...
+1   300059  ...  http://finance.eastmoney.com/a/202405103073132...
+2   300059  ...  http://finance.eastmoney.com/a/202404243057785...
+3   300059  ...  http://finance.eastmoney.com/a/202404163047193...
+4   300059  ...  http://finance.eastmoney.com/a/202404263060328...
+..     ...  ...                                                ...
+95  300059  ...  http://finance.eastmoney.com/a/202403213019923...
+96  300059  ...  http://finance.eastmoney.com/a/202403143012507...
+97  300059  ...  http://finance.eastmoney.com/a/202403073004835...
+98  300059  ...  http://finance.eastmoney.com/a/202402282997385...
+99  300059  ...  http://finance.eastmoney.com/a/202402282997353...
+[100 rows x 6 columns]
+```
+### 新闻联播文字稿
+
+接口: news_cctv
+
+目标地址: https://tv.cctv.com/lm/xwlb
+
+描述: 新闻联播文字稿, 数据区间从 20160330-至今
+
+限量: 单次返回指定日期新闻联播文字稿数据
+
+输入参数
+
+| 名称   | 类型  | 描述                            |
+|------|-----|-------------------------------|
+| date | str | date="20240424";  20160330-至今 |
+
+输出参数
+
+| 名称      | 类型     | 描述   |
+|---------|--------|------|
+| date    | object | 新闻日期 |
+| title   | object | 新闻标题 |
+| content | object | 新闻内容 |
+
+接口示例
+
+```python
+import akshare as ak
+
+news_cctv_df = ak.news_cctv(date="20240424")
+print(news_cctv_df)
+```
+
+数据示例
+
+```
+      date  ...                                            content
+0   20240424  ...  中共中央总书记、国家主席、中央军委主席习近平近日在重庆考察时强调，重庆要对标新时代新征程党的...
+1   20240424  ...                   本台今天（4月24日）播发央视快评《奋力谱写西部大开发新篇章》。
+2   20240424  ...  4月24日，国家主席习近平向首届“中国－拉美和加勒比国家航天合作论坛”致贺信。习近平指出，今...
+3   20240424  ...  中共中央政治局常委、国务院总理李强4月24日在贵州调研。他强调，要深入贯彻习近平总书记关于巩...
+4   20240424  ...  十四届全国人大常委会第二十四次委员长会议24日下午在北京人民大会堂举行。赵乐际委员长主持。会...
+5   20240424  ...  应墨西哥参议长里维拉邀请，全国人大常委会委员长赵乐际于墨西哥当地时间23日在墨参议院成立20...
+6   20240424  ...  全国政协主席王沪宁24日在京会见哈萨克斯坦议会下院议长科沙诺夫。王沪宁表示，在习近平主席和托...
+7   20240424  ...  国家副主席韩正24日在京会见哈萨克斯坦议会下院议长科沙诺夫。韩正表示，去年，习近平主席同托卡...
+8   20240424  ...  今天（4月24日），神舟十八号载人飞行任务新闻发布会在酒泉卫星发射中心举行，计划于4月25日...
+9   20240424  ...  日前，中央纪委国家监委对八起违规吃喝典型问题进行公开通报。江西省人大常委会原党组副书记、副主...
+10  20240424  ...  国务院新闻办公室今天（4月24日）举行发布会，国家知识产权局介绍，已经会同中国贸促会设立国家...
+11  20240424  ...  全国多地举行中国航天日活动今天（4月24日）是第九个中国航天日，以“极目楚天，共襄星汉”为主...
+[12 rows x 3 columns]
+```
+### 交易日历
+
+接口: tool_trade_date_hist_sina
+
+目标地址: https://finance.sina.com.cn
+
+描述: 新浪财经-股票交易日历数据
+
+限量: 单次返回从 1990-12-19 到 2024-12-31 之间的股票交易日历数据, 这里补充 1992-05-04 进入交易日
+
+输入参数
+
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
+
+输出参数
+
+| 名称         | 类型     | 描述                                                        |
+|------------|--------|-----------------------------------------------------------|
+| trade_date | object | 从 1990-12-19 至 2024-12-31 的股票交易日数据; 这里补充 1992-05-04 进入交易日 |
+
+接口示例
+
+```python
+import akshare as ak
+
+tool_trade_date_hist_sina_df = ak.tool_trade_date_hist_sina()
+print(tool_trade_date_hist_sina_df)
+```
+
+数据示例
+
+```
+      trade_date
+0     1990-12-19
+1     1990-12-20
+2     1990-12-21
+3     1990-12-24
+4     1990-12-25
+...          ...
+8550  2025-12-25
+8551  2025-12-26
+8552  2025-12-29
+8553  2025-12-30
+8554  2025-12-31
+[8555 rows x 1 columns]
+```
+#### 预约披露时间-巨潮资讯
+
+接口: stock_report_disclosure
+
+目标地址: http://www.cninfo.com.cn/new/commonUrl?url=data/yypl
+
+描述: 巨潮资讯-数据-预约披露的数据
+
+限量: 单次获取指定 market 和 period 的预约披露数据
+
+输入参数
+
+| 名称     | 类型  | 描述                                                                                   |
+|--------|-----|--------------------------------------------------------------------------------------|
+| market | str | market="沪深京"; choice of {"沪深京", "深市", "深主板", "创业板", "沪市", "沪主板", "科创板", "北交所"}       |
+| period | str | period="2021年报"; 近四期的财务报告; e.g., choice of {"2021一季", "2021半年报", "2021三季", "2021年报"} |
+
+输出参数
+
+| 名称   | 类型     | 描述  |
+|------|--------|-----|
+| 股票代码 | object | -   |
+| 股票简称 | object | -   |
+| 首次预约 | object | -   |
+| 初次变更 | object | -   |
+| 二次变更 | object | -   |
+| 三次变更 | object | -   |
+| 实际披露 | object | -   |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_report_disclosure_df = ak.stock_report_disclosure(market="沪深京", period="2022年报")
+print(stock_report_disclosure_df)
+```
+
+数据示例
+
+```
+      股票代码   股票简称  首次预约        初次变更 二次变更 三次变更 实际披露
+0     000001   平安银行  2023-03-09         NaT  NaN  NaN  2023-03-09
+1     000002  万  科Ａ  2023-03-31         NaT  NaN  NaN  2023-03-31
+2     000004   国华网安  2023-04-21  2023-04-29  NaN  NaN  2023-04-29
+3     000005   ST星源  2023-04-29         NaT  NaN  NaN  2023-04-29
+4     000006   深振业Ａ  2023-04-28         NaT  NaN  NaN  2023-04-28
+      ...    ...         ...         ...  ...  ...         ...
+5102  873223   荣亿精密  2023-04-26         NaT  NaN  NaN  2023-04-26
+5103  873305   九菱科技  2023-04-26         NaT  NaN  NaN  2023-04-26
+5104  873339   恒太照明  2023-04-25  2023-04-12  NaN  NaN  2023-04-12
+5105  873527    夜光明  2023-04-17         NaT  NaN  NaN  2023-04-17
+5106  873593   鼎智科技  2023-04-25  2023-03-17  NaN  NaN         NaT
+[5107 rows x 7 columns]
+```
+##### 大宗商品价格
+
+接口: macro_china_commodity_price_index
+
+目标地址: https://data.eastmoney.com/cjsj/hyzs_list_EMI00662535.html
+
+描述: 大宗商品价格数据, 数据区间从 20111205-至今
+
+限量: 单次返回所有历史数据
+
+输入参数
+
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
+
+输出参数
+
+| 名称     | 类型      | 描述      |
+|--------|---------|---------|
+| 日期     | object  | -       |
+| 最新值    | int64   | -       |
+| 涨跌幅    | float64 | 注意单位: % |
+| 近3月涨跌幅 | float64 | 注意单位: % |
+| 近6月涨跌幅 | float64 | 注意单位: % |
+| 近1年涨跌幅 | float64 | 注意单位: % |
+| 近2年涨跌幅 | float64 | 注意单位: % |
+| 近3年涨跌幅 | float64 | 注意单位: % |
+
+接口示例
+
+```python
+import akshare as ak
+
+macro_china_commodity_price_index_df = ak.macro_china_commodity_price_index()
+print(macro_china_commodity_price_index_df)
+```
+
+数据示例
+
+```
+          日期   最新值    涨跌幅  ...     近1年涨跌幅   近2年涨跌幅   近3年涨跌幅
+0     2011-12-05   999       NaN  ...        NaN        NaN        NaN
+1     2011-12-12   991 -0.800801  ...        NaN        NaN        NaN
+2     2011-12-19   990 -0.100908  ...        NaN        NaN        NaN
+3     2011-12-26   988 -0.202020  ...        NaN        NaN        NaN
+4     2012-01-02   992  0.404858  ...        NaN        NaN        NaN
+          ...   ...       ...  ...        ...        ...        ...
+2975  2022-03-31  1213  0.000000  ...  21.543086  68.005540  40.556199
+2976  2022-04-01  1212 -0.082440  ...  20.958084  69.037657  40.277778
+2977  2022-04-02  1212  0.000000  ...  20.717131  70.224719  40.440324
+2978  2022-04-03  1212  0.000000  ...  20.837488  70.464135  40.440324
+2979  2022-04-04  1212  0.000000  ...  20.837488  70.704225  40.440324
+``` 
+--------------------------------
+[2025-01-01 00:24:37] agent 生成新的查询语句:
+ 需要用到的数据是：个股新闻，需要查询的主体是：贵州茅台（600519），查询的时间范围是：2024-11-13到2024-12-30。 
+--------------------------------
+[2025-01-01 00:24:42] agent 第0次生成执行代码:
+ import akshare as ak
+import pandas as pd
+from datetime import datetime
+
+# 定义查询的时间范围和股票代码
+start_date = "2024-11-13"
+end_date = "2024-12-30"
+symbol = "600519"
+
+# 获取交易日历数据
+trade_dates_df = ak.tool_trade_date_hist_sina()
+trade_dates = trade_dates_df['trade_date'].tolist()
+
+# 过滤出在查询时间范围内的交易日
+filtered_dates = [date for date in trade_dates if start_date <= date <= end_date]
+
+# 获取个股新闻数据
+result = {}
+for date in filtered_dates:
+    news_df = ak.stock_news_em(symbol=symbol)
+    news_df['发布时间'] = pd.to_datetime(news_df['发布时间']).dt.strftime('%Y-%m-%d')
+    filtered_news = news_df[news_df['发布时间'] == date]
+    if not filtered_news.empty:
+        result[date] = filtered_news.to_dict(orient='records')
+
+# 输出结果
+result 
+--------------------------------
+[2025-01-01 00:24:42] agent 代码执行错误:
+ '<=' not supported between instances of 'str' and 'datetime.date' 
+--------------------------------
+[2025-01-01 00:24:49] agent 分析结果并提出修改建议:
+ 当前代码在处理日期过滤时出现了类型不匹配的错误，导致无法正确获取新闻数据。错误信息表明在比较字符串和日期类型时出现了问题。需要将日期字符串转换为日期类型进行比较。此外，代码中获取的新闻数据并未按日期过滤，导致结果不准确。1. 将日期字符串转换为日期类型进行比较。2. 确保新闻数据按日期过滤。修改代码如下：
+
+# 将日期字符串转换为日期类型
+start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
+end_date = datetime.strptime(end_date, '%Y-%m-%d').date()
+
+# 过滤出在查询时间范围内的交易日
+filtered_dates = [date for date in trade_dates if start_date <= datetime.strptime(date, '%Y-%m-%d').date() <= end_date]
+
+# 获取个股新闻数据并过滤
+result = {}
+news_df = ak.stock_news_em(symbol=symbol)
+news_df['发布时间'] = pd.to_datetime(news_df['发布时间']).dt.date
+filtered_news = news_df[(news_df['发布时间'] >= start_date) & (news_df['发布时间'] <= end_date)]
+if not filtered_news.empty:
+    result = filtered_news.to_dict(orient='records') 
+--------------------------------
+[2025-01-01 00:24:55] agent 第1次生成执行代码:
+ import akshare as ak
+import pandas as pd
+from datetime import datetime
+
+# 定义查询的时间范围和股票代码
+start_date = "2024-11-13"
+end_date = "2024-12-30"
+symbol = "600519"
+
+# 将日期字符串转换为日期类型
+start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
+end_date = datetime.strptime(end_date, '%Y-%m-%d').date()
+
+# 获取交易日历数据
+trade_dates_df = ak.tool_trade_date_hist_sina()
+trade_dates = trade_dates_df['trade_date'].tolist()
+
+# 过滤出在查询时间范围内的交易日
+filtered_dates = [date for date in trade_dates if start_date <= datetime.strptime(date, '%Y-%m-%d').date() <= end_date]
+
+# 获取个股新闻数据并过滤
+result = {}
+news_df = ak.stock_news_em(symbol=symbol)
+news_df['发布时间'] = pd.to_datetime(news_df['发布时间']).dt.date
+filtered_news = news_df[(news_df['发布时间'] >= start_date) & (news_df['发布时间'] <= end_date)]
+if not filtered_news.empty:
+    result = filtered_news.to_dict(orient='records') 
+--------------------------------
+[2025-01-01 00:24:55] agent 代码执行错误:
+ strptime() argument 1 must be str, not datetime.date 
+--------------------------------
+[2025-01-01 00:25:00] agent 分析结果并提出修改建议:
+ 当前代码在处理日期转换时出现了错误，导致无法正确获取新闻数据。错误信息表明strptime()函数的参数类型不正确，可能是由于日期格式处理不当。此外，代码逻辑上已经尝试获取指定时间范围内的新闻数据，但由于日期处理错误，导致结果不完整。建议修改日期转换部分的代码，确保日期格式正确。具体修改如下：1. 删除不必要的日期类型转换，直接使用字符串进行比较。2. 确保新闻数据的发布时间字段正确转换为日期格式。修改后的代码片段如下：
+
+# 获取个股新闻数据并过滤
+result = {}
+news_df = ak.stock_news_em(symbol=symbol)
+news_df['发布时间'] = pd.to_datetime(news_df['发布时间']).dt.date
+filtered_news = news_df[(news_df['发布时间'] >= pd.to_datetime(start_date).date()) & (news_df['发布时间'] <= pd.to_datetime(end_date).date())]
+if not filtered_news.empty:
+    result = filtered_news.to_dict(orient='records') 
+--------------------------------
+[2025-01-01 00:25:05] agent 第2次生成执行代码:
+ import akshare as ak
+import pandas as pd
+from datetime import datetime
+
+# 定义查询的时间范围和股票代码
+start_date = "2024-11-13"
+end_date = "2024-12-30"
+symbol = "600519"
+
+# 获取交易日历数据
+trade_dates_df = ak.tool_trade_date_hist_sina()
+trade_dates = trade_dates_df['trade_date'].tolist()
+
+# 过滤出在查询时间范围内的交易日
+filtered_dates = [date for date in trade_dates if start_date <= date <= end_date]
+
+# 获取个股新闻数据并过滤
+result = {}
+news_df = ak.stock_news_em(symbol=symbol)
+news_df['发布时间'] = pd.to_datetime(news_df['发布时间']).dt.date
+filtered_news = news_df[(news_df['发布时间'] >= pd.to_datetime(start_date).date()) & (news_df['发布时间'] <= pd.to_datetime(end_date).date())]
+if not filtered_news.empty:
+    result = filtered_news.to_dict(orient='records') 
+--------------------------------
+[2025-01-01 00:25:06] agent 代码执行错误:
+ '<=' not supported between instances of 'str' and 'datetime.date' 
+--------------------------------
+[2025-01-01 00:25:06] agent 检测到重复结果，重新开始查询流程
+[2025-01-01 00:25:11] agent 第2次生成执行代码:
+ import akshare as ak
+import pandas as pd
+from datetime import datetime
+
+# 定义查询的时间范围和股票代码
+start_date = "2024-11-13"
+end_date = "2024-12-30"
+symbol = "600519"
+
+# 获取交易日历数据
+trade_dates_df = ak.tool_trade_date_hist_sina()
+trade_dates = trade_dates_df['trade_date'].tolist()
+
+# 过滤出在查询时间范围内的交易日
+filtered_dates = [date for date in trade_dates if start_date <= date <= end_date]
+
+# 获取个股新闻数据并过滤
+result = {}
+news_df = ak.stock_news_em(symbol=symbol)
+news_df['发布时间'] = pd.to_datetime(news_df['发布时间']).dt.strftime('%Y-%m-%d')
+filtered_news = news_df[(news_df['发布时间'] >= start_date) & (news_df['发布时间'] <= end_date)]
+if not filtered_news.empty:
+    result = filtered_news.to_dict(orient='records') 
+--------------------------------
+[2025-01-01 00:25:11] agent 代码执行错误:
+ '<=' not supported between instances of 'str' and 'datetime.date' 
+--------------------------------
+[2025-01-01 00:25:11] agent 检测到重复结果，重新开始查询流程
+[2025-01-01 00:29:23] agent 查找相关数据文档:
+ #### 个股信息查询
+
+接口: stock_individual_info_em
+
+目标地址: http://quote.eastmoney.com/concept/sh603777.html?from=classic
+
+描述: 东方财富-个股-股票信息
+
+限量: 单次返回指定 symbol 的个股信息
+
+输入参数
+
+| 名称      | 类型    | 描述                      |
+|---------|-------|-------------------------|
+| symbol  | str   | symbol="603777"; 股票代码   |
+| timeout | float | timeout=None; 默认不设置超时参数 |
+
+输出参数
+
+| 名称    | 类型     | 描述  |
+|-------|--------|-----|
+| item  | object | -   |
+| value | object | -   |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_individual_info_em_df = ak.stock_individual_info_em(symbol="000001")
+print(stock_individual_info_em_df)
+```
+
+数据示例
+
+```
+   item                value
+0   总市值  337468917463.220032
+1  流通市值      337466070320.25
+2    行业                   银行
+3  上市时间             19910403
+4  股票代码               000001
+5  股票简称                 平安银行
+6   总股本        19405918198.0
+7   流通股        19405754475.0
+```
+#### 分红情况-同花顺
+
+接口: stock_fhps_detail_ths
+
+目标地址: https://basic.10jqka.com.cn/new/603444/bonus.html
+
+描述: 同花顺-分红情况
+
+限量: 单次获取指定 symbol 的分红情况数据
+
+输入参数
+
+| 名称     | 类型  | 描述              |
+|--------|-----|-----------------|
+| symbol | str | symbol="603444" |
+
+输出参数
+
+| 名称         | 类型     | 描述 |
+|------------|--------|----|
+| 报告期        | object | -  |
+| 董事会日期      | object | -  |
+| 股东大会预案公告日期 | object | -  |
+| 实施公告日      | object | -  |
+| 分红方案说明     | object | -  |
+| A股股权登记日    | object | -  |
+| A股除权除息日    | object | -  |
+| 分红总额       | object | -  |
+| 方案进度       | object | -  |
+| 股利支付率      | object | -  |
+| 税前分红率      | object | -  |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_fhps_detail_ths_df = ak.stock_fhps_detail_ths(symbol="603444")
+print(stock_fhps_detail_ths_df)
+```
+
+数据示例
+
+```
+        报告期   董事会日期  股东大会预案公告日期  实施公告日  ... 分红总额 方案进度 股利支付率 税前分红率
+0    2016年报  2017-03-28  2017-04-18  2017-04-28  ...   2.94亿    实施方案  37.37%  1.52%
+1    2017中报  2017-08-15         NaT         NaT  ...      --   董事会预案      --     --
+2    2017年报  2018-04-03  2018-04-25  2018-05-07  ...   1.87亿    实施方案  30.48%  1.66%
+3    2018中报  2018-08-14         NaT         NaT  ...      --   董事会预案      --     --
+4    2018年报  2019-04-10  2019-05-01  2019-05-16  ...   7.19亿    实施方案  98.81%  4.47%
+5    2019中报  2019-08-13         NaT         NaT  ...      --   董事会预案      --     --
+6    2019年报  2020-04-09  2020-04-30  2020-05-14  ...   3.59亿    实施方案  44.33%  1.17%
+7    2020中报  2020-08-18         NaT         NaT  ...      --   董事会预案      --     --
+8    2020年报  2021-03-31  2021-05-13  2021-05-31  ...   8.62亿    实施方案   82.3%  2.08%
+9    2021中报  2021-08-13         NaT         NaT  ...      --   董事会预案      --     --
+10   2021年报  2022-04-08  2022-04-30  2022-05-13  ...  11.50亿    实施方案  78.32%  4.78%
+11   2022中报  2022-08-16         NaT         NaT  ...      --   董事会预案      --     --
+12  2022三季报  2022-10-27  2022-11-16  2022-12-22  ...  10.06亿    实施方案  99.43%  4.41%
+13   2022年报  2023-03-31  2023-04-22  2023-05-05  ...   2.16亿    实施方案  14.76%  0.61%
+14   2023中报  2023-08-16  2023-09-09  2023-09-21  ...   5.04亿    实施方案  74.47%  1.88%
+15   2023年报  2024-03-29  2024-04-19         NaT  ...      --  股东大会预案      --     --
+[16 rows x 11 columns]
+```
+#### 公司概况-巨潮资讯
+
+接口: stock_profile_cninfo
+
+目标地址: http://webapi.cninfo.com.cn/#/company
+
+描述: 巨潮资讯-个股-公司概况
+
+限量: 单次获取指定 symbol 的公司概况
+
+输入参数
+
+| 名称         | 类型  | 描述                    |
+|------------|-----|-----------------------|
+| symbol     | str | symbol="600030"       |
+
+输出参数
+
+| 名称   | 类型     | 描述  |
+|------|--------|-----|
+| 公司名称 | object | -   |
+| 英文名称 | object | -   |
+| 曾用简称 | object | -   |
+| A股代码 | object | -   |
+| A股简称 | object | -   |
+| B股代码 | object | -   |
+| B股简称 | object | -   |
+| H股代码 | object | -   |
+| H股简称 | object | -   |
+| 入选指数 | object | -   |
+| 所属市场 | object | -   |
+| 所属行业 | object | -   |
+| 法人代表 | object | -   |
+| 注册资金 | object | -   |
+| 成立日期 | object | -   |
+| 上市日期 | object | -   |
+| 官方网站 | object | -   |
+| 电子邮箱 | object | -   |
+| 联系电话 | object | -   |
+| 传真   | object | -   |
+| 注册地址 | object | -   |
+| 办公地址 | object | -   |
+| 邮政编码 | object | -   |
+| 主营业务 | object | -   |
+| 经营范围 | object | -   |
+| 机构简介 | object | -   |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_profile_cninfo_df = ak.stock_profile_cninfo(symbol="600030")
+print(stock_profile_cninfo_df)
+```
+
+数据示例
+
+```
+         公司名称  ...                                               机构简介
+0  中信证券股份有限公司  ...  公司的前身中信证券有限责任公司是经中国人民银行银复[1995]313号文批准，由中信公司，中...
+```
+#### 信息披露公告-巨潮资讯
+
+接口: stock_zh_a_disclosure_report_cninfo
+
+目标地址: http://www.cninfo.com.cn/new/commonUrl/pageOfSearch?url=disclosure/list/search
+
+描述: 巨潮资讯-首页-公告查询-信息披露公告-沪深京
+
+限量: 单次获取指定 symbol 的信息披露公告数据
+
+输入参数
+
+| 名称         | 类型  | 描述                                                                                                                                                                                                                         |
+|------------|-----|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| symbol     | str | symbol="000001"; 股票代码                                                                                                                                                                                                      |
+| market     | str | market="沪深京"; choice of {"沪深京", "港股", "三板", "基金", "债券", "监管", "预披露"}                                                                                                                                                       |
+| keyword    | str | keyword=""; 关键词                                                                                                                                                                                                            |
+| category   | str | category=""; choice of {'年报', '半年报', '一季报', '三季报', '业绩预告', '权益分派', '董事会', '监事会', '股东大会', '日常经营', '公司治理', '中介报告', '首发', '增发', '股权激励', '配股', '解禁', '公司债', '可转债', '其他融资', '股权变动', '补充更正', '澄清致歉', '风险提示', '特别处理和退市', '退市整理期'} |
+| start_date | str | start_date="20230618"                                                                                                                                                                                                      |
+| end_date   | str | end_date="20231219"                                                                                                                                                                                                        |
+
+输出参数
+
+| 名称   | 类型     | 描述 |
+|------|--------|----|
+| 代码   | object | -  |
+| 简称   | object | -  |
+| 公告标题 | object | -  |
+| 公告时间 | object | -  |
+| 公告链接 | object | -  |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_zh_a_disclosure_report_cninfo_df = ak.stock_zh_a_disclosure_report_cninfo(symbol="000001", market="沪深京", category="公司治理", start_date="20230619", end_date="20231220")
+print(stock_zh_a_disclosure_report_cninfo_df)
+```
+
+数据示例
+
+```
+   代码    简称  ...        公告时间                               公告链接
+0  000001  平安银行  ...  2023-12-09  http://www.cninfo.com.cn/new/disclosure/detail...
+1  000001  平安银行  ...  2023-11-21  http://www.cninfo.com.cn/new/disclosure/detail...
+2  000001  平安银行  ...  2023-10-25  http://www.cninfo.com.cn/new/disclosure/detail...
+3  000001  平安银行  ...  2023-08-24  http://www.cninfo.com.cn/new/disclosure/detail...
+4  000001  平安银行  ...  2023-07-29  http://www.cninfo.com.cn/new/disclosure/detail...
+5  000001  平安银行  ...  2023-07-25  http://www.cninfo.com.cn/new/disclosure/detail...
+[6 rows x 5 columns]
+```
+#### 信息披露调研-巨潮资讯
+
+接口: stock_zh_a_disclosure_relation_cninfo
+
+目标地址: http://www.cninfo.com.cn/new/commonUrl/pageOfSearch?url=disclosure/list/search
+
+描述: 巨潮资讯-首页-公告查询-信息披露调研-沪深京
+
+限量: 单次获取指定 symbol 的信息披露调研数据
+
+输入参数
+
+| 名称         | 类型  | 描述                                                                   |
+|------------|-----|----------------------------------------------------------------------|
+| symbol     | str | symbol="000001"; 股票代码                                                |
+| market     | str | market="沪深京"; choice of {"沪深京", "港股", "三板", "基金", "债券", "监管", "预披露"} |
+| start_date | str | start_date="20230618"                                                |
+| end_date   | str | end_date="20231219"                                                  |
+
+输出参数
+
+| 名称   | 类型     | 描述 |
+|------|--------|----|
+| 代码   | object | -  |
+| 简称   | object | -  |
+| 公告标题 | object | -  |
+| 公告时间 | object | -  |
+| 公告链接 | object | -  |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_zh_a_disclosure_relation_cninfo_df = ak.stock_zh_a_disclosure_relation_cninfo(symbol="000001", market="沪深京", start_date="20230619", end_date="20231220")
+print(stock_zh_a_disclosure_relation_cninfo_df)
+```
+
+数据示例
+
+```
+   代码    简称  ...        公告时间                               公告链接
+0  000001  平安银行  ...  2023-11-08  http://www.cninfo.com.cn/new/disclosure/detail...
+1  000001  平安银行  ...  2023-11-01  http://www.cninfo.com.cn/new/disclosure/detail...
+2  000001  平安银行  ...  2023-10-24  http://www.cninfo.com.cn/new/disclosure/detail...
+3  000001  平安银行  ...  2023-10-24  http://www.cninfo.com.cn/new/disclosure/detail...
+4  000001  平安银行  ...  2023-10-24  http://www.cninfo.com.cn/new/disclosure/detail...
+5  000001  平安银行  ...  2023-10-24  http://www.cninfo.com.cn/new/disclosure/detail...
+6  000001  平安银行  ...  2023-08-23  http://www.cninfo.com.cn/new/disclosure/detail...
+7  000001  平安银行  ...  2023-08-23  http://www.cninfo.com.cn/new/disclosure/detail...
+8  000001  平安银行  ...  2023-08-23  http://www.cninfo.com.cn/new/disclosure/detail...
+9  000001  平安银行  ...  2023-08-23  http://www.cninfo.com.cn/new/disclosure/detail...
+[10 rows x 5 columns]
+``` 
+--------------------------------
+[2025-01-01 00:29:28] agent 生成新的查询语句:
+ 需要用到的数据是：个股信息查询，需要查询的主体是：贵州茅台（600519），查询的时间范围是：2025-01-01。 
+--------------------------------
+[2025-01-01 00:29:35] agent 第0次生成执行代码:
+ import akshare as ak
+
+# 获取贵州茅台的个股信息
+stock_individual_info_em_df = ak.stock_individual_info_em(symbol="600519")
+
+# 将获取到的数据处理为 dict 类型
+result = {
+    "股票代码": stock_individual_info_em_df.loc[stock_individual_info_em_df['item'] == '股票代码', 'value'].values[0],
+    "股票简称": stock_individual_info_em_df.loc[stock_individual_info_em_df['item'] == '股票简称', 'value'].values[0],
+    "总市值": stock_individual_info_em_df.loc[stock_individual_info_em_df['item'] == '总市值', 'value'].values[0],
+    "流通市值": stock_individual_info_em_df.loc[stock_individual_info_em_df['item'] == '流通市值', 'value'].values[0],
+    "行业": stock_individual_info_em_df.loc[stock_individual_info_em_df['item'] == '行业', 'value'].values[0],
+    "上市时间": stock_individual_info_em_df.loc[stock_individual_info_em_df['item'] == '上市时间', 'value'].values[0],
+    "总股本": stock_individual_info_em_df.loc[stock_individual_info_em_df['item'] == '总股本', 'value'].values[0],
+    "流通股": stock_individual_info_em_df.loc[stock_individual_info_em_df['item'] == '流通股', 'value'].values[0]
+} 
+--------------------------------
+[2025-01-01 00:29:40] agent 判断数据满足需求，返回结果
+[2025-01-01 00:29:40] agent 查找相关数据文档:
+ #### 港股估值指标
+
+接口: stock_hk_valuation_baidu
+
+目标地址: https://gushitong.baidu.com/stock/hk-06969
+
+描述: 百度股市通-港股-财务报表-估值数据
+
+限量: 单次获取指定 symbol 的指定 indicator 的特定 period 的历史数据
+
+输入参数
+
+| 名称        | 类型  | 描述                                                                     |
+|-----------|-----|------------------------------------------------------------------------|
+| symbol    | str | symbol="02358"; 港股代码                                                   |
+| indicator | str | indicator="总市值"; choice of {"总市值", "市盈率(TTM)", "市盈率(静)", "市净率", "市现率"} |
+| period    | str | period="近一年"; choice of {"近一年", "近三年", "全部"}                           |
+
+输出参数
+
+| 名称    | 类型      | 描述  |
+|-------|---------|-----|
+| date  | object  | -   |
+| value | float64 | -   |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_hk_valuation_baidu_df = ak.stock_hk_valuation_baidu(symbol="06969", indicator="总市值", period="近一年")
+print(stock_hk_valuation_baidu_df)
+```
+
+数据示例
+
+```
+           date   value
+0    2023-11-21  427.15
+1    2023-11-22  428.99
+2    2023-11-23  441.88
+3    2023-11-24  430.83
+4    2023-11-25  430.83
+..          ...     ...
+362  2024-11-17  602.46
+363  2024-11-18  632.73
+364  2024-11-19  679.69
+365  2024-11-20  713.06
+366  2024-11-21  688.35
+[367 rows x 2 columns]
+```
+#### 指数估值-中证
+
+接口: stock_zh_index_value_csindex
+
+目标地址: https://www.csindex.com.cn/zh-CN/indices/index-detail/H30374#/indices/family/detail?indexCode=H30374
+
+描述: 中证指数-指数估值数据
+
+限量: 该接口返回指定的指数的估值数据, 该接口只能返回近期的数据
+
+输入参数
+
+| 名称     | 类型  | 描述                    |
+|--------|-----|-----------------------|
+| symbol | str | symbol="H30374"; 指数代码 |
+
+输出参数
+
+| 名称     | 类型      | 描述              |
+|--------|---------|-----------------|
+| 日期     | object  | -               |
+| 指数代码   | object  | -               |
+| 指数中文全称 | object  | -               |
+| 指数中文简称 | object  | -               |
+| 指数英文全称 | object  | -               |
+| 指数英文简称 | object  | -               |
+| 市盈率1   | float64 | 注意: （总股本）P/E1   |
+| 市盈率2   | float64 | 注意: （计算用股本）P/E2 |
+| 股息率1   | float64 | 注意: （总股本）D/P1   |
+| 股息率2   | float64 | 注意: （计算用股本）D/P2 |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_zh_index_value_csindex_df = ak.stock_zh_index_value_csindex(symbol="H30374")
+print(stock_zh_index_value_csindex_df)
+```
+
+数据示例
+
+```
+    日期    指数代码        指数中文全称  指数中文简称  ...       市盈率1   市盈率2  股息率1  股息率2
+0   2021-10-19  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  18.22  19.66  1.79  1.56
+1   2021-10-18  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  18.05  19.45  1.80  1.58
+2   2021-10-15  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  18.05  19.45  1.80  1.58
+3   2021-10-14  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  17.96  19.33  1.81  1.59
+4   2021-10-13  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  17.96  19.32  1.82  1.59
+5   2021-10-12  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  17.84  19.17  1.83  1.60
+6   2021-10-11  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  18.09  19.46  1.80  1.58
+7   2021-10-08  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  18.06  19.38  1.81  1.59
+8   2021-10-07  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  17.94  19.23  1.82  1.60
+9   2021-10-05  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  17.82  19.05  1.83  1.61
+10  2021-10-04  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  17.81  19.03  1.83  1.61
+11  2021-10-01  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  17.90  19.16  1.82  1.60
+12  2021-09-30  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  17.91  19.18  1.82  1.60
+13  2021-09-29  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  17.75  19.01  1.83  1.63
+14  2021-09-28  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  18.04  19.31  1.80  1.61
+15  2021-09-27  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  17.95  19.21  1.80  1.60
+16  2021-09-24  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  18.07  19.33  1.79  1.59
+17  2021-09-23  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  18.23  19.51  1.77  1.58
+18  2021-09-22  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  18.12  19.37  1.78  1.59
+19  2021-09-21  H30374  中证中国内地企业全球综合指数  中国内地全指  ...  18.09  19.36  1.79  1.59
+```
+#### A 股估值指标
+
+接口: stock_zh_valuation_baidu
+
+目标地址: https://gushitong.baidu.com/stock/ab-002044
+
+描述: 百度股市通-A 股-财务报表-估值数据
+
+限量: 单次获取指定 symbol 和 indicator 的所有历史数据
+
+输入参数
+
+| 名称        | 类型  | 描述                                                                     |
+|-----------|-----|------------------------------------------------------------------------|
+| symbol    | str | symbol="002044"; A 股代码                                                 |
+| indicator | str | indicator="总市值"; choice of {"总市值", "市盈率(TTM)", "市盈率(静)", "市净率", "市现率"} |
+| period    | str | period="近一年"; choice of {"近一年", "近三年", "近五年", "近十年", "全部"}             |
+
+输出参数
+
+| 名称    | 类型      | 描述  |
+|-------|---------|-----|
+| date  | object  | -   |
+| value | float64 | -   |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_zh_valuation_baidu_df = ak.stock_zh_valuation_baidu(symbol="002044", indicator="总市值", period="近一年")
+print(stock_zh_valuation_baidu_df)
+```
+
+数据示例
+
+```
+           date   value
+0    2023-05-29  245.42
+1    2023-05-30  246.60
+2    2023-05-31  249.73
+3    2023-06-01  253.64
+4    2023-06-02  259.52
+..          ...     ...
+362  2024-05-25  167.92
+363  2024-05-26  167.92
+364  2024-05-27  165.96
+365  2024-05-28  164.40
+366  2024-05-29  167.14
+[367 rows x 2 columns]
+```
+### 盈利预测-同花顺
+
+接口: stock_profit_forecast_ths
+
+目标地址: http://basic.10jqka.com.cn/new/600519/worth.html
+
+描述: 同花顺-盈利预测
+
+限量: 单次返回指定 symbol 和 indicator 的数据
+
+输入参数
+
+| 名称        | 类型  | 描述                                                                                    |
+|-----------|-----|---------------------------------------------------------------------------------------|
+| symbol    | str | symbol="600519"; 股票代码                                                                 |
+| indicator | str | indicator="预测年报每股收益"; choice of {"预测年报每股收益", "预测年报净利润", "业绩预测详表-机构", "业绩预测详表-详细指标预测"} |
+
+输出参数-预测年报每股收益
+
+| 名称    | 类型      | 描述  |
+|-------|---------|-----|
+| 年度    | object  | -   |
+| 预测机构数 | int64   | -   |
+| 最小值   | float64 | -   |
+| 均值    | float64 | -   |
+| 最大值   | float64 | -   |
+| 行业平均数 | float64 | -   |
+
+接口示例-预测年报每股收益
+
+```python
+import akshare as ak
+
+stock_profit_forecast_ths_df = ak.stock_profit_forecast_ths(symbol="600519", indicator="预测年报每股收益")
+print(stock_profit_forecast_ths_df)
+```
+
+数据示例-预测年报每股收益
+
+```
+     年度  预测机构数    最小值     均值    最大值  行业平均数
+0  2022     48  48.46  49.73  50.58   7.00
+1  2023     48  56.01  58.31  61.53   8.45
+2  2024     48  63.79  67.59  73.67  10.12
+```
+
+输出参数-预测年报净利润
+
+| 名称    | 类型      | 描述  |
+|-------|---------|-----|
+| 年度    | object  | -   |
+| 预测机构数 | int64   | -   |
+| 最小值   | float64 | -   |
+| 均值    | float64 | -   |
+| 最大值   | float64 | -   |
+| 行业平均数 | float64 | -   |
+
+接口示例-预测年报净利润
+
+```python
+import akshare as ak
+
+stock_profit_forecast_ths_df = ak.stock_profit_forecast_ths(symbol="600519", indicator="预测年报净利润")
+print(stock_profit_forecast_ths_df)
+```
+
+数据示例-预测年报净利润
+
+```
+     年度  预测机构数     最小值      均值     最大值   行业平均数
+0  2022     48  608.70  624.70  635.37   92.07
+1  2023     48  703.55  732.50  772.89  109.92
+2  2024     48  801.30  849.09  925.44  130.04
+```
+
+输出参数-业绩预测详表-机构
+
+| 名称             | 类型      | 描述  |
+|----------------|---------|-----|
+| 机构名称           | object  | -   |
+| 研究员            | object  | -   |
+| 预测年报每股收益2022预测 | float64 | -   |
+| 预测年报每股收益2023预测 | float64 | -   |
+| 预测年报每股收益2024预测 | float64 | -   |
+| 预测年报净利润2022预测  | object  | -   |
+| 预测年报净利润2023预测  | object  | -   |
+| 预测年报净利润2024预测  | object  | -   |
+| 报告日期           | object  | -   |
+
+接口示例-业绩预测详表-机构
+
+```python
+import akshare as ak
+
+stock_profit_forecast_ths_df = ak.stock_profit_forecast_ths(symbol="600519", indicator="业绩预测详表-机构")
+print(stock_profit_forecast_ths_df)
+```
+
+数据示例-业绩预测详表-机构
+
+```
+       机构名称          研究员  ...  预测年报净利润2024预测        报告日期
+0      东方证券          叶书怀  ...        829.14亿  2023-03-07
+1      中泰证券          范劲松  ...        848.80亿  2023-02-13
+2      中信证券           李鑫  ...        832.79亿  2023-02-13
+3      招银证券  Joseph Wong  ...        866.26亿  2023-02-06
+4      华鑫证券          孙山山  ...        860.24亿  2023-01-03
+5      开源证券          张宇光  ...        860.49亿  2023-01-03
+6  群益证券(香港)          顾向君  ...        845.28亿  2023-01-03
+7      财通证券           苏铖  ...        850.53亿  2023-01-02
+8      东吴证券           汤军  ...        845.27亿  2022-12-30
+9      东莞证券          魏红梅  ...        846.24亿  2022-12-30
+```
+
+输出参数-业绩预测详表-详细指标预测
+
+| 名称        | 类型     | 描述  |
+|-----------|--------|-----|
+| 预测指标      | object | -   |
+| 2019-实际值  | object | -   |
+| 2020-实际值  | object | -   |
+| 2021-实际值  | object | -   |
+| 预测2022-平均 | object | -   |
+| 预测2023-平均 | object | -   |
+| 预测2024-平均 | object | -   |
+
+接口示例-业绩预测详表-详细指标预测
+
+```python
+import akshare as ak
+
+stock_profit_forecast_ths_df = ak.stock_profit_forecast_ths(symbol="600519", indicator="业绩预测详表-详细指标预测")
+print(stock_profit_forecast_ths_df)
+```
+
+数据示例-业绩预测详表-详细指标预测
+
+```
+       预测指标 2019-实际值 2020-实际值  2021-实际值 预测2022-平均 预测2023-平均 预测2024-平均
+0   营业收入(元)  854.30亿  949.15亿  1061.90亿  1268.88亿  1471.77亿  1691.60亿
+1   营业收入增长率   15.10%   10.29%    11.71%    19.49%    15.99%    14.93%
+2   利润总额(元)  587.83亿  661.97亿   745.28亿   883.27亿  1034.55亿  1198.90亿
+3    净利润(元)  412.06亿  466.97亿   524.60亿   624.70亿   732.50亿   849.09亿
+4    净利润增长率   17.05%   13.33%    12.34%    18.92%    17.23%    15.96%
+5  每股现金流(元)    35.99    41.13     50.97     55.46     59.37     72.57
+6  每股净资产(元)   108.27   128.42    150.88    177.18    210.97    251.11
+7    净资产收益率   33.09%   31.41%    29.90%    28.62%    28.26%    27.64%
+8   市盈率(动态)    53.98    47.63     42.40     35.65     30.41     26.24
+```
+##### 行业市盈率
+
+接口: stock_industry_pe_ratio_cninfo
+
+目标地址: http://webapi.cninfo.com.cn/#/thematicStatistics
+
+描述: 巨潮资讯-数据中心-行业分析-行业市盈率
+
+限量: 单次获取指定 symbol 在指定交易日的所有数据; 只能获取近期的数据
+
+输入参数
+
+| 名称     | 类型  | 描述                                                |
+|--------|-----|---------------------------------------------------|
+| symbol | str | symbol="证监会行业分类"; choice of {"证监会行业分类", "国证行业分类"} |
+| date   | str | date="20210910"; 交易日                              |
+
+输出参数
+
+| 名称         | 类型      | 描述       |
+|------------|---------|----------|
+| 变动日期       | object  | -        |
+| 行业分类       | object  | -        |
+| 行业层级       | int64   | -        |
+| 行业编码       | object  | -        |
+| 行业名称       | object  | -        |
+| 公司数量       | float64 | -        |
+| 纳入计算公司数量   | float64 | -        |
+| 总市值-静态     | float64 | 注意单位: 亿元 |
+| 净利润-静态     | float64 | 注意单位: 亿元 |
+| 静态市盈率-加权平均 | float64 | -        |
+| 静态市盈率-中位数  | float64 | -        |
+| 静态市盈率-算术平均 | float64 | -        |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_industry_pe_ratio_cninfo_df = ak.stock_industry_pe_ratio_cninfo(symbol="国证行业分类", date="20240617")
+print(stock_industry_pe_ratio_cninfo_df)
+```
+
+数据示例
+
+```
+        变动日期          行业分类  行业层级  ... 静态市盈率-加权平均 静态市盈率-中位数  静态市盈率-算术平均
+0    2024-06-17  国证行业分类标准2019     1  ...      11.54     15.75       49.19
+1    2024-06-17  国证行业分类标准2019     2  ...      11.54     15.75       49.19
+2    2024-06-17  国证行业分类标准2019     3  ...      18.44     22.05       28.24
+3    2024-06-17  国证行业分类标准2019     4  ...      19.23     21.45       30.02
+4    2024-06-17  国证行业分类标准2019     4  ...      18.10     24.86       25.35
+..          ...           ...   ...  ...        ...       ...         ...
+288  2024-06-17  国证行业分类标准2019     4  ...        NaN       NaN         NaN
+289  2024-06-17  国证行业分类标准2019     3  ...      19.59     22.28       43.17
+290  2024-06-17  国证行业分类标准2019     4  ...      19.59     22.28       43.17
+291  2024-06-17  国证行业分类标准2019     3  ...      14.12     14.12       14.12
+292  2024-06-17  国证行业分类标准2019     4  ...      14.12     14.12       14.12
+[293 rows x 12 columns]
+``` 
+--------------------------------
+[2025-01-01 00:29:43] agent 生成新的查询语句:
+ 需要用到的数据是：股票估值, 个股估值, 历史行情数据, 需要查询的主体是：贵州茅台（600519），查询的时间范围是：2024-11-13到2024-12-30。 
+--------------------------------
+[2025-01-01 00:29:47] agent 第0次生成执行代码:
+ import akshare as ak
+import pandas as pd
+
+# 获取贵州茅台在2024-11-13到2024-12-30期间的估值数据
+symbol = "600519"
+start_date = "2024-11-13"
+end_date = "2024-12-30"
+
+# 获取市盈率(TTM)数据
+valuation_data = ak.stock_zh_valuation_baidu(symbol=symbol, indicator="市盈率(TTM)", period="全部")
+
+# 过滤出指定时间范围内的数据
+valuation_data['date'] = pd.to_datetime(valuation_data['date'])
+filtered_data = valuation_data[(valuation_data['date'] >= start_date) & (valuation_data['date'] <= end_date)]
+
+# 将结果转换为字典
+result = filtered_data.to_dict(orient='records') 
+--------------------------------
+[2025-01-01 00:29:51] agent 判断数据满足需求，返回结果
+[2025-01-01 00:29:52] agent 查找相关数据文档:
+ ### 盈利预测-同花顺
+
+接口: stock_profit_forecast_ths
+
+目标地址: http://basic.10jqka.com.cn/new/600519/worth.html
+
+描述: 同花顺-盈利预测
+
+限量: 单次返回指定 symbol 和 indicator 的数据
+
+输入参数
+
+| 名称        | 类型  | 描述                                                                                    |
+|-----------|-----|---------------------------------------------------------------------------------------|
+| symbol    | str | symbol="600519"; 股票代码                                                                 |
+| indicator | str | indicator="预测年报每股收益"; choice of {"预测年报每股收益", "预测年报净利润", "业绩预测详表-机构", "业绩预测详表-详细指标预测"} |
+
+输出参数-预测年报每股收益
+
+| 名称    | 类型      | 描述  |
+|-------|---------|-----|
+| 年度    | object  | -   |
+| 预测机构数 | int64   | -   |
+| 最小值   | float64 | -   |
+| 均值    | float64 | -   |
+| 最大值   | float64 | -   |
+| 行业平均数 | float64 | -   |
+
+接口示例-预测年报每股收益
+
+```python
+import akshare as ak
+
+stock_profit_forecast_ths_df = ak.stock_profit_forecast_ths(symbol="600519", indicator="预测年报每股收益")
+print(stock_profit_forecast_ths_df)
+```
+
+数据示例-预测年报每股收益
+
+```
+     年度  预测机构数    最小值     均值    最大值  行业平均数
+0  2022     48  48.46  49.73  50.58   7.00
+1  2023     48  56.01  58.31  61.53   8.45
+2  2024     48  63.79  67.59  73.67  10.12
+```
+
+输出参数-预测年报净利润
+
+| 名称    | 类型      | 描述  |
+|-------|---------|-----|
+| 年度    | object  | -   |
+| 预测机构数 | int64   | -   |
+| 最小值   | float64 | -   |
+| 均值    | float64 | -   |
+| 最大值   | float64 | -   |
+| 行业平均数 | float64 | -   |
+
+接口示例-预测年报净利润
+
+```python
+import akshare as ak
+
+stock_profit_forecast_ths_df = ak.stock_profit_forecast_ths(symbol="600519", indicator="预测年报净利润")
+print(stock_profit_forecast_ths_df)
+```
+
+数据示例-预测年报净利润
+
+```
+     年度  预测机构数     最小值      均值     最大值   行业平均数
+0  2022     48  608.70  624.70  635.37   92.07
+1  2023     48  703.55  732.50  772.89  109.92
+2  2024     48  801.30  849.09  925.44  130.04
+```
+
+输出参数-业绩预测详表-机构
+
+| 名称             | 类型      | 描述  |
+|----------------|---------|-----|
+| 机构名称           | object  | -   |
+| 研究员            | object  | -   |
+| 预测年报每股收益2022预测 | float64 | -   |
+| 预测年报每股收益2023预测 | float64 | -   |
+| 预测年报每股收益2024预测 | float64 | -   |
+| 预测年报净利润2022预测  | object  | -   |
+| 预测年报净利润2023预测  | object  | -   |
+| 预测年报净利润2024预测  | object  | -   |
+| 报告日期           | object  | -   |
+
+接口示例-业绩预测详表-机构
+
+```python
+import akshare as ak
+
+stock_profit_forecast_ths_df = ak.stock_profit_forecast_ths(symbol="600519", indicator="业绩预测详表-机构")
+print(stock_profit_forecast_ths_df)
+```
+
+数据示例-业绩预测详表-机构
+
+```
+       机构名称          研究员  ...  预测年报净利润2024预测        报告日期
+0      东方证券          叶书怀  ...        829.14亿  2023-03-07
+1      中泰证券          范劲松  ...        848.80亿  2023-02-13
+2      中信证券           李鑫  ...        832.79亿  2023-02-13
+3      招银证券  Joseph Wong  ...        866.26亿  2023-02-06
+4      华鑫证券          孙山山  ...        860.24亿  2023-01-03
+5      开源证券          张宇光  ...        860.49亿  2023-01-03
+6  群益证券(香港)          顾向君  ...        845.28亿  2023-01-03
+7      财通证券           苏铖  ...        850.53亿  2023-01-02
+8      东吴证券           汤军  ...        845.27亿  2022-12-30
+9      东莞证券          魏红梅  ...        846.24亿  2022-12-30
+```
+
+输出参数-业绩预测详表-详细指标预测
+
+| 名称        | 类型     | 描述  |
+|-----------|--------|-----|
+| 预测指标      | object | -   |
+| 2019-实际值  | object | -   |
+| 2020-实际值  | object | -   |
+| 2021-实际值  | object | -   |
+| 预测2022-平均 | object | -   |
+| 预测2023-平均 | object | -   |
+| 预测2024-平均 | object | -   |
+
+接口示例-业绩预测详表-详细指标预测
+
+```python
+import akshare as ak
+
+stock_profit_forecast_ths_df = ak.stock_profit_forecast_ths(symbol="600519", indicator="业绩预测详表-详细指标预测")
+print(stock_profit_forecast_ths_df)
+```
+
+数据示例-业绩预测详表-详细指标预测
+
+```
+       预测指标 2019-实际值 2020-实际值  2021-实际值 预测2022-平均 预测2023-平均 预测2024-平均
+0   营业收入(元)  854.30亿  949.15亿  1061.90亿  1268.88亿  1471.77亿  1691.60亿
+1   营业收入增长率   15.10%   10.29%    11.71%    19.49%    15.99%    14.93%
+2   利润总额(元)  587.83亿  661.97亿   745.28亿   883.27亿  1034.55亿  1198.90亿
+3    净利润(元)  412.06亿  466.97亿   524.60亿   624.70亿   732.50亿   849.09亿
+4    净利润增长率   17.05%   13.33%    12.34%    18.92%    17.23%    15.96%
+5  每股现金流(元)    35.99    41.13     50.97     55.46     59.37     72.57
+6  每股净资产(元)   108.27   128.42    150.88    177.18    210.97    251.11
+7    净资产收益率   33.09%   31.41%    29.90%    28.62%    28.26%    27.64%
+8   市盈率(动态)    53.98    47.63     42.40     35.65     30.41     26.24
+```
+##### 历史行情数据-腾讯
+
+接口: stock_zh_index_daily_tx
+
+目标地址: https://gu.qq.com/sh000919/zs
+
+描述: 股票指数(或者股票)历史行情数据
+
+限量: 单次返回具体某个股票指数(或者股票)的所有历史行情数据
+
+输入参数-历史行情数据
+
+| 名称     | 类型  | 描述                |
+|--------|-----|-------------------|
+| symbol | str | symbol="sh000919" |
+
+输出参数-历史行情数据
+
+| 名称     | 类型      | 描述                  |
+|--------|---------|---------------------|
+| date   | object  | 腾讯的数据开始时间, 不是证券上市时间 |
+| open   | float64 | -                   |
+| close  | float64 | -                   |
+| high   | float64 | -                   |
+| low    | float64 | -                   |
+| amount | float64 | 注意单位: 手             |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_zh_index_daily_tx_df = ak.stock_zh_index_daily_tx(symbol="sh000919")
+print(stock_zh_index_daily_tx_df)
+```
+
+数据示例
+
+```
+            date     open    close     high      low       amount
+0     2005-01-04   993.11   978.14   993.11   976.82   4235501.99
+1     2005-01-05   976.94   981.50   985.52   972.80   3366738.80
+2     2005-01-06   982.37   968.90   982.37   966.52   3137876.84
+3     2005-01-07   968.77   967.72   978.27   963.10   3340483.54
+4     2005-01-10   967.81   977.77   978.15   963.31   2680018.64
+          ...      ...      ...      ...      ...          ...
+4566  2023-10-23  4169.32  4140.72  4177.63  4115.03  51476987.00
+4567  2023-10-24  4146.42  4148.72  4157.80  4119.85  63088387.00
+4568  2023-10-25  4185.97  4158.66  4190.35  4149.74  70715384.00
+4569  2023-10-26  4139.06  4174.96  4177.47  4134.28  54267034.00
+4570  2023-10-27  4159.83  4179.02  4194.93  4146.62  60862014.00
+[4571 rows x 6 columns]
+```
+#### 向上突破
+
+接口: stock_rank_xstp_ths
+
+目标地址: https://data.10jqka.com.cn/rank/xstp/
+
+描述: 同花顺-数据中心-技术选股-向上突破
+
+限量: 单次返回所有数据
+
+输入参数
+
+| 名称     | 类型  | 描述                                                                                                   |
+|--------|-----|------------------------------------------------------------------------------------------------------|
+| symbol | str | symbol="500日均线"; choice of {"5日均线", "10日均线", "20日均线", "30日均线", "60日均线", "90日均线", "250日均线", "500日均线"} |
+
+输出参数
+
+| 名称   | 类型      | 描述      |
+|------|---------|---------|
+| 序号   | int64   | -       |
+| 股票代码 | object  | -       |
+| 股票简称 | object  | -       |
+| 最新价  | float64 | 注意单位: 元 |
+| 成交额  | object  | 注意单位: 元 |
+| 成交量  | object  | 注意单位: 股 |
+| 涨跌幅  | float64 | 注意单位: % |
+| 换手率  | float64 | 注意单位: % |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_rank_xstp_ths_df = ak.stock_rank_xstp_ths(symbol="500日均线")
+print(stock_rank_xstp_ths_df)
+```
+
+数据示例
+
+```
+   序号    股票代码  股票简称  最新价  成交额  成交量    涨跌幅    换手率
+0      1  300466  赛摩智能   6.13  6.42亿  9499.20万 -11.03  22.62
+1      2  300374  中铁装配  14.28  6.98亿  4488.57万 -10.69  23.72
+2      3  000972  中基健康   4.58  4.62亿  8499.21万 -10.02  11.02
+3      4  600630  龙头股份   9.70  8.09亿  7629.75万 -10.02  17.96
+4      5  603721  中广天择  17.24  3.40亿  1934.10万 -10.02  14.88
+..   ...     ...   ...    ...    ...       ...    ...    ...
+385  386  603178  圣龙股份  27.89  2.87亿  1066.88万  10.02   4.51
+386  387  603225   新凤鸣  13.37  2.67亿  2070.78万  10.04   1.35
+387  388  688728   格科微  19.96  3.61亿  1882.35万  11.63   1.69
+388  389  688127  蓝特光学  19.74  1.54亿   818.44万  12.74   3.40
+389  390  300128  锦富技术   4.20  3.43亿  8830.80万  16.02   8.07
+[390 rows x 8 columns]
+```
+### 交易日历
+
+接口: tool_trade_date_hist_sina
+
+目标地址: https://finance.sina.com.cn
+
+描述: 新浪财经-股票交易日历数据
+
+限量: 单次返回从 1990-12-19 到 2024-12-31 之间的股票交易日历数据, 这里补充 1992-05-04 进入交易日
+
+输入参数
+
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
+
+输出参数
+
+| 名称         | 类型     | 描述                                                        |
+|------------|--------|-----------------------------------------------------------|
+| trade_date | object | 从 1990-12-19 至 2024-12-31 的股票交易日数据; 这里补充 1992-05-04 进入交易日 |
+
+接口示例
+
+```python
+import akshare as ak
+
+tool_trade_date_hist_sina_df = ak.tool_trade_date_hist_sina()
+print(tool_trade_date_hist_sina_df)
+```
+
+数据示例
+
+```
+      trade_date
+0     1990-12-19
+1     1990-12-20
+2     1990-12-21
+3     1990-12-24
+4     1990-12-25
+...          ...
+8550  2025-12-25
+8551  2025-12-26
+8552  2025-12-29
+8553  2025-12-30
+8554  2025-12-31
+[8555 rows x 1 columns]
+```
+##### 期权行情日数据
+
+接口: option_sse_daily_sina
+
+目标地址: https://stock.finance.sina.com.cn/futures/view/optionsCffexDP.php
+
+描述: 期权行情日数据
+
+限量: 单次返回期权行情日数据
+
+输入参数
+
+| 名称     | 类型  | 描述                |
+|--------|-----|-------------------|
+| symbol | str | symbol="10002273" |
+
+输出参数
+
+| 名称  | 类型      | 描述  |
+|-----|---------|-----|
+| 时间  | object  | -   |
+| 开盘  | float64 | -   |
+| 最高  | float64 | -   |
+| 最低  | float64 | -   |
+| 收盘  | float64 | -   |
+| 成交  | int64   | -   |
+
+接口示例
+
+```python
+import akshare as ak
+
+option_sse_daily_sina_df = ak.option_sse_daily_sina(symbol="10002273")
+print(option_sse_daily_sina_df)
+```
+
+数据示例
+
+```
+     日期      开盘      最高      最低      收盘        成交
+0   2020-02-04  0.2200  0.2870  0.2151  0.2850  13729899
+1   2020-02-05  0.2868  0.3159  0.2711  0.3010  10716172
+2   2020-02-06  0.3050  0.3581  0.2939  0.3420   8849637
+3   2020-02-07  0.3265  0.3416  0.3110  0.3410   3538617
+4   2020-02-10  0.3251  0.3389  0.3117  0.3390   3569910
+5   2020-02-11  0.3402  0.3737  0.3391  0.3621   4518172
+6   2020-02-12  0.3600  0.3776  0.3550  0.3721   1020605
+7   2020-02-13  0.3756  0.3898  0.3556  0.3610   1956981
+8   2020-02-14  0.3662  0.3848  0.3626  0.3833   1130476
+9   2020-02-17  0.3800  0.4415  0.3800  0.4359   2606707
+10  2020-02-18  0.4250  0.4334  0.4042  0.4121    827370
+11  2020-02-19  0.4066  0.4300  0.4051  0.4122    720243
+12  2020-02-20  0.4200  0.4666  0.4050  0.4585   2621812
+13  2020-02-21  0.4550  0.4799  0.4477  0.4550   1892291
+``` 
+--------------------------------
+[2025-01-01 00:29:53] agent 生成新的查询语句:
+ 需要用到的数据是：股票历史行情数据，需要查询的主体是：贵州茅台（600519），查询的时间范围是：2024-11-13到2024-12-30。 
+--------------------------------
+[2025-01-01 00:29:58] agent 第0次生成执行代码:
+ import akshare as ak
+import pandas as pd
+
+# 获取贵州茅台的历史行情数据
+stock_code = "600519"
+start_date = "2024-11-13"
+end_date = "2024-12-30"
+
+# 获取交易日历数据
+trade_dates_df = ak.tool_trade_date_hist_sina()
+trade_dates = trade_dates_df['trade_date'].tolist()
+
+# 过滤出在指定时间范围内的交易日
+filtered_dates = [date for date in trade_dates if start_date <= date <= end_date]
+
+# 获取贵州茅台的历史行情数据
+stock_data = ak.stock_zh_index_daily_tx(symbol=stock_code)
+
+# 过滤出指定时间范围内的数据
+filtered_data = stock_data[stock_data['date'].isin(filtered_dates)]
+
+# 将数据转换为字典格式
+result = filtered_data.to_dict(orient='records') 
+--------------------------------
+[2025-01-01 00:29:58] agent 代码执行错误:
+ '<=' not supported between instances of 'str' and 'datetime.date' 
+--------------------------------
+[2025-01-01 00:30:04] agent 分析结果并提出修改建议:
+ 当前代码在处理日期过滤时出现了类型不匹配的错误，导致无法正确获取指定时间范围内的数据。错误信息表明在比较日期时，字符串和日期类型不兼容。需要将日期字符串转换为日期类型后再进行比较。1. 将trade_dates中的日期字符串转换为日期类型，以便进行比较。2. 使用pd.to_datetime将stock_data中的date列转换为日期类型。3. 确保过滤条件中的日期类型一致。修改代码如下：
+
+# 将trade_dates中的日期字符串转换为日期类型
+from datetime import datetime
+trade_dates = [datetime.strptime(date, '%Y-%m-%d').date() for date in trade_dates_df['trade_date'].tolist()]
+
+# 将stock_data中的date列转换为日期类型
+stock_data['date'] = pd.to_datetime(stock_data['date']).dt.date
+
+# 过滤出在指定时间范围内的交易日
+filtered_dates = [date for date in trade_dates if datetime.strptime(start_date, '%Y-%m-%d').date() <= date <= datetime.strptime(end_date, '%Y-%m-%d').date()]
+
+# 过滤出指定时间范围内的数据
+filtered_data = stock_data[stock_data['date'].isin(filtered_dates)] 
+--------------------------------
+[2025-01-01 00:30:10] agent 第1次生成执行代码:
+ import akshare as ak
+import pandas as pd
+from datetime import datetime
+
+# 获取贵州茅台的历史行情数据
+stock_code = "600519"
+start_date = "2024-11-13"
+end_date = "2024-12-30"
+
+# 获取交易日历数据
+trade_dates_df = ak.tool_trade_date_hist_sina()
+
+# 将trade_dates中的日期字符串转换为日期类型
+trade_dates = [datetime.strptime(date, '%Y-%m-%d').date() for date in trade_dates_df['trade_date'].tolist()]
+
+# 获取贵州茅台的历史行情数据
+stock_data = ak.stock_zh_index_daily_tx(symbol=stock_code)
+
+# 将stock_data中的date列转换为日期类型
+stock_data['date'] = pd.to_datetime(stock_data['date']).dt.date
+
+# 过滤出在指定时间范围内的交易日
+filtered_dates = [date for date in trade_dates if datetime.strptime(start_date, '%Y-%m-%d').date() <= date <= datetime.strptime(end_date, '%Y-%m-%d').date()]
+
+# 过滤出指定时间范围内的数据
+filtered_data = stock_data[stock_data['date'].isin(filtered_dates)]
+
+# 将数据转换为字典格式
+result = filtered_data.to_dict(orient='records') 
+--------------------------------
+[2025-01-01 00:30:10] agent 代码执行错误:
+ strptime() argument 1 must be str, not datetime.date 
+--------------------------------
+[2025-01-01 00:30:16] agent 分析结果并提出修改建议:
+ 当前代码在处理日期转换时出现了错误，导致无法正确获取贵州茅台在指定时间范围内的股价走势。错误信息表明strptime()函数的参数类型不正确，可能是由于日期格式处理不当。建议修改日期转换部分的代码，确保日期格式正确。具体修改如下：
+1. 删除不必要的日期转换步骤，直接使用pandas的日期处理功能。
+2. 使用pd.to_datetime()函数将日期列转换为datetime类型，并直接进行日期范围过滤。
+修改后的代码片段如下：
+
+# 获取贵州茅台的历史行情数据
+stock_code = 600519
+start_date = 2024-11-13
+end_date = 2024-12-30
+
+# 获取贵州茅台的历史行情数据
+stock_data = ak.stock_zh_index_daily_tx(symbol=stock_code)
+
+# 将date列转换为datetime类型
+stock_data[date] = pd.to_datetime(stock_data[date])
+
+# 过滤出指定时间范围内的数据
+filtered_data = stock_data[(stock_data[date] >= start_date) & (stock_data[date] <= end_date)]
+
+# 将数据转换为字典格式
+result = filtered_data.to_dict(orient=records) 
+--------------------------------
+[2025-01-01 00:30:24] agent 第2次生成执行代码:
+ import akshare as ak
+import pandas as pd
+
+# 获取贵州茅台的历史行情数据
+stock_code = "600519"
+start_date = "2024-11-13"
+end_date = "2024-12-30"
+
+# 获取贵州茅台的历史行情数据
+stock_data = ak.stock_zh_index_daily_tx(symbol=stock_code)
+
+# 将date列转换为datetime类型
+stock_data['date'] = pd.to_datetime(stock_data['date'])
+
+# 过滤出指定时间范围内的数据
+filtered_data = stock_data[(stock_data['date'] >= start_date) & (stock_data['date'] <= end_date)]
+
+# 将数据转换为字典格式
+result = filtered_data.to_dict(orient='records') 
+--------------------------------
+[2025-01-01 00:30:24] agent 代码执行错误:
+ invalid literal for int() with base 10: 'i' 
+--------------------------------
+[2025-01-01 00:30:30] agent 分析结果并提出修改建议:
+ 当前代码尝试获取贵州茅台的历史行情数据，但由于使用了错误的接口 `stock_zh_index_daily_tx`，该接口用于获取股票指数的历史数据，而不是个股的历史数据。因此，代码无法正确获取贵州茅台的股价数据，导致错误。应使用正确的接口来获取个股的历史行情数据。建议使用 `stock_zh_a_hist` 接口来获取贵州茅台的股价数据。修改代码如下：
+
+import akshare as ak
+import pandas as pd
+
+# 获取贵州茅台的历史行情数据
+stock_code = 600519
+start_date = 2024-11-13
+end_date = 2024-12-30
+
+# 获取贵州茅台的历史行情数据
+stock_data = ak.stock_zh_a_hist(symbol=stock_code, period=daily, start_date=start_date, end_date=end_date, adjust=)
+
+# 将date列转换为datetime类型
+stock_data[date] = pd.to_datetime(stock_data[date])
+
+# 过滤出指定时间范围内的数据
+filtered_data = stock_data[(stock_data[date] >= start_date) & (stock_data[date] <= end_date)]
+
+# 将数据转换为字典格式
+result = filtered_data.to_dict(orient=records) 
+--------------------------------
+[2025-01-01 00:30:35] agent 第3次生成执行代码:
+ import akshare as ak
+import pandas as pd
+
+# 获取贵州茅台的历史行情数据
+stock_code = "600519"
+start_date = "2024-11-13"
+end_date = "2024-12-30"
+
+# 获取贵州茅台的历史行情数据
+stock_data = ak.stock_zh_a_hist(symbol=stock_code, period="daily", start_date=start_date, end_date=end_date, adjust="")
+
+# 将date列转换为datetime类型
+stock_data['date'] = pd.to_datetime(stock_data['date'])
+
+# 过滤出指定时间范围内的数据
+filtered_data = stock_data[(stock_data['date'] >= start_date) & (stock_data['date'] <= end_date)]
+
+# 将数据转换为字典格式
+result = filtered_data.to_dict(orient='records') 
+--------------------------------
+[2025-01-01 00:30:35] agent 代码执行错误:
+ 'date' 
+--------------------------------
+[2025-01-01 00:30:40] agent 分析结果并提出修改建议:
+ 当前代码尝试获取贵州茅台在2024-11-13到2024-12-30期间的股价走势，但使用了错误的接口 `stock_zh_a_hist`，该接口可能不存在或参数不正确，导致返回错误信息。根据接口文档，应使用 `stock_zh_index_daily_tx` 接口来获取历史行情数据。建议修改代码，使用正确的接口 `stock_zh_index_daily_tx` 来获取贵州茅台的历史行情数据。具体修改如下：
+
+1. 将 `stock_zh_a_hist` 替换为 `stock_zh_index_daily_tx`。
+2. 确保 `symbol` 参数正确，贵州茅台的股票代码为 `sh600519`。
+3. 由于 `stock_zh_index_daily_tx` 接口不支持直接指定日期范围，需要在获取数据后手动过滤。
+
+修改后的代码片段如下：
+
+stock_data = ak.stock_zh_index_daily_tx(symbol=sh600519)
+filtered_data = stock_data[(stock_data['date'] >= start_date) & (stock_data['date'] <= end_date)] 
+--------------------------------
+[2025-01-01 00:30:45] agent 第4次生成执行代码:
+ import akshare as ak
+import pandas as pd
+
+# 获取贵州茅台的历史行情数据
+stock_code = "sh600519"
+start_date = "2024-11-13"
+end_date = "2024-12-30"
+
+# 获取贵州茅台的历史行情数据
+stock_data = ak.stock_zh_index_daily_tx(symbol=stock_code)
+
+# 将date列转换为datetime类型
+stock_data['date'] = pd.to_datetime(stock_data['date'])
+
+# 过滤出指定时间范围内的数据
+filtered_data = stock_data[(stock_data['date'] >= start_date) & (stock_data['date'] <= end_date)]
+
+# 将数据转换为字典格式
+result = filtered_data.to_dict(orient='records') 
+--------------------------------
+[2025-01-01 00:31:05] agent 判断数据满足需求，返回结果
+[2025-01-01 00:31:05] agent 查找相关数据文档:
+ ### 个股新闻
+
+接口: stock_news_em
+
+目标地址: https://so.eastmoney.com/news/s
+
+描述: 东方财富指定个股的新闻资讯数据
+
+限量: 指定 symbol 当日最近 100 条新闻资讯数据
+
+输入参数
+
+| 名称     | 类型  | 描述                          |
+|--------|-----|-----------------------------|
+| symbol | str | symbol="300059"; 股票代码或其他关键词 |
+
+输出参数
+
+| 名称   | 类型     | 描述  |
+|------|--------|-----|
+| 关键词  | object | -   |
+| 新闻标题 | object | -   |
+| 新闻内容 | object | -   |
+| 发布时间 | object | -   |
+| 文章来源 | object | -   |
+| 新闻链接 | object | -   |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_news_em_df = ak.stock_news_em(symbol="300059")
+print(stock_news_em_df)
+```
+
+数据示例
+
+```
+       关键词  ...                                               新闻链接
+0   300059  ...  http://finance.eastmoney.com/a/202405103073124...
+1   300059  ...  http://finance.eastmoney.com/a/202405103073132...
+2   300059  ...  http://finance.eastmoney.com/a/202404243057785...
+3   300059  ...  http://finance.eastmoney.com/a/202404163047193...
+4   300059  ...  http://finance.eastmoney.com/a/202404263060328...
+..     ...  ...                                                ...
+95  300059  ...  http://finance.eastmoney.com/a/202403213019923...
+96  300059  ...  http://finance.eastmoney.com/a/202403143012507...
+97  300059  ...  http://finance.eastmoney.com/a/202403073004835...
+98  300059  ...  http://finance.eastmoney.com/a/202402282997385...
+99  300059  ...  http://finance.eastmoney.com/a/202402282997353...
+[100 rows x 6 columns]
+```
+### 新闻联播文字稿
+
+接口: news_cctv
+
+目标地址: https://tv.cctv.com/lm/xwlb
+
+描述: 新闻联播文字稿, 数据区间从 20160330-至今
+
+限量: 单次返回指定日期新闻联播文字稿数据
+
+输入参数
+
+| 名称   | 类型  | 描述                            |
+|------|-----|-------------------------------|
+| date | str | date="20240424";  20160330-至今 |
+
+输出参数
+
+| 名称      | 类型     | 描述   |
+|---------|--------|------|
+| date    | object | 新闻日期 |
+| title   | object | 新闻标题 |
+| content | object | 新闻内容 |
+
+接口示例
+
+```python
+import akshare as ak
+
+news_cctv_df = ak.news_cctv(date="20240424")
+print(news_cctv_df)
+```
+
+数据示例
+
+```
+      date  ...                                            content
+0   20240424  ...  中共中央总书记、国家主席、中央军委主席习近平近日在重庆考察时强调，重庆要对标新时代新征程党的...
+1   20240424  ...                   本台今天（4月24日）播发央视快评《奋力谱写西部大开发新篇章》。
+2   20240424  ...  4月24日，国家主席习近平向首届“中国－拉美和加勒比国家航天合作论坛”致贺信。习近平指出，今...
+3   20240424  ...  中共中央政治局常委、国务院总理李强4月24日在贵州调研。他强调，要深入贯彻习近平总书记关于巩...
+4   20240424  ...  十四届全国人大常委会第二十四次委员长会议24日下午在北京人民大会堂举行。赵乐际委员长主持。会...
+5   20240424  ...  应墨西哥参议长里维拉邀请，全国人大常委会委员长赵乐际于墨西哥当地时间23日在墨参议院成立20...
+6   20240424  ...  全国政协主席王沪宁24日在京会见哈萨克斯坦议会下院议长科沙诺夫。王沪宁表示，在习近平主席和托...
+7   20240424  ...  国家副主席韩正24日在京会见哈萨克斯坦议会下院议长科沙诺夫。韩正表示，去年，习近平主席同托卡...
+8   20240424  ...  今天（4月24日），神舟十八号载人飞行任务新闻发布会在酒泉卫星发射中心举行，计划于4月25日...
+9   20240424  ...  日前，中央纪委国家监委对八起违规吃喝典型问题进行公开通报。江西省人大常委会原党组副书记、副主...
+10  20240424  ...  国务院新闻办公室今天（4月24日）举行发布会，国家知识产权局介绍，已经会同中国贸促会设立国家...
+11  20240424  ...  全国多地举行中国航天日活动今天（4月24日）是第九个中国航天日，以“极目楚天，共襄星汉”为主...
+[12 rows x 3 columns]
+```
+### 交易日历
+
+接口: tool_trade_date_hist_sina
+
+目标地址: https://finance.sina.com.cn
+
+描述: 新浪财经-股票交易日历数据
+
+限量: 单次返回从 1990-12-19 到 2024-12-31 之间的股票交易日历数据, 这里补充 1992-05-04 进入交易日
+
+输入参数
+
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
+
+输出参数
+
+| 名称         | 类型     | 描述                                                        |
+|------------|--------|-----------------------------------------------------------|
+| trade_date | object | 从 1990-12-19 至 2024-12-31 的股票交易日数据; 这里补充 1992-05-04 进入交易日 |
+
+接口示例
+
+```python
+import akshare as ak
+
+tool_trade_date_hist_sina_df = ak.tool_trade_date_hist_sina()
+print(tool_trade_date_hist_sina_df)
+```
+
+数据示例
+
+```
+      trade_date
+0     1990-12-19
+1     1990-12-20
+2     1990-12-21
+3     1990-12-24
+4     1990-12-25
+...          ...
+8550  2025-12-25
+8551  2025-12-26
+8552  2025-12-29
+8553  2025-12-30
+8554  2025-12-31
+[8555 rows x 1 columns]
+```
+#### 预约披露时间-巨潮资讯
+
+接口: stock_report_disclosure
+
+目标地址: http://www.cninfo.com.cn/new/commonUrl?url=data/yypl
+
+描述: 巨潮资讯-数据-预约披露的数据
+
+限量: 单次获取指定 market 和 period 的预约披露数据
+
+输入参数
+
+| 名称     | 类型  | 描述                                                                                   |
+|--------|-----|--------------------------------------------------------------------------------------|
+| market | str | market="沪深京"; choice of {"沪深京", "深市", "深主板", "创业板", "沪市", "沪主板", "科创板", "北交所"}       |
+| period | str | period="2021年报"; 近四期的财务报告; e.g., choice of {"2021一季", "2021半年报", "2021三季", "2021年报"} |
+
+输出参数
+
+| 名称   | 类型     | 描述  |
+|------|--------|-----|
+| 股票代码 | object | -   |
+| 股票简称 | object | -   |
+| 首次预约 | object | -   |
+| 初次变更 | object | -   |
+| 二次变更 | object | -   |
+| 三次变更 | object | -   |
+| 实际披露 | object | -   |
+
+接口示例
+
+```python
+import akshare as ak
+
+stock_report_disclosure_df = ak.stock_report_disclosure(market="沪深京", period="2022年报")
+print(stock_report_disclosure_df)
+```
+
+数据示例
+
+```
+      股票代码   股票简称  首次预约        初次变更 二次变更 三次变更 实际披露
+0     000001   平安银行  2023-03-09         NaT  NaN  NaN  2023-03-09
+1     000002  万  科Ａ  2023-03-31         NaT  NaN  NaN  2023-03-31
+2     000004   国华网安  2023-04-21  2023-04-29  NaN  NaN  2023-04-29
+3     000005   ST星源  2023-04-29         NaT  NaN  NaN  2023-04-29
+4     000006   深振业Ａ  2023-04-28         NaT  NaN  NaN  2023-04-28
+      ...    ...         ...         ...  ...  ...         ...
+5102  873223   荣亿精密  2023-04-26         NaT  NaN  NaN  2023-04-26
+5103  873305   九菱科技  2023-04-26         NaT  NaN  NaN  2023-04-26
+5104  873339   恒太照明  2023-04-25  2023-04-12  NaN  NaN  2023-04-12
+5105  873527    夜光明  2023-04-17         NaT  NaN  NaN  2023-04-17
+5106  873593   鼎智科技  2023-04-25  2023-03-17  NaN  NaN         NaT
+[5107 rows x 7 columns]
+```
+##### 大宗商品价格
+
+接口: macro_china_commodity_price_index
+
+目标地址: https://data.eastmoney.com/cjsj/hyzs_list_EMI00662535.html
+
+描述: 大宗商品价格数据, 数据区间从 20111205-至今
+
+限量: 单次返回所有历史数据
+
+输入参数
+
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
+
+输出参数
+
+| 名称     | 类型      | 描述      |
+|--------|---------|---------|
+| 日期     | object  | -       |
+| 最新值    | int64   | -       |
+| 涨跌幅    | float64 | 注意单位: % |
+| 近3月涨跌幅 | float64 | 注意单位: % |
+| 近6月涨跌幅 | float64 | 注意单位: % |
+| 近1年涨跌幅 | float64 | 注意单位: % |
+| 近2年涨跌幅 | float64 | 注意单位: % |
+| 近3年涨跌幅 | float64 | 注意单位: % |
+
+接口示例
+
+```python
+import akshare as ak
+
+macro_china_commodity_price_index_df = ak.macro_china_commodity_price_index()
+print(macro_china_commodity_price_index_df)
+```
+
+数据示例
+
+```
+          日期   最新值    涨跌幅  ...     近1年涨跌幅   近2年涨跌幅   近3年涨跌幅
+0     2011-12-05   999       NaN  ...        NaN        NaN        NaN
+1     2011-12-12   991 -0.800801  ...        NaN        NaN        NaN
+2     2011-12-19   990 -0.100908  ...        NaN        NaN        NaN
+3     2011-12-26   988 -0.202020  ...        NaN        NaN        NaN
+4     2012-01-02   992  0.404858  ...        NaN        NaN        NaN
+          ...   ...       ...  ...        ...        ...        ...
+2975  2022-03-31  1213  0.000000  ...  21.543086  68.005540  40.556199
+2976  2022-04-01  1212 -0.082440  ...  20.958084  69.037657  40.277778
+2977  2022-04-02  1212  0.000000  ...  20.717131  70.224719  40.440324
+2978  2022-04-03  1212  0.000000  ...  20.837488  70.464135  40.440324
+2979  2022-04-04  1212  0.000000  ...  20.837488  70.704225  40.440324
+``` 
+--------------------------------
+[2025-01-01 00:31:07] agent 生成新的查询语句:
+ 需要用到的数据是：个股新闻，需要查询的主体是：贵州茅台（600519），查询的时间范围是：2024-11-13到2024-12-30。 
+--------------------------------
+[2025-01-01 00:31:15] agent 第0次生成执行代码:
+ import akshare as ak
+from datetime import datetime
+
+# 获取贵州茅台（600519）在2024-11-13到2024-12-30期间的新闻数据
+symbol = "600519"
+start_date = "2024-11-13"
+end_date = "2024-12-30"
+
+# 获取交易日历
+trade_dates_df = ak.tool_trade_date_hist_sina()
+trade_dates = trade_dates_df['trade_date'].tolist()
+
+# 过滤出在指定日期范围内的交易日
+filtered_dates = [date for date in trade_dates if start_date <= date <= end_date]
+
+# 获取新闻数据
+result = []
+for date in filtered_dates:
+    news_df = ak.stock_news_em(symbol=symbol)
+    news_df = news_df[news_df['发布时间'].str.contains(date)]
+    if not news_df.empty:
+        for _, row in news_df.iterrows():
+            result.append({
+                "关键词": row["关键词"],
+                "新闻标题": row["新闻标题"],
+                "新闻内容": row["新闻内容"],
+                "发布时间": row["发布时间"],
+                "文章来源": row["文章来源"],
+                "新闻链接": row["新闻链接"]
+            })
+
+# 将结果转换为字典
+result = {"news": result} 
+--------------------------------
+[2025-01-01 00:31:15] agent 代码执行错误:
+ '<=' not supported between instances of 'str' and 'datetime.date' 
+--------------------------------
+[2025-01-01 00:31:21] agent 分析结果并提出修改建议:
+ 当前代码在处理日期过滤时出现了类型不匹配的错误，导致无法正确获取新闻数据。需要将日期字符串转换为可比较的日期格式，并确保在过滤时使用正确的数据类型。1. 将日期字符串转换为datetime对象以便进行比较。2. 确保在过滤日期时使用正确的数据类型。3. 删除不必要的交易日历过滤，因为stock_news_em接口本身已经返回了指定symbol的新闻数据。修改代码如下：
+
+from datetime import datetime
+
+# 获取贵州茅台（600519）在2024-11-13到2024-12-30期间的新闻数据
+symbol = 600519
+start_date = datetime.strptime(2024-11-13, %Y-%m-%d)
+end_date = datetime.strptime(2024-12-30, %Y-%m-%d)
+
+# 获取新闻数据
+news_df = ak.stock_news_em(symbol=symbol)
+
+# 过滤出在指定日期范围内的新闻
+filtered_news = news_df[(news_df[发布时间] >= start_date) & (news_df[发布时间] <= end_date)]
+
+# 将结果转换为字典
+result = {
+    news: filtered_news.to_dict(records)
+} 
+--------------------------------
+[2025-01-01 00:31:26] agent 第1次生成执行代码:
+ import akshare as ak
+from datetime import datetime
+
+# 获取贵州茅台（600519）在2024-11-13到2024-12-30期间的新闻数据
+symbol = "600519"
+start_date = datetime.strptime("2024-11-13", "%Y-%m-%d")
+end_date = datetime.strptime("2024-12-30", "%Y-%m-%d")
+
+# 获取新闻数据
+news_df = ak.stock_news_em(symbol=symbol)
+
+# 过滤出在指定日期范围内的新闻
+filtered_news = news_df[(news_df['发布时间'].apply(lambda x: datetime.strptime(x, "%Y-%m-%d %H:%M:%S")) >= start_date) & 
+                        (news_df['发布时间'].apply(lambda x: datetime.strptime(x, "%Y-%m-%d %H:%M:%S")) <= end_date)]
+
+# 将结果转换为字典
+result = {"news": filtered_news.to_dict('records')} 
+--------------------------------
+[2025-01-01 00:31:30] agent 判断数据满足需求，返回结果
+[2025-01-01 00:31:30] agent 查找相关数据文档:
+ ##### 大宗商品价格
+
+接口: macro_china_commodity_price_index
+
+目标地址: https://data.eastmoney.com/cjsj/hyzs_list_EMI00662535.html
+
+描述: 大宗商品价格数据, 数据区间从 20111205-至今
+
+限量: 单次返回所有历史数据
+
+输入参数
+
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
+
+输出参数
+
+| 名称     | 类型      | 描述      |
+|--------|---------|---------|
+| 日期     | object  | -       |
+| 最新值    | int64   | -       |
+| 涨跌幅    | float64 | 注意单位: % |
+| 近3月涨跌幅 | float64 | 注意单位: % |
+| 近6月涨跌幅 | float64 | 注意单位: % |
+| 近1年涨跌幅 | float64 | 注意单位: % |
+| 近2年涨跌幅 | float64 | 注意单位: % |
+| 近3年涨跌幅 | float64 | 注意单位: % |
+
+接口示例
+
+```python
+import akshare as ak
+
+macro_china_commodity_price_index_df = ak.macro_china_commodity_price_index()
+print(macro_china_commodity_price_index_df)
+```
+
+数据示例
+
+```
+          日期   最新值    涨跌幅  ...     近1年涨跌幅   近2年涨跌幅   近3年涨跌幅
+0     2011-12-05   999       NaN  ...        NaN        NaN        NaN
+1     2011-12-12   991 -0.800801  ...        NaN        NaN        NaN
+2     2011-12-19   990 -0.100908  ...        NaN        NaN        NaN
+3     2011-12-26   988 -0.202020  ...        NaN        NaN        NaN
+4     2012-01-02   992  0.404858  ...        NaN        NaN        NaN
+          ...   ...       ...  ...        ...        ...        ...
+2975  2022-03-31  1213  0.000000  ...  21.543086  68.005540  40.556199
+2976  2022-04-01  1212 -0.082440  ...  20.958084  69.037657  40.277778
+2977  2022-04-02  1212  0.000000  ...  20.717131  70.224719  40.440324
+2978  2022-04-03  1212  0.000000  ...  20.837488  70.464135  40.440324
+2979  2022-04-04  1212  0.000000  ...  20.837488  70.704225  40.440324
+```
+##### 官方制造业 PMI
+
+接口: macro_china_pmi_yearly
+
+目标地址: https://datacenter.jin10.com/reportType/dc_chinese_manufacturing_pmi
+
+描述: 中国年度PMI数据, 数据区间从 20050201-至今
+
+限量: 单次返回所有历史数据
+
+输入参数
+
+| 名称 | 类型 | 描述 |
+|----|----|----|
+| -  | -  | -  |
+
+输出参数
+
+| 名称  | 类型      | 描述 |
+|-----|---------|----|
+| 商品  | object  | -  |
+| 日期  | object  | -  |
+| 今值  | float64 | -  |
+| 预测值 | float64 | -  |
+| 前值  | float64 | -  |
+
+接口示例
+
+```python
+import akshare as ak
+
+macro_china_pmi_yearly_df = ak.macro_china_pmi_yearly()
+print(macro_china_pmi_yearly_df)
+```
+
+数据示例
+
+```
+             商品        日期      今值   预测值 前值
+0    中国官方制造业PMI  2005-02-01  54.7   NaN   NaN
+1    中国官方制造业PMI  2005-03-01  54.5   NaN  54.7
+2    中国官方制造业PMI  2005-04-01  57.9   NaN  54.5
+3    中国官方制造业PMI  2005-05-01  56.7   NaN  57.9
+4    中国官方制造业PMI  2005-06-01  52.9   NaN  56.7
+..          ...         ...   ...   ...   ...
+228  中国官方制造业PMI  2023-11-30  49.4  49.7  49.5
+229  中国官方制造业PMI  2023-12-31  49.0  49.5  49.4
+230  中国官方制造业PMI  2024-01-31  49.2  49.2  49.0
+231  中国官方制造业PMI  2024-03-01  49.1  49.1  49.2
+232  中国官方制造业PMI  2024-03-31  50.8  50.1  49.1
+[233 rows x 5 columns]
+```
+##### 美国经常帐报告
+
+接口: macro_usa_current_account
+
+目标地址: https://datacenter.jin10.com/reportType/dc_usa_current_account
+
+描述: 美国经常帐报告, 数据区间从 20080317-至今
+
+限量: 单次返回所有历史数据
+
+输入参数
+
+| 名称 | 类型   | 描述 |
+|----|------|----|
+| -  | -  - |
+
+输出参数
+
+| 名称  | 类型      | 描述        |
+|-----|---------|-----------|
+| 商品  | object  | -         |
+| 日期  | object  | -         |
+| 今值  | float64 | 注意单位: 亿美元 |
+| 预测值 | float64 | 注意单位: 亿美元 |
+| 前值  | float64 | 注意单位: 亿美元 |
+
+接口示例
+
+```python
+import akshare as ak
+
+macro_usa_current_account_df = ak.macro_usa_current_account()
+print(macro_usa_current_account_df)
+```
+
+数据示例
+
+```
+         商品          日期    今值     预测值    前值
+0   美国经常账报告  2008-03-17 -1730 -1840.0 -1790
+1   美国经常账报告  2008-06-17 -1760     NaN -1730
+2   美国经常账报告  2008-09-17 -1830 -1800.0 -1760
+3   美国经常账报告  2008-12-17 -1740 -1800.0 -1830
+4   美国经常账报告  2009-03-18 -1330 -1370.0 -1740
+..      ...         ...   ...     ...   ...
+60  美国经常账报告  2023-03-23 -2068 -2132.0 -2190
+61  美国经常账报告  2023-06-22 -2193 -2169.0 -2162
+62  美国经常账报告  2023-09-21 -2121 -2210.0 -2145
+63  美国经常账报告  2023-12-20 -2003 -1970.0 -2168
+64  美国经常账报告  2024-03-21 -1948 -2090.0 -1964
+[65 rows x 5 columns]
+```
+###### 美国实际个人消费支出季率初值报告
+
+接口: macro_usa_real_consumer_spending
+
+目标地址: https://datacenter.jin10.com/reportType/dc_usa_real_consumer_spending
+
+描述: 美国实际个人消费支出季率初值报告, 数据区间从 20131107-至今
+
+限量: 单次返回所有历史数据
+
+输入参数
+
+| 名称 | 类型   | 描述 |
+|----|------|----|
+| -  | -  - |
+
+输出参数
+
+| 名称  | 类型      | 描述      |
+|-----|---------|---------|
+| 商品  | object  | -       |
+| 日期  | object  | -       |
+| 今值  | float64 | 注意单位: % |
+| 预测值 | float64 | 注意单位: % |
+| 前值  | float64 | 注意单位: % |
+
+接口示例
+
+```python
+import akshare as ak
+
+macro_usa_real_consumer_spending_df = ak.macro_usa_real_consumer_spending()
+print(macro_usa_real_consumer_spending_df)
+```
+
+数据示例
+
+```
+                 商品          日期   今值  预测值   前值
+0    美国实际个人消费支出季率初值  2013-11-07  1.5  1.6  1.8
+1    美国实际个人消费支出季率初值  2013-12-05  1.4  1.5  1.5
+2    美国实际个人消费支出季率初值  2013-12-20  2.0  1.4  1.4
+3    美国实际个人消费支出季率初值  2014-01-30  3.3  3.7  2.0
+4    美国实际个人消费支出季率初值  2014-02-28  2.6  2.9  3.3
+..              ...         ...  ...  ...  ...
+124  美国实际个人消费支出季率初值  2023-12-21  3.1  3.6  3.6
+125  美国实际个人消费支出季率初值  2024-01-25  2.8  NaN  3.1
+126  美国实际个人消费支出季率初值  2024-02-28  3.0  2.8  3.1
+127  美国实际个人消费支出季率初值  2024-03-28  3.3  3.0  3.1
+128  美国实际个人消费支出季率初值  2024-04-25  NaN  NaN  3.3
+[129 rows x 5 columns]
+```
+##### 能源指数
+
+接口: macro_china_energy_index
+
+目标地址: https://data.eastmoney.com/cjsj/hyzs_list_EMI00662539.html
+
+描述: 能源指数数据, 数据区间从 20111205-至今
+
+限量: 单次返回所有历史数据
+
+输入参数
+
+| 名称  | 类型  | 描述  |
+|-----|-----|-----|
+| -   | -   | -   |
+
+输出参数
+
+| 名称     | 类型      | 描述      |
+|--------|---------|---------|
+| 日期     | object  | -       |
+| 最新值    | int64   | -       |
+| 涨跌幅    | float64 | 注意单位: % |
+| 近3月涨跌幅 | float64 | 注意单位: % |
+| 近6月涨跌幅 | float64 | 注意单位: % |
+| 近1年涨跌幅 | float64 | 注意单位: % |
+| 近2年涨跌幅 | float64 | 注意单位: % |
+| 近3年涨跌幅 | float64 | 注意单位: % |
+
+接口示例
+
+```python
+import akshare as ak
+
+macro_china_energy_index_df = ak.macro_china_energy_index()
+print(macro_china_energy_index_df)
+```
+
+数据示例
+
+```
+         日期   最新值    涨跌幅  ...     近1年涨跌幅    近2年涨跌幅  近3年涨跌幅
+0     2011-12-05  1003       NaN  ...        NaN        NaN        NaN
+1     2011-12-12   995 -0.797607  ...        NaN        NaN        NaN
+2     2011-12-19   987 -0.804020  ...        NaN        NaN        NaN
+3     2011-12-26   983 -0.405268  ...        NaN        NaN        NaN
+4     2012-01-02   984  0.101729  ...        NaN        NaN        NaN
+          ...   ...       ...  ...        ...        ...        ...
+2972  2022-03-29  1208 -0.247729  ...  48.220859  84.992343  48.768473
+2973  2022-03-30  1206 -0.165563  ...  47.252747  88.437500  48.522167
+2974  2022-03-31  1207  0.082919  ...  47.735618  90.378549  48.645320
+2975  2022-04-01  1207  0.000000  ...  48.098160  91.283677  48.828607
+2976  2022-04-02  1208  0.082850  ...  47.858017  91.442155  47.858017
+``` 
+--------------------------------
+[2025-01-01 00:31:34] agent 生成新的查询语句:
+ 需要用到的数据是：中国宏观, 中国宏观杠杆率, 国民经济运行状况, 经济状况, 企业商品价格指数，需要查询的主体是：宏观环境数据，查询的时间范围是：2024-11-13到2024-12-30。 
+--------------------------------
+[2025-01-01 00:31:41] agent 第0次生成执行代码:
+ import akshare as ak
+import pandas as pd
+
+# 定义时间范围
+start_date = "2024-11-13"
+end_date = "2024-12-30"
+
+# 获取大宗商品价格数据
+commodity_price_df = ak.macro_china_commodity_price_index()
+commodity_price_df['日期'] = pd.to_datetime(commodity_price_df['日期'])
+commodity_price_filtered = commodity_price_df[(commodity_price_df['日期'] >= start_date) & (commodity_price_df['日期'] <= end_date)]
+
+# 获取官方制造业 PMI 数据
+pmi_yearly_df = ak.macro_china_pmi_yearly()
+pmi_yearly_df['日期'] = pd.to_datetime(pmi_yearly_df['日期'])
+pmi_yearly_filtered = pmi_yearly_df[(pmi_yearly_df['日期'] >= start_date) & (pmi_yearly_df['日期'] <= end_date)]
+
+# 获取能源指数数据
+energy_index_df = ak.macro_china_energy_index()
+energy_index_df['日期'] = pd.to_datetime(energy_index_df['日期'])
+energy_index_filtered = energy_index_df[(energy_index_df['日期'] >= start_date) & (energy_index_df['日期'] <= end_date)]
+
+# 将数据转换为字典格式
+result = {
+    "commodity_price": commodity_price_filtered.to_dict(orient='records'),
+    "pmi_yearly": pmi_yearly_filtered.to_dict(orient='records'),
+    "energy_index": energy_index_filtered.to_dict(orient='records')
+} 
+--------------------------------
+[2025-01-01 00:32:42] agent 判断数据满足需求，返回结果

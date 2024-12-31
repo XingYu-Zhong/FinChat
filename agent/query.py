@@ -1,9 +1,17 @@
 from datetime import datetime
+import os
 import json_repair
+
+import json
+from typing import List, Dict, Any, AsyncGenerator
+import aiohttp
+from datetime import datetime
 from llm.api.func_get_openai import OpenaiApi
 from llamaindex.indexstore import IndexStore
 from promptstore.prompt import write_code_prompt,get_code_fromat,rewrite_query_prompt,reflection_write_code_prompt,reflection_analysis_prompt
-
+from log_manager import SyncLogManager
+# 配置日志文件路径
+LOG_FILE = os.path.join(os.path.dirname(os.path.dirname(__file__)), "chat_logs.txt")
 class QueryProcessor:
     def __init__(self, llm_api_key, llm_base_url, chat_model="glm-4-plus", 
                  embedding_model_name="embedding-2", embedding_store_dir=".index_all_embedding_2",update_rag_doc=False,embedding_api_key=None,embedding_base_url=None):
@@ -38,6 +46,8 @@ class QueryProcessor:
             base_url=llm_base_url,
             model=chat_model
         )
+        # 初始化日志管理器
+        self.log_manager = SyncLogManager(LOG_FILE)
     
     def chat_llm(self,messages):
         return self.model.chat_model(messages)
@@ -91,7 +101,7 @@ class QueryProcessor:
         search_results = self.index.search(user_query)
         doc_api_list = search_results[:min(5, len(search_results))]
         doc_api = "\n".join(doc_api_list)
-
+        self.log_manager.append_log(f"agent 查找相关数据文档")
         # 生成新的查询语句
         rewrite_query = rewrite_query_prompt.format(
             user_query=user_query,
@@ -104,7 +114,7 @@ class QueryProcessor:
             "content": rewrite_query
         }]
         rewrite_user_query = self.model.chat_model(messages)
-        print(rewrite_user_query)
+        self.log_manager.append_log(f"agent 生成新的查询语句:\n {rewrite_user_query} \n--------------------------------")
         # 构建提示词
         prompt = write_code_prompt.format(
             user_query=user_query,
@@ -112,7 +122,7 @@ class QueryProcessor:
             data_api_doc=doc_api,
             current_time=current_time
         )
-        print(prompt)
+     
         
         # 获取LLM响应
         messages = [{
@@ -122,7 +132,7 @@ class QueryProcessor:
         result = self.model.chat_model(messages)
         # 提取代码
         code = get_code_fromat(result)
-        print(code)
+        self.log_manager.append_log(f"agent 生成执行代码:\n {code} \n--------------------------------")
         
         # 执行代码
         context = {}
@@ -130,31 +140,10 @@ class QueryProcessor:
         exec(compiled_code, context)
         
         data = context.get('result')
+        self.log_manager.append_log(f"agent 执行代码结果:\n {data} \n--------------------------------")
         # 返回结果
         return data
 
-    def _get_result_structure(self, result):
-        """
-        获取结果的数据结构
-        
-        Args:
-            result: 查询结果（可能是dict或list）
-            
-        Returns:
-            str: 数据结构描述
-        """
-        if isinstance(result, dict):
-            return f"数据结构为字典，包含以下字段：{', '.join(result.keys())}"
-        elif isinstance(result, list):
-            if not result:
-                return "数据结构为空列表"
-            sample = result[0] if result else None
-            if isinstance(sample, dict):
-                return f"数据结构为列表，每个元素为字典，包含以下字段：{', '.join(sample.keys())}"
-            else:
-                return f"数据结构为列表，元素类型为：{type(sample).__name__}"
-        else:
-            return f"数据类型为：{type(result).__name__}"
 
     def _check_analysis_result(self, analysis_result):
         """
@@ -191,7 +180,7 @@ class QueryProcessor:
             search_results = self.index.search(user_query)
             doc_api_list = search_results[:min(5, len(search_results))]
             doc_api = "\n".join(doc_api_list)
-
+            self.log_manager.append_log(f"agent 正在查找相关数据文档")
             # 生成新的查询语句
             rewrite_query = rewrite_query_prompt.format(
                 user_query=user_query,
@@ -200,14 +189,14 @@ class QueryProcessor:
             )
             messages = [{"role": "user", "content": rewrite_query}]
             rewrite_user_query = self.model.chat_model(messages)
+            self.log_manager.append_log(f"agent 生成新的查询语句:\n {rewrite_user_query} \n--------------------------------")
             
             # 初始化变量
             current_code = None
             current_result = None
             analysis_result = None
             iteration = 0
-            last_result = None
-            consecutive_same_result = 0
+            historical_results = []  # 改用列表存储历史结果
             
             while iteration < max_iterations:
                 # 第一次执行或需要修改代码
@@ -229,8 +218,7 @@ class QueryProcessor:
                 messages = [{"role": "user", "content": prompt}]
                 result = self.model.chat_model(messages)
                 current_code = get_code_fromat(result)
-                print(f'prompt: {prompt}')
-                print(f'result: {result}')
+                self.log_manager.append_log(f"agent 第{iteration}次生成执行代码:\n {current_code} \n--------------------------------")
                 
                 # 执行代码
                 try:
@@ -239,22 +227,19 @@ class QueryProcessor:
                     exec(compiled_code, context)
                     current_result = context.get('result', {})  
                 except Exception as e:
-                    print(f"代码执行错误: {str(e)}")
+                    self.log_manager.append_log(f"agent 代码执行错误:\n {str(e)} \n--------------------------------")
                     current_result = {"error": str(e)}
                 
-                # 检查结果是否与上次相同
-                if last_result == current_result:
-                    consecutive_same_result += 1
-                    if consecutive_same_result >= 2:
-                        print("检测到连续两次相同结果，重新开始查询流程")
-                        return None  # 触发重新执行整个流程
-                else:
-                    consecutive_same_result = 0
+                # 将当前结果添加到历史列表
+                result_str = str(current_result)  # 转换为字符串用于比较
+                if result_str in [str(r) for r in historical_results]:
+                    self.log_manager.append_log("agent 检测到重复结果，重新开始查询流程")
+                    return None
                 
-                last_result = current_result
+                historical_results.append(current_result)
                 
                 # 分析结果
-                result_structure = self._get_result_structure(current_result)+'\n部分数据结果：'+str(current_result)[:1000]
+                result_structure = '\n部分数据结果：'+str(current_result)[:1000]
                 analysis_prompt = reflection_analysis_prompt.format(
                     user_query=user_query,
                     data_api_doc=doc_api,
@@ -270,13 +255,16 @@ class QueryProcessor:
                 
                 # 如果结果满足需求，返回结果
                 if is_pass:
+                    self.log_manager.append_log("agent 判断数据满足需求，返回结果")
                     return current_result
                 else:
                     analysis_result = thoughts+code_improve
-                    print(f'analysis_result: {analysis_result}')
+                    self.log_manager.append_log(f"agent 分析结果并提出修改建议:\n {analysis_result} \n--------------------------------")
                 iteration += 1
             
-            return current_result
+            # 如果达到最大迭代次数，返回元素里len最大的结果
+            max_len = max(len(result) for result in historical_results)
+            return [result for result in historical_results if len(result) == max_len][0]
 
         # 主循环，最多重试3次
         max_retries = 3
@@ -287,9 +275,9 @@ class QueryProcessor:
             if result is not None:
                 return result
             retry_count += 1
-            print(f"开始第 {retry_count + 1} 次重试...")
+            self.log_manager.append_log(f"agent 开始第 {retry_count + 1} 次重试...")
         
-        print("达到最大重试次数，返回最后一次结果")
+        self.log_manager.append_log("agent 达到最大重试次数，返回最后一次结果")
         return _execute_reflection_cycle()  # 最后一次尝试，无论结果如何都返回
     
     def query(self, user_query, is_reflection=False, max_iterations=3):
@@ -308,3 +296,110 @@ class QueryProcessor:
             return self.process_query_with_reflection(user_query, max_iterations)
         else:
             return self.process_query(user_query)
+        
+    async def chat_stream(self, messages: List[Dict[str, str]]) -> AsyncGenerator[str, None]:
+        """
+        流式生成聊天回复
+        
+        Args:
+            messages: 对话消息列表
+            
+        Yields:
+            生成的回复片段
+        """
+        try:
+            # 构建请求数据
+            data = {
+                "model": self.chat_model,
+                "messages": messages,
+                "stream": True,
+                "temperature": 0.7,
+                "max_tokens": 2000
+            }
+            
+            # 发送请求并处理流式响应
+            async with aiohttp.ClientSession() as session:
+                async with session.post(
+                    f"{self.llm_base_url}{self.chat_api_path}",
+                    headers=self.headers,
+                    json=data
+                ) as response:
+                    if response.status != 200:
+                        error_text = await response.text()
+                        raise RuntimeError(f"API请求失败: {response.status} - {error_text}")
+                    
+                    # 处理流式响应
+                    async for line in response.content:
+                        line = line.decode('utf-8').strip()
+                        if line:
+                            if line.startswith('data: '):
+                                line = line[6:]  # 移除 "data: " 前缀
+                            if line == '[DONE]':
+                                break
+                            try:
+                                chunk_data = json.loads(line)
+                                if chunk_data.get('choices') and chunk_data['choices'][0].get('delta'):
+                                    content = chunk_data['choices'][0]['delta'].get('content', '')
+                                    if content:
+                                        yield content
+                            except json.JSONDecodeError:
+                                print(f"无法解析JSON: {line}")
+                                continue
+                            
+        except Exception as e:
+            error_msg = f"生成回复时出错: {str(e)}"
+            print(error_msg)
+            raise RuntimeError(error_msg)
+
+    async def chat_once(self, messages: List[Dict[str, str]]) -> str:
+        """
+        生成单次聊天回复
+        
+        Args:
+            messages: 对话消息列表
+            
+        Returns:
+            完整的回复内容
+        """
+        response = []
+        try:
+            async for chunk in self.chat_stream(messages):
+                response.append(chunk)
+            return "".join(response)
+        except Exception as e:
+            raise RuntimeError(f"生成回复时出错: {str(e)}")
+
+    def save_chat_history(self, history: List[Dict[str, str]], filename: str = None):
+        """
+        保存聊天历史
+        
+        Args:
+            history: 聊天历史记录
+            filename: 保存的文件名，如果为None则使用时间戳
+        """
+        if filename is None:
+            timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+            filename = f"chat_history_{timestamp}.json"
+        
+        try:
+            with open(filename, 'w', encoding='utf-8') as f:
+                json.dump(history, f, ensure_ascii=False, indent=2)
+        except Exception as e:
+            print(f"保存聊天历史失败: {e}")
+
+    def load_chat_history(self, filename: str) -> List[Dict[str, str]]:
+        """
+        加载聊天历史
+        
+        Args:
+            filename: 历史记录文件名
+            
+        Returns:
+            聊天历史记录列表
+        """
+        try:
+            with open(filename, 'r', encoding='utf-8') as f:
+                return json.load(f)
+        except Exception as e:
+            print(f"加载聊天历史失败: {e}")
+            return [] 

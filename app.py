@@ -253,6 +253,24 @@ with col2:
     """)
 
 # 页脚
+# from streamlit_autorefresh import st_autorefresh
+
+# # 在 Streamlit 脚本里的某处（例如页脚）添加这段逻辑：
+# # 设置自动刷新（单位毫秒），比如每 5 秒刷新一次
+# count = st_autorefresh(interval=5000, limit=None, key="footer_autorefresh")
+
+# st.markdown("---")
+# st.markdown("### 实时日志")
+
+# # 用一个可折叠组件来显示日志内容
+# with st.expander("查看 chat_logs.txt 日志"):
+#     try:
+#         with open("chat_logs.txt", "r", encoding="utf-8") as f:
+#             logs = f.read()
+#         # 这里可以自由选择用 st.text_area、st.code、st.markdown 等
+#         st.text_area("日志内容", logs, height=200)
+#     except FileNotFoundError:
+#         st.info("暂时没有可显示的日志记录或文件未找到。")
 st.markdown("---")
 st.markdown("### 💡 提示")
 st.info("本系统使用AI大模型进行分析，结果仅供参考，不构成投资建议。")

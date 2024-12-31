@@ -1,0 +1,9 @@
+{
+  "short_name": "股票分析助手",
+  "name": "智能股票分析助手",
+  "icons": [],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+} 

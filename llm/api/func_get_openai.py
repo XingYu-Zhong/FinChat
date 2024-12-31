@@ -38,24 +38,10 @@ class OpenaiApi:
             # 记录输出的响应
             # print(f"Output response: {content}")
             
-            # 可以选择将日志写入文件
-            with open('chat_logs.txt', 'a', encoding='utf-8') as f:
-                f.write(f"\n--- {time.strftime('%Y-%m-%d %H:%M:%S')} ---\n")
-                f.write(f"Model: {model}\n")
-                f.write(f"Input: {str(messages_list[0]['content'])}\n")
-                f.write(f"Output: {content}\n")
-                f.write("-" * 50 + "\n")
-            
             return content
         
         except Exception as e:
-            # 记录错误信息
-            error_msg = f"An error occurred: {e}. Retrying in 1 minute...model:{model}"
-            print(error_msg)
-            with open('chat_logs.txt', 'a', encoding='utf-8') as f:
-                f.write(f"\n--- {time.strftime('%Y-%m-%d %H:%M:%S')} ERROR ---\n")
-                f.write(f"{error_msg}\n")
-            
+
             time.sleep(60)  # Wait for 1 minute before retrying
             return self.chat_model(messages_list, model=model, temperature=temperature, top_p=top_p)
 

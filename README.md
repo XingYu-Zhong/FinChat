@@ -73,36 +73,48 @@ deepseek_base_url=your_deepseek_base_url
 需要自行去官网获取api，目前使用了zhipu的embedding模型，可以自行替换。
 ## 🚀 使用方法
 
-1. 启动应用
+### 1. 启动后端服务
+
 ```bash
-streamlit run app.py
+# 在项目根目录下运行
+uvicorn main:app --reload
 ```
 
-2. 在浏览器中访问 `http://localhost:8501`
+后端服务将在 http://0.0.0.0:8000 启动
+
+### 2. 启动前端服务
+
+```bash
+# 进入前端目录
+cd frontend
+
+# 安装前端依赖
+npm install
+# 或使用 yarn
+yarn install
+
+# 启动开发服务器
+npm start
+# 或使用 yarn
+yarn start
+```
+
+前端服务将在 http://0.0.0.0:3000 启动
+
+### 3. 访问应用
+
+打开浏览器访问 http://localhost:3000 即可使用 FinChat 智能股票分析助手
 
 <div align="center">
-    <img src="img/init.png" width="500">
+    <img src="img/image.png" width="500">
 </div>
 
-3. 使用步骤：
-   - 在左侧边栏选择要使用的LLM模型
-   - 输入股票名称（如：贵州茅台）
-   - 选择分析的时间范围
-   - 点击"开始分析"按钮
+### 4. 使用说明
 
-   <div align="center">
-    <img src="img/yanbao.png" width="500">
-    </div>
-
-   - 等待分析完成后，可以查看研报并进行智能问答
-<div align="center">
-    <img src="img/liaotian.png" width="500">
-</div>
-<div align="center">
-    <img src="img/wenda.png" width="500">
-</div>
-
-
+1. 在输入框中输入股票名称（例如：贵州茅台）
+2. 系统会自动生成该股票的分析研报
+3. 您可以针对研报内容提出问题，系统会基于研报内容为您解答
+4. 如需分析其他股票，只需重新输入新的股票名称即可
 
 ## 📝 注意事项
 
