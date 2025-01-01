@@ -9,17 +9,11 @@ streamlit-autorefresh==1.0.1
 #backend
 fastapi==0.104.1
 uvicorn==0.24.0
-python-dotenv==1.0.0
-pydantic==1.10.13
-zhipuai==1.0.7
 python-multipart==0.0.6
 python-jose[cryptography]==3.3.0
 passlib[bcrypt]==1.7.4
 sqlalchemy==2.0.23
 aiohttp==3.9.1
-pandas==2.1.4
-numpy==1.26.2
-llama-index==0.9.48
 aiofiles==23.2.1 
 sse-starlette==1.6.5 
 
