@@ -1,5 +1,6 @@
 
 import os
+from agent.chat_manager import ChatManager
 from dotenv import load_dotenv
 load_dotenv()
 from agent.query import QueryProcessor
@@ -32,19 +33,26 @@ processor = QueryProcessor(
 )
 
 
-# 初始化 StockAnalyzer
-analyzer = StockAnalyzer(processor)
+chat_manager = ChatManager(processor)
 
-# 分析股票
-result = analyzer.analyze_stock(
-    stock_name="贵州茅台",
-    start_date="2024-11-01",
-    end_date="2024-12-01"
-)
+# 处理用户消息（返回生成器）
+for response_chunk in chat_manager.process_message("用户消息"):
+    print(response_chunk, end="", flush=True)  # 流式输出
 
 
-# result = 
-analysis_result = analyzer.get_stock_report(result)
-print(analysis_result)
+# # 初始化 StockAnalyzer
+# analyzer = StockAnalyzer(processor)
+
+# # 分析股票
+# result = analyzer.analyze_stock(
+#     stock_name="贵州茅台",
+#     start_date="2024-11-01",
+#     end_date="2024-12-01"
+# )
+
+
+# # result = 
+# analysis_result = analyzer.get_stock_report(result)
+# print(analysis_result)
 
 
