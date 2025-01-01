@@ -7,7 +7,7 @@
 
 ## 🌟 功能特点
 
-- 🤖 支持多种大语言模型（GLM-4-plus、Deepseek-chat），无需科学上网，都是国内大模型
+- 🤖 支持多种大语言模型（GLM-4-plus、Deepseek-v3），无需科学上网，都是国内大模型
 - 📊 自动生成股票分析研报
 - 💬 智能问答功能，可针对研报内容进行深入讨论
 - 🔄 实时流式响应
@@ -20,7 +20,6 @@
 - 📚 RAG (Retrieval-Augmented Generation) 增强的工具调用机制
 - 🛠️ 自适应代码生成与执行框架
 - 📊 实时数据获取与分析引擎
-- 🌐 Streamlit构建的交互式Web界面
 
 ## 💡 创新特点
 
@@ -78,6 +77,8 @@ deepseek_base_url=your_deepseek_base_url
 ```bash
 # 在项目根目录下运行
 uvicorn main:app --reload
+# 或者用python
+python main.py
 ```
 
 后端服务将在 http://0.0.0.0:8000 启动
@@ -90,13 +91,9 @@ cd frontend
 
 # 安装前端依赖
 npm install
-# 或使用 yarn
-yarn install
 
 # 启动开发服务器
 npm start
-# 或使用 yarn
-yarn start
 ```
 
 前端服务将在 http://0.0.0.0:3000 启动
@@ -136,6 +133,30 @@ MIT License
 
 欢迎提交 Issue 和 Pull Request 来帮助改进项目。
 
+<a href="https://github.com/XingYu-Zhong/FinChat/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=XingYu-Zhong/FinChat" />
+</a>
+
 ## 📞 联系方式
 
 如有问题或建议，请通过 Issue 与我们联系。
+
+## 🌟Star History
+<picture>
+  <source
+    media="(prefers-color-scheme: dark)"
+    srcset="
+      https://api.star-history.com/svg?repos=XingYu-Zhong/FinChat&type=Date&theme=dark
+    "
+  />
+  <source
+    media="(prefers-color-scheme: light)"
+    srcset="
+      https://api.star-history.com/svg?repos=XingYu-Zhong/FinChat&type=Date
+    "
+  />
+  <img
+    alt="Star History Chart"
+    src="https://api.star-history.com/svg?repos=XingYu-Zhong/FinChat&type=Date"
+  />
+</picture>
