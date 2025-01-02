@@ -152,110 +152,103 @@ function App() {
         display: 'flex',
         backgroundColor: '#1e1e1e',
       }}>
-        {/* 左侧聊天区域 (2) */}
+        {/* 左侧区域：聊天界面（包含研报生成） */}
         <Box sx={{ 
-          flex: 2,
-          borderRight: '1px solid #424242',
-          height: '100%',
-          overflow: 'hidden',
-        }}>
-          <Box sx={{ p: 2, borderBottom: '1px solid #424242' }}>
-            <Typography variant="h6" sx={{ color: '#569cd6' }}>
-              FinChat-智能股票分析
-            </Typography>
-          </Box>
-          <ChatInterface stockName={currentStock} />
-        </Box>
-
-        {/* 右侧分析和日志区域 (2) */}
-        <Box sx={{ 
-          flex: 2,
+          flex: 3,
           height: '100%',
           display: 'flex',
           flexDirection: 'column',
-          overflow: 'hidden',
+          borderRight: '1px solid #424242',
         }}>
-          {/* 上部分析区域 (7) */}
+          <Box sx={{ 
+            flex: 1,
+            overflow: 'hidden',
+          }}>
+            <ChatInterface 
+              stockName={currentStock} 
+              onAnalysisComplete={(result: string, stockName: string) => {
+                setAnalysisResult(result || '');
+                setCurrentStock(stockName);
+              }}
+            />
+          </Box>
+        </Box>
+
+        {/* 右侧区域：分析报告和日志 */}
+        <Box sx={{ 
+          flex: 7,
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+        }}>
+          {/* 分析报告展示区域 */}
           <Box sx={{ 
             flex: 7,
             overflow: 'auto',
+            p: 2,
             borderBottom: '1px solid #424242',
-            display: 'flex',
-            flexDirection: 'column',
           }}>
-            {/* 股票分析表格部分 */}
-            <Box sx={{ p: 2, borderBottom: '1px solid #424242' }}>
-              <Typography variant="h6" sx={{ color: '#569cd6', mb: 2 }}>
-                智能股票研报生成
+            <Box sx={{ 
+              display: 'flex', 
+              justifyContent: 'space-between', 
+              alignItems: 'center', 
+              mb: 2 
+            }}>
+              <Typography variant="subtitle1" sx={{ color: '#569cd6' }}>
+                分析报告
               </Typography>
-              <StockAnalysis 
-                onAnalysisComplete={(result: string, stockName: string) => {
-                  setAnalysisResult(result || '');
-                  setCurrentStock(stockName);
-                }}
-              />
+              {analysisResult && (
+                <Button
+                  variant="outlined"
+                  startIcon={<DownloadIcon />}
+                  onClick={handleDownload}
+                  size="small"
+                >
+                  下载报告
+                </Button>
+              )}
             </Box>
-
-            {/* 分析报告部分 */}
-            <Box sx={{ p: 2, flex: 1, overflow: 'auto' }}>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-                <Typography variant="subtitle1" sx={{ color: '#569cd6' }}>
-                  分析报告
-                </Typography>
-                {analysisResult && (
-                  <Button
-                    variant="outlined"
-                    startIcon={<DownloadIcon />}
-                    onClick={handleDownload}
-                    size="small"
-                  >
-                    下载报告
-                  </Button>
-                )}
-              </Box>
-
-              <Box sx={{
-                backgroundColor: '#252526',
-                p: 2,
-                borderRadius: 1,
-                fontFamily: 'Consolas, Monaco, monospace',
-                fontSize: '14px',
-                color: '#d4d4d4',
-                '& *': { fontFamily: 'inherit' },
-                ...MarkdownStyles,
-              }}>
-                <ReactMarkdown
-                  remarkPlugins={[remarkGfm]}
-                  rehypePlugins={[rehypeRaw]}
-                  components={{
-                    code: ({ node, inline, className, children, ...props }: CodeProps) => {
-                      const match = /language-(\w+)/.exec(className || '');
-                      return !inline && match ? (
-                        <pre className={className} style={{
-                          backgroundColor: '#1e1e1e',
-                          padding: '1em',
-                          borderRadius: '4px',
-                          overflow: 'auto',
-                        }}>
-                          <code className={className} {...props}>
-                            {children}
-                          </code>
-                        </pre>
-                      ) : (
+            <Box sx={{
+              backgroundColor: '#252526',
+              p: 2,
+              borderRadius: 1,
+              fontFamily: 'Consolas, Monaco, monospace',
+              fontSize: '14px',
+              color: '#d4d4d4',
+              '& *': { fontFamily: 'inherit' },
+              ...MarkdownStyles,
+            }}>
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                rehypePlugins={[rehypeRaw]}
+                components={{
+                  code: ({ node, inline, className, children, ...props }: CodeProps) => {
+                    const match = /language-(\w+)/.exec(className || '');
+                    return !inline && match ? (
+                      <pre className={className} style={{
+                        backgroundColor: '#1e1e1e',
+                        padding: '1em',
+                        borderRadius: '4px',
+                        overflow: 'auto',
+                      }}>
                         <code className={className} {...props}>
                           {children}
                         </code>
-                      );
-                    },
-                  }}
-                >
-                  {analysisResult || '暂无分析报告'}
-                </ReactMarkdown>
-              </Box>
+                      </pre>
+                    ) : (
+                      <code className={className} {...props}>
+                        {children}
+                      </code>
+                    );
+                  },
+                }}
+              >
+                {analysisResult || '暂无分析报告'}
+              </ReactMarkdown>
             </Box>
           </Box>
 
-          {/* 下部日志区域 (3) */}
+          {/* 日志区域 */}
           <Box sx={{ 
             flex: 3,
             overflow: 'hidden',

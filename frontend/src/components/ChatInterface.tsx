@@ -1,9 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Box, TextField, Button, Paper, Typography, CircularProgress, Avatar } from '@mui/material';
+import { Box, TextField, Button, Paper, Typography, CircularProgress, Avatar, Divider } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import ChatIcon from '@mui/icons-material/Chat';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import PersonIcon from '@mui/icons-material/Person';
+import StockAnalysis from './StockAnalysis';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 
 interface ChatMessage {
   role: 'user' | 'assistant';
@@ -12,9 +16,18 @@ interface ChatMessage {
 
 interface ChatInterfaceProps {
   stockName: string;
+  onAnalysisComplete: (result: string, stockName: string) => void;
 }
 
-const ChatInterface: React.FC<ChatInterfaceProps> = ({ stockName }) => {
+// 添加代码块组件的类型定义
+interface CodeProps {
+  node?: any;
+  inline?: boolean;
+  className?: string;
+  children?: React.ReactNode;
+}
+
+const ChatInterface: React.FC<ChatInterfaceProps> = ({ stockName, onAnalysisComplete }) => {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       role: 'assistant',
@@ -124,6 +137,98 @@ ${stockName ? `目前已选择股票：${stockName}` : '请先选择一个股票
     }
   };
 
+  // Markdown样式
+  const markdownStyles = {
+    p: {
+      margin: 0,
+      lineHeight: 1.6,
+    },
+    'h1,h2,h3,h4,h5,h6': {
+      color: '#569cd6',
+      margin: '0.5em 0',
+    },
+    ul: {
+      margin: '0.5em 0',
+      paddingLeft: '1.5em',
+    },
+    ol: {
+      margin: '0.5em 0',
+      paddingLeft: '1.5em',
+    },
+    li: {
+      margin: '0.2em 0',
+    },
+    table: {
+      borderCollapse: 'collapse',
+      margin: '0.5em 0',
+      width: '100%',
+    },
+    th: {
+      border: '1px solid #424242',
+      padding: '0.5em',
+      backgroundColor: '#2d2d2d',
+    },
+    td: {
+      border: '1px solid #424242',
+      padding: '0.5em',
+    },
+    pre: {
+      backgroundColor: '#1e1e1e',
+      padding: '0.5em',
+      borderRadius: '4px',
+      overflow: 'auto',
+      margin: '0.5em 0',
+    },
+    code: {
+      backgroundColor: '#1e1e1e',
+      padding: '0.2em 0.4em',
+      borderRadius: '3px',
+      fontSize: '85%',
+      fontFamily: 'Consolas, Monaco, monospace',
+    },
+    blockquote: {
+      borderLeft: '4px solid #424242',
+      margin: '0.5em 0',
+      padding: '0.5em 1em',
+      backgroundColor: '#2d2d2d',
+    },
+  };
+
+  const MessageContent = ({ content }: { content: string }) => (
+    <Box sx={{
+      ...markdownStyles,
+      '& *': { fontFamily: 'inherit' },
+    }}>
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        rehypePlugins={[rehypeRaw]}
+        components={{
+          code: ({ node, inline, className, children, ...props }: CodeProps) => {
+            const match = /language-(\w+)/.exec(className || '');
+            return !inline && match ? (
+              <pre className={className} style={{
+                backgroundColor: '#1e1e1e',
+                padding: '1em',
+                borderRadius: '4px',
+                overflow: 'auto',
+              }}>
+                <code className={className} {...props}>
+                  {children}
+                </code>
+              </pre>
+            ) : (
+              <code className={className} {...props}>
+                {children}
+              </code>
+            );
+          },
+        }}
+      >
+        {content}
+      </ReactMarkdown>
+    </Box>
+  );
+
   return (
     <Box sx={{ 
       height: '100%', 
@@ -215,18 +320,7 @@ ${stockName ? `目前已选择股票：${stockName}` : '请先选择一个股票
                   borderColor: message.role === 'user' ? '#569cd6' : '#4ec9b0',
                 }}
               >
-                <Typography
-                  component="pre"
-                  sx={{
-                    whiteSpace: 'pre-wrap',
-                    wordWrap: 'break-word',
-                    fontFamily: 'Consolas, Monaco, monospace',
-                    m: 0,
-                    fontSize: '14px',
-                  }}
-                >
-                  {message.content}
-                </Typography>
+                <MessageContent content={message.content} />
               </Paper>
             </Box>
           </Box>
@@ -267,18 +361,7 @@ ${stockName ? `目前已选择股票：${stockName}` : '请先选择一个股票
                   borderLeft: '3px solid #4ec9b0',
                 }}
               >
-                <Typography
-                  component="pre"
-                  sx={{
-                    whiteSpace: 'pre-wrap',
-                    wordWrap: 'break-word',
-                    fontFamily: 'Consolas, Monaco, monospace',
-                    m: 0,
-                    fontSize: '14px',
-                  }}
-                >
-                  {currentAssistantMessage}
-                </Typography>
+                <MessageContent content={currentAssistantMessage} />
               </Paper>
             </Box>
           </Box>
@@ -291,54 +374,68 @@ ${stockName ? `目前已选择股票：${stockName}` : '请先选择一个股票
         <div ref={messagesEndRef} />
       </Box>
 
-      {/* 输入区域 */}
-      <Box sx={{ display: 'flex', gap: 1 }}>
-        <TextField
-          fullWidth
-          multiline
-          maxRows={4}
-          value={inputMessage}
-          onChange={(e) => setInputMessage(e.target.value)}
-          onKeyPress={handleKeyPress}
-          placeholder="输入您的问题..."
-          disabled={isLoading}
-          sx={{
-            backgroundColor: '#252526',
-            '& .MuiOutlinedInput-root': {
-              color: '#d4d4d4',
-              '& fieldset': {
-                borderColor: '#424242',
+      {/* 底部输入区域 */}
+      <Box sx={{ 
+        backgroundColor: '#252526',
+        p: 2,
+        borderRadius: 1,
+      }}>
+        {/* 研报生成控制面板 */}
+        <Box sx={{ mb: 2 }}>
+          <StockAnalysis onAnalysisComplete={onAnalysisComplete} />
+        </Box>
+        
+        <Divider sx={{ my: 2, borderColor: '#424242' }} />
+
+        {/* 聊天输入框 */}
+        <Box sx={{ display: 'flex', gap: 1 }}>
+          <TextField
+            fullWidth
+            multiline
+            maxRows={4}
+            value={inputMessage}
+            onChange={(e) => setInputMessage(e.target.value)}
+            onKeyPress={handleKeyPress}
+            placeholder="输入您的问题..."
+            disabled={isLoading}
+            sx={{
+              backgroundColor: '#1e1e1e',
+              '& .MuiOutlinedInput-root': {
+                color: '#d4d4d4',
+                '& fieldset': {
+                  borderColor: '#424242',
+                },
+                '&:hover fieldset': {
+                  borderColor: '#569cd6',
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: '#569cd6',
+                },
               },
-              '&:hover fieldset': {
-                borderColor: '#569cd6',
+              '& .MuiInputBase-input::placeholder': {
+                color: '#808080',
               },
-              '&.Mui-focused fieldset': {
-                borderColor: '#569cd6',
+            }}
+          />
+          <Button
+            variant="contained"
+            onClick={handleSend}
+            disabled={!inputMessage.trim() || isLoading}
+            sx={{
+              minWidth: 100,
+              backgroundColor: '#0e639c',
+              '&:hover': {
+                backgroundColor: '#1177bb',
               },
-            },
-            '& .MuiInputBase-input::placeholder': {
-              color: '#808080',
-            },
-          }}
-        />
-        <Button
-          variant="contained"
-          onClick={handleSend}
-          disabled={!inputMessage.trim() || isLoading}
-          sx={{
-            minWidth: 100,
-            backgroundColor: '#0e639c',
-            '&:hover': {
-              backgroundColor: '#1177bb',
-            },
-            '&.Mui-disabled': {
-              backgroundColor: '#2d2d2d',
-              color: '#808080',
-            },
-          }}
-        >
-          {isLoading ? <CircularProgress size={24} sx={{ color: '#d4d4d4' }} /> : <SendIcon />}
-        </Button>
+              '&.Mui-disabled': {
+                backgroundColor: '#2d2d2d',
+                color: '#808080',
+              },
+            }}
+          >
+            {isLoading ? <CircularProgress size={24} sx={{ color: '#d4d4d4' }} /> : <SendIcon />}
+          </Button>
+        </Box>
       </Box>
     </Box>
   );
