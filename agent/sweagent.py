@@ -110,10 +110,8 @@ class DataFetchAgent:
                 # 分析结果
                 analysis_prompt = data_fetch_reflection_analysis_prompt.format(
                     data_api_doc=doc_api,
-                    user_query=rewrite_query,
                     current_result=str(current_result)[:1000],
-                    current_code=current_code,
-                    current_time=current_time
+                    current_code=current_code
                 )
                 
                 messages = [{"role": "user", "content": analysis_prompt}]
