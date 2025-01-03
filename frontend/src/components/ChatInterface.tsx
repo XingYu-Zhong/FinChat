@@ -1,9 +1,22 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Box, TextField, Button, Paper, Typography, CircularProgress, Avatar, Divider } from '@mui/material';
+import { 
+  Box, 
+  TextField, 
+  Button, 
+  Paper, 
+  Typography, 
+  CircularProgress, 
+  Avatar, 
+  Divider,
+  Tabs,
+  Tab,
+  IconButton
+} from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import ChatIcon from '@mui/icons-material/Chat';
 import SmartToyIcon from '@mui/icons-material/SmartToy';
 import PersonIcon from '@mui/icons-material/Person';
+import CloseIcon from '@mui/icons-material/Close';
 import StockAnalysis from './StockAnalysis';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -27,6 +40,40 @@ interface CodeProps {
   children?: React.ReactNode;
 }
 
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
+
+interface AnalysisTab {
+  id: string;
+  label: string;
+  content: string;
+  type: 'report' | 'visualization';
+}
+
+const TabPanel = (props: TabPanelProps) => {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`analysis-tabpanel-${index}`}
+      aria-labelledby={`analysis-tab-${index}`}
+      {...other}
+      style={{ height: '100%', overflow: 'auto' }}
+    >
+      {value === index && (
+        <Box sx={{ height: '100%', p: 2 }}>
+          {children}
+        </Box>
+      )}
+    </div>
+  );
+};
+
 const ChatInterface: React.FC<ChatInterfaceProps> = ({ stockName, onAnalysisComplete }) => {
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
@@ -47,6 +94,8 @@ ${stockName ? `目前已选择股票：${stockName}` : '请先选择一个股票
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const [currentAssistantMessage, setCurrentAssistantMessage] = useState('');
+  const [analysisTabs, setAnalysisTabs] = useState<AnalysisTab[]>([]);
+  const [activeTab, setActiveTab] = useState(0);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -55,6 +104,22 @@ ${stockName ? `目前已选择股票：${stockName}` : '请先选择一个股票
   useEffect(() => {
     scrollToBottom();
   }, [messages, currentAssistantMessage]);
+
+  // 添加 ResizeObserver 警告处理
+  useEffect(() => {
+    // 防止 ResizeObserver 警告
+    const resizeObserverError = (error: ErrorEvent) => {
+      if (error.message === 'ResizeObserver loop completed with undelivered notifications.') {
+        error.stopImmediatePropagation();
+      }
+    };
+
+    window.addEventListener('error', resizeObserverError);
+    
+    return () => {
+      window.removeEventListener('error', resizeObserverError);
+    };
+  }, []);
 
   const handleSend = async () => {
     if (!inputMessage.trim() || isLoading) return;
@@ -229,212 +294,186 @@ ${stockName ? `目前已选择股票：${stockName}` : '请先选择一个股票
     </Box>
   );
 
+  // 处理新的分析报告
+  const handleAnalysisComplete = (result: string, stockName: string) => {
+    const newTab: AnalysisTab = {
+      id: Date.now().toString(),
+      label: `${stockName}分析报告`,
+      content: result,
+      type: 'report'
+    };
+    setAnalysisTabs(prev => [...prev, newTab]);
+    setActiveTab(analysisTabs.length);
+    onAnalysisComplete(result, stockName);
+  };
+
+  // 关闭标签页
+  const handleCloseTab = (event: React.MouseEvent<HTMLElement>, tabId: string) => {
+    event.stopPropagation();
+    const tabIndex = analysisTabs.findIndex(tab => tab.id === tabId);
+    const newTabs = analysisTabs.filter(tab => tab.id !== tabId);
+    setAnalysisTabs(newTabs);
+    
+    if (activeTab === tabIndex) {
+      setActiveTab(Math.max(0, tabIndex - 1));
+    } else if (activeTab > tabIndex) {
+      setActiveTab(activeTab - 1);
+    }
+  };
+
   return (
     <Box sx={{ 
-      height: '100%', 
-      display: 'flex', 
+      height: '100vh',
+      display: 'flex',
       flexDirection: 'column',
-      backgroundColor: '#1e1e1e',
-      color: '#d4d4d4',
-      p: 2,
-      borderRadius: 1
+      overflow: 'hidden'
     }}>
-      {/* 标题头部 */}
+      {/* 标题栏 */}
       <Box sx={{
         display: 'flex',
         alignItems: 'center',
         gap: 2,
-        pb: 2,
-        borderBottom: '1px solid #424242',
-        mb: 2
+        p: 2,
+        borderBottom: 1,
+        borderColor: 'divider',
+        backgroundColor: 'background.paper'
       }}>
         <ChatIcon sx={{ 
-          fontSize: 32, 
-          color: '#569cd6',
-          backgroundColor: '#252526',
-          p: 1,
-          borderRadius: 1
+          fontSize: 32,
+          color: 'primary.main'
         }} />
         <Typography variant="h5" sx={{
           fontWeight: 600,
-          color: '#d4d4d4',
+          color: 'text.primary',
           letterSpacing: 1
         }}>
           FinChat-智能股票分析助手
         </Typography>
       </Box>
       
-      {/* 消息显示区域 */}
-      <Box sx={{ 
-        flex: 1, 
-        overflowY: 'auto', 
-        mb: 2,
-        '&::-webkit-scrollbar': {
-          width: '8px',
-        },
-        '&::-webkit-scrollbar-track': {
-          background: '#1e1e1e',
-        },
-        '&::-webkit-scrollbar-thumb': {
-          background: '#424242',
-          borderRadius: '4px',
-        },
-      }}>
-        {messages.map((message, index) => (
-          <Box
-            key={index}
-            sx={{
-              mb: 2,
-              display: 'flex',
-              gap: 2,
-              alignItems: 'flex-start',
-            }}
-          >
-            <Avatar
-              sx={{
-                bgcolor: message.role === 'user' ? '#569cd6' : '#4ec9b0',
-                width: 40,
-                height: 40,
-              }}
-            >
-              {message.role === 'user' ? <PersonIcon /> : <SmartToyIcon />}
-            </Avatar>
-            <Box sx={{ flex: 1 }}>
-              <Typography
-                variant="caption"
-                sx={{
-                  color: message.role === 'user' ? '#569cd6' : '#4ec9b0',
-                  mb: 0.5,
-                  display: 'block'
-                }}
-              >
-                {message.role === 'user' ? '用户' : 'AI助手'}
-              </Typography>
-              <Paper
-                elevation={0}
-                sx={{
-                  p: 1.5,
-                  backgroundColor: message.role === 'user' ? '#252526' : '#2d2d2d',
-                  color: '#d4d4d4',
-                  borderLeft: '3px solid',
-                  borderColor: message.role === 'user' ? '#569cd6' : '#4ec9b0',
-                }}
-              >
-                <MessageContent content={message.content} />
-              </Paper>
-            </Box>
-          </Box>
-        ))}
-        {currentAssistantMessage && (
-          <Box sx={{ 
-            mb: 2,
-            display: 'flex',
-            gap: 2,
-            alignItems: 'flex-start',
-          }}>
-            <Avatar
-              sx={{
-                bgcolor: '#4ec9b0',
-                width: 40,
-                height: 40,
-              }}
-            >
-              <SmartToyIcon />
-            </Avatar>
-            <Box sx={{ flex: 1 }}>
-              <Typography
-                variant="caption"
-                sx={{
-                  color: '#4ec9b0',
-                  mb: 0.5,
-                  display: 'block'
-                }}
-              >
-                AI助手
-              </Typography>
-              <Paper
-                elevation={0}
-                sx={{
-                  p: 1.5,
-                  backgroundColor: '#2d2d2d',
-                  color: '#d4d4d4',
-                  borderLeft: '3px solid #4ec9b0',
-                }}
-              >
-                <MessageContent content={currentAssistantMessage} />
-              </Paper>
-            </Box>
-          </Box>
-        )}
-        {isLoading && !currentAssistantMessage && (
-          <Box sx={{ display: 'flex', justifyContent: 'center', my: 2 }}>
-            <CircularProgress size={20} sx={{ color: '#569cd6' }} />
-          </Box>
-        )}
-        <div ref={messagesEndRef} />
-      </Box>
+      
 
-      {/* 底部输入区域 */}
+      {/* 主要内容区域 */}
       <Box sx={{ 
-        backgroundColor: '#252526',
-        p: 2,
-        borderRadius: 1,
+        flex: 1,
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden',
+        position: 'relative'
       }}>
-        {/* 研报生成控制面板 */}
-        <Box sx={{ mb: 2 }}>
-          <StockAnalysis onAnalysisComplete={onAnalysisComplete} />
-        </Box>
         
-        <Divider sx={{ my: 2, borderColor: '#424242' }} />
 
-        {/* 聊天输入框 */}
-        <Box sx={{ display: 'flex', gap: 1 }}>
-          <TextField
-            fullWidth
-            multiline
-            maxRows={4}
-            value={inputMessage}
-            onChange={(e) => setInputMessage(e.target.value)}
-            onKeyPress={handleKeyPress}
-            placeholder="输入您的问题..."
-            disabled={isLoading}
-            sx={{
-              backgroundColor: '#1e1e1e',
-              '& .MuiOutlinedInput-root': {
-                color: '#d4d4d4',
-                '& fieldset': {
-                  borderColor: '#424242',
-                },
-                '&:hover fieldset': {
-                  borderColor: '#569cd6',
-                },
-                '&.Mui-focused fieldset': {
-                  borderColor: '#569cd6',
-                },
-              },
-              '& .MuiInputBase-input::placeholder': {
-                color: '#808080',
-              },
-            }}
-          />
-          <Button
-            variant="contained"
-            onClick={handleSend}
-            disabled={!inputMessage.trim() || isLoading}
-            sx={{
-              minWidth: 100,
-              backgroundColor: '#0e639c',
-              '&:hover': {
-                backgroundColor: '#1177bb',
-              },
-              '&.Mui-disabled': {
-                backgroundColor: '#2d2d2d',
-                color: '#808080',
-              },
-            }}
-          >
-            {isLoading ? <CircularProgress size={24} sx={{ color: '#d4d4d4' }} /> : <SendIcon />}
-          </Button>
+        {/* 聊天区域 */}
+        <Box sx={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
+          overflow: 'hidden'
+        }}>
+          {/* 消息列表 */}
+          <Box sx={{
+            flex: 1,
+            overflow: 'auto',
+            padding: 2,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 2
+          }}>
+            {messages.map((message, index) => (
+              <Box
+                key={index}
+                sx={{
+                  display: 'flex',
+                  gap: 2,
+                  alignItems: 'flex-start'
+                }}
+              >
+                <Avatar sx={{ bgcolor: message.role === 'assistant' ? 'primary.main' : 'secondary.main' }}>
+                  {message.role === 'assistant' ? <SmartToyIcon /> : <PersonIcon />}
+                </Avatar>
+                <Paper
+                  elevation={1}
+                  sx={{
+                    p: 2,
+                    flex: 1,
+                    backgroundColor: message.role === 'assistant' ? 'background.paper' : 'action.hover',
+                    maxWidth: 'calc(100% - 56px)',
+                    overflow: 'hidden',
+                    wordBreak: 'break-word'
+                  }}
+                >
+                  <MessageContent content={message.content} />
+                </Paper>
+              </Box>
+            ))}
+            {currentAssistantMessage && (
+              <Box
+                sx={{
+                  display: 'flex',
+                  gap: 2,
+                  alignItems: 'flex-start'
+                }}
+              >
+                <Avatar sx={{ bgcolor: 'primary.main' }}>
+                  <SmartToyIcon />
+                </Avatar>
+                <Paper
+                  elevation={1}
+                  sx={{
+                    p: 2,
+                    flex: 1,
+                    backgroundColor: 'background.paper',
+                    maxWidth: 'calc(100% - 56px)',
+                    overflow: 'hidden',
+                    wordBreak: 'break-word'
+                  }}
+                >
+                  <MessageContent content={currentAssistantMessage} />
+                </Paper>
+              </Box>
+            )}
+            {isLoading && (
+              <Box sx={{ display: 'flex', justifyContent: 'center', p: 2 }}>
+                <CircularProgress size={24} />
+              </Box>
+            )}
+            <div ref={messagesEndRef} />
+          </Box>
+
+          {/* 输入区域 */}
+          <Box sx={{
+            borderTop: 1,
+            borderColor: 'divider',
+            backgroundColor: 'background.paper',
+            p: 2
+          }}>
+            <StockAnalysis onAnalysisComplete={handleAnalysisComplete} />
+            <Divider sx={{ my: 2 }} />
+            <Box sx={{ display: 'flex', gap: 1 }}>
+              <TextField
+                fullWidth
+                multiline
+                maxRows={4}
+                value={inputMessage}
+                onChange={(e) => setInputMessage(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="输入消息..."
+                sx={{
+                  '& .MuiInputBase-root': {
+                    backgroundColor: 'background.paper'
+                  }
+                }}
+              />
+              <Button
+                variant="contained"
+                onClick={handleSend}
+                disabled={isLoading || !inputMessage.trim()}
+                sx={{ minWidth: 100 }}
+              >
+                {isLoading ? <CircularProgress size={24} /> : <SendIcon />}
+              </Button>
+            </Box>
+          </Box>
         </Box>
       </Box>
     </Box>

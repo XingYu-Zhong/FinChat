@@ -1,8 +1,8 @@
 from typing import List, Dict, Generator, Union, AsyncGenerator
-from .query import QueryProcessor
+from .query import QueryAgent
 
 class ChatManager:
-    def __init__(self, query_processor: QueryProcessor):
+    def __init__(self, query_processor: QueryAgent):
         self.query_processor = query_processor
         self.history: List[Dict[str, str]] = []
         self.max_history = 10  # 最大历史记录数
@@ -29,12 +29,20 @@ class ChatManager:
         self.add_message("user", user_message)
         
         # 检查是否需要使用query
-        need_query = self.query_processor.check_need_query(user_message)
+        is_need_data, query_list = self.query_processor.check_need_query(user_message)
         
-        if need_query:
+        if is_need_data:
             # 如果需要查询数据，使用process_query处理
             try:
-                query_result = self.query_processor.query(user_message, True, 10)
+                query_results = []
+                for query in query_list:
+                    # 如果提供了股票名称，将其添加到查询中
+                    if stock_name:
+                        query_message = f"关于股票【{stock_name}】的查询：{query}"
+                    else:
+                        query_message = query
+                    query_result = self.query_processor.query(query_message)
+                    query_results.append(query+":\n[相关数据]\n"+str(query_result)  )
                 # 将查询结果添加到消息中
                 messages = self.get_messages()
                 messages.append({

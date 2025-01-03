@@ -1,9 +1,10 @@
 import os
 import sys
 
-# 添加项目根目录到 Python 路径
-ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append(ROOT_DIR)
+from llamaindex.indexstore import IndexStore
+from llm.api.func_get_openai import OpenaiApi
+from log_manager import SyncLogManager
+
 
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
@@ -18,13 +19,13 @@ from typing import List, Optional
 from dotenv import load_dotenv
 
 # 导入现有的处理模块
-from agent.query import QueryProcessor
+from agent.query import QueryAgent
 from agent.stock_analysis import StockAnalyzer
 from agent.chat_manager import ChatManager
 
 # 加载环境变量
 load_dotenv()
-
+LOG_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "chat_logs.txt")
 app = FastAPI(title="股票分析助手API")
 
 # 配置CORS
@@ -53,7 +54,7 @@ class ChatRequest(BaseModel):
 processors = {}
 chat_managers = {}
 
-def init_query_processor(chat_model: str) -> QueryProcessor:
+def init_query_processor(chat_model: str) -> QueryAgent:
     """初始化查询处理器"""
     if chat_model == "glm-4-plus":
         llm_api_key = os.getenv("zhipu_api_key")
@@ -67,15 +68,25 @@ def init_query_processor(chat_model: str) -> QueryProcessor:
     
     if not llm_api_key or not llm_base_url:
         raise HTTPException(status_code=500, detail="API配置缺失")
-    
-    return QueryProcessor(
-        llm_api_key=llm_api_key,
-        llm_base_url=llm_base_url,
-        chat_model=chat_model,
-        embedding_model_name="embedding-3",
-        embedding_store_dir=".index_all_embedding_3",
-        embedding_api_key=embedding_api_key,
-        embedding_base_url=embedding_base_url
+    embedding_model_name = 'embedding-3'
+    embedding_store_dir = '.index_all_embedding_3'
+    log_manager = SyncLogManager(LOG_FILE)
+    index = IndexStore(
+        embedding_model_name=embedding_model_name,
+        index_dir=embedding_store_dir,
+        update_rag_doc=False,
+        api_key=embedding_api_key,
+        base_url=embedding_base_url
+    )
+    llm_model = OpenaiApi(
+        api_key=llm_api_key,
+        base_url=llm_base_url,
+        model=chat_model
+    )
+    return QueryAgent(
+        model=llm_model,
+        log_manager=log_manager,
+        index=index
     )
 
 def get_or_create_chat_manager(stock_name: str, chat_model: str) -> ChatManager:
@@ -131,7 +142,7 @@ async def chat(request: ChatRequest):
                 print("开始收集回复片段")
                 async for chunk in chat_manager.process_message_async(enriched_input, request.stock_name):
                     if chunk:
-                        print(f"发送回复片段: {chunk[:50]}...")
+                        print(f"发送回复片段: {chunk}...")
                         yield {
                             "event": "message",
                             "data": json.dumps({
@@ -184,7 +195,7 @@ async def get_available_models():
     """获取可用的模型列表"""
     return {
         "models": [
-            {"id": "deepseek-chat", "name": "Deepseek Chat"},
+            {"id": "deepseek-chat", "name": "Deepseek V3"},
             {"id": "glm-4-plus", "name": "GLM-4 Plus"}
         ]
     }
