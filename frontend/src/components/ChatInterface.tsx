@@ -84,7 +84,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ stockName, onAnalysisComp
 
 您可以在下方直接输入您感兴趣的股票相关问题，我会尽力为您提供专业的分析和建议。
 
-或者您可以点击右方按钮选择一个股票开始分析，我会通过SWE-Agent自主编写代码获取金融数据，并结合真实数据生成股票分析报告。
+或者您可以选择一个股票开始分析，我会通过SWE-Agent自主编写代码获取金融数据，并结合真实数据生成股票分析报告。
 
 在右下方您可以看到SWE-Agent的思考过程，以及它生成的代码。
 ${stockName ? `目前已选择股票：${stockName}` : '请先选择一个股票开始分析。'}`

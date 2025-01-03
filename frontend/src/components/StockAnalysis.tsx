@@ -24,8 +24,8 @@ interface StockAnalysisProps {
 
 const StockAnalysis: React.FC<StockAnalysisProps> = ({ onAnalysisComplete }) => {
   const [stockName, setStockName] = useState<string>('贵州茅台');
-  const [startDate, setStartDate] = useState<Dayjs | null>(dayjs().subtract(30, 'day'));
-  const [endDate, setEndDate] = useState<Dayjs | null>(dayjs().subtract(1, 'day'));
+  const [startDate, setStartDate] = useState<Dayjs | null>(dayjs().subtract(37, 'day'));
+  const [endDate, setEndDate] = useState<Dayjs | null>(dayjs().subtract(7, 'day'));
   const [chatModel, setChatModel] = useState<string>('deepseek-chat');
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>('');
